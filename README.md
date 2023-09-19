@@ -1,3 +1,59 @@
+1. npx create-next-app@latest
+What is your project named? my-app
+Would you like to use TypeScript?  Yes
+Would you like to use ESLint?  Yes
+Would you like to use Tailwind CSS?  Yes
+Would you like to use `src/` directory?  Yes
+Would you like to use App Router? (recommended) Yes
+Would you like to customize the default import alias? Yes
+What import alias would you like configured? @/* ENTER
+
+1-2. cd [project Name]
+
+2.npm install next@latest react@latest react-dom@latest
+
+Install Prisma
+3. 
+npm init -y
+npm install prisma typescript ts-node @types/node --save-dev
+
+npx prisma
+npx prisma init
+
+4.파일 .env file 열고
+
+콜렉션, 유저 아이디, 패스워드 생성후에 
+몽고 DB url 받아오기
+
+DATABASE_URL="mongodb+srv://<userID>:<passward>@cluster0.urzkftq.mongodb.net/<collection 이름>?retryWrites=true&w=majority"
+
+src 폴더 아래
+db.ts 생성
+
+import { PrismaClient } from '@prisma/client'
+
+const prismaClientSingleton = () => {
+  return new PrismaClient()
+}
+
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientSingleton | undefined
+}
+
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+
+export default prisma
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+
+넣고 저장
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
