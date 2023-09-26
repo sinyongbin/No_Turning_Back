@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-
+import { MyModal } from '../Login/MyModal'
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
     { name: 'Dashboard/test', href: '/dashboard/test', current: false },
@@ -17,11 +17,19 @@ function classNames(...classes : any) {
 }
 
 export default function Navbar() {
+  
     let [isOpen, setIsOpen] = useState(true)
+    let [isOpen2, setIsOpen2] = useState(false);
+    function closeModal2()
+    {
+        setIsOpen2(false)
+    }
+  
    return (
      <Disclosure as="nav" className="bg-gray-800 sticky top-0">
        {({ open }) => (
          <>
+          <MyModal closeModal={closeModal2} isOpen={isOpen2}/>
            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
              <div className="relative flex h-16 items-center justify-between">
                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -74,7 +82,7 @@ export default function Navbar() {
                  {/* Profile dropdown */}
                  <Menu as="div" className="relative ml-3">
                    <div>
-                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                     <Menu.Button onClick={()=>setIsOpen2(true)} className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                        <span className="absolute -inset-1.5" />
                        <span className="sr-only">Open user menu</span>
                        <input
