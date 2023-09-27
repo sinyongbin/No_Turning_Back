@@ -12,7 +12,8 @@ What import alias would you like configured? @/* ENTER
 
 2.npm install next@latest react@latest react-dom@latest
 
-Install Prisma
+npm install prisma
+
 3. 
 npm init -y
 npm install prisma typescript ts-node @types/node --save-dev
