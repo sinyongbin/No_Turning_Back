@@ -515,3 +515,12 @@ textarea {
 .comment-button:hover {
   background-color: darkred;
 }
+.lightMode
+{
+  @apply bg-slate-300 text-black
+}
+
+.darkMode
+{
+  @apply bg-gray-900 text-slate-200
+}

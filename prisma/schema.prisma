@@ -46,7 +46,6 @@ model Comment {
   createAt DateTime @default(now())
   update_date DateTime @updatedAt
 }
-
 model Category{
     id String @id @default(auto()) @map("_id") @db.ObjectId
     category_type String
@@ -57,14 +56,12 @@ enum Role {
   USER
   ADMIN
 }
-
 enum PublicInfo {
   PUBLIC
   CLOSED
   DELETE
   BLOCKED
 }
-
 enum Gender {
   FEMALE
   MALE

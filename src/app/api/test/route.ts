@@ -15,6 +15,3 @@ export async function POST(req:NextRequest) {
     let body = Object.fromEntries(data);
     return new Response("OK")
 }
-
-
-
