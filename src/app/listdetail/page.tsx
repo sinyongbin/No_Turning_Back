@@ -1,10 +1,11 @@
 'use client'
 
 import React, { Component, useState } from 'react';
-import DetailModal from '../components/modal';
-import Detail from '../components/detail';
+import DetailModal from './_components/modal';
+import Detail from './_components/detail';
 import Nav from '../components/nav';
 import Login from '../components/login';
+import BottomList from './_components/bottomlist';
 
 export default function Buy() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -22,7 +23,6 @@ export default function Buy() {
     return (
         <>
             <div>
-                <Login/>
                 <Nav/>
                 <Detail/>
             </div>

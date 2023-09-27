@@ -1,99 +1,156 @@
+"use client"
+
+
 import Image from 'next/image'
 import prisma from '@/db'
 import Link from "next/link"
 import Paging from './paging'
+import { useState } from 'react'
 
 
-export default function list() {
+export default function MainList() {
+
+    const [isActive, setIsActive] = useState(false);
+    
     const products = [
-        {
-          id: 1,
-          name: 'Earthen Bottle',
-          href: 'listdetail',
-          price: '$1148',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-        },
-        {
-          id: 2,
-          name: 'Nomad Tumbler',
-          href: '#',
-          price: '$35',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-        },
-        {
-          id: 3,
-          name: 'Focus Paper Refill',
-          href: '#',
-          price: '$89',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-        },
-        {
-          id: 4,
-          name: 'Machined Mechanical Pencil',
-          href: '#',
-          price: '$35',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
-        {
-          id: 5,
-          name: 'Machined Mechanical Pencil',
-          href: '#',
-          price: '$35',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
-        {
-          id: 6,
-          name: 'Machined Mechanical Pencil',
-          href: '#',
-          price: '$35',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
-        {
-          id: 7,
-          name: 'Machined Mechanical Pencil',
-          href: '#',
-          price: '$35',
-          imageSrc: '/img/경매이미지.png',
-          imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-        },
-      ]
+      {
+        id: 1,
+        name: 'Earthen Bottle',
+        href: '/listdetail',
+        price: '$1148',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
+      },
+      {
+        id: 2,
+        name: 'Nomad Tumbler',
+        href: '#',
+        price: '$35',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
+      },
+      {
+        id: 3,
+        name: 'Focus Paper Refill',
+        href: '#',
+        price: '$89',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
+      },
+      {
+        id: 4,
+        name: 'Machined Mechanical Pencil',
+        href: '#',
+        price: '$35',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
+      },
+      {
+        id: 5,
+        name: 'Machined Mechanical Pencil',
+        href: '#',
+        price: '$35',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
+      },
+      {
+        id: 6,
+        name: 'Machined Mechanical Pencil',
+        href: '#',
+        price: '$35',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
+      },
+      {
+        id: 7,
+        name: 'Machined Mechanical Pencil',
+        href: '#',
+        price: '$35',
+        imageSrc: '/img/경매이미지.png',
+        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
+      },
+    ]
+
+  
+    
+    
+    
+    const [visibleProducts, setVisibleProducts] = useState(products.slice(0, 4));
+
+
+    const loadMoreProducts = () => {
+      // "더 보기" 버튼을 클릭했을 때 실행되는 함수입니다.
+      const currentLength = visibleProducts.length;
+      const nextProducts = products.slice(currentLength, currentLength + 4);
+  
+      if (nextProducts.length > 0) {
+        setVisibleProducts((prevProducts) => [...prevProducts, ...nextProducts]);
+      }
+    };
+
+    
     
     
       return (
         
         <div className="bg-white ">
             <HomeMain/>
-          <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-            <h2 className="sr-only">Products</h2>
-    
-            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-              {products.map((product) => (
-                <a key={product.id} href={product.href} className="group">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                    <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}  
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
-                      style={{ width: '280px', height: '280px' }} // 이미지 크기 조정
+            <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+
+              {/* <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                {products.map((product) => (
+                  <a key={product.id} href={product.href} className="group">
+                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                      <img
+                        src={product.imageSrc}
+                        alt={product.imageAlt}
+                        className="h-full w-full object-cover object-center group-hover:opacity-75"
+                        style={{ width: '280px', height: '280px' }} // 이미지 크기 조정
                       />
-                  </div>
-                  <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
-                </a>
-              ))}
+                    </div>
+                    <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                  </a>
+                ))}
+              </div> */}
+
+              {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
+              <div className="product-grid">
+                <div className="grid grid-cols-4 gap-4">
+                  {visibleProducts.map((product) => (
+                    <div key={product.id} className="product-item">
+                      {/* 상품 정보를 표시하는 코드를 추가하세요. */}
+                      <a key={product.id} href={product.href} className="group">
+                        <img
+                          src={product.imageSrc}
+                          alt={product.imageAlt}
+                          className="h-full w-full object-cover object-center group-hover:opacity-75"
+                          style={{ width: '280px', height: '280px' }}
+                        />
+                        <h3>{product.name}</h3>
+                      </a>
+                      <p>{product.price}</p>
+                    </div>
+                  ))}
+                </div>
+                {/* "더 보기" 버튼을 추가하고 클릭 이벤트를 연결합니다. */}
+                <div className="text-center mt-4">
+                  {visibleProducts.length < products.length && (
+                    <button className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg" onClick={loadMoreProducts}>
+                      더 보기
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-          <Paging/>
-        </div> 
       )
     }
-    function HomeMain(){
+
+
+
+
+function HomeMain(){
       return(
         <div className="relative overflow-hidden bg-white">
         <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">

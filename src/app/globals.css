@@ -94,31 +94,16 @@
 }
 
 /* 버튼 스타일 */
-.search-button {
+/* .search-button {
   padding: 10px 20px;
   background-color: black;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-/* 검색창 및 버튼을 감싸는 컨테이너 스타일 */
-.search-container {
- 
-}
+} */
 
 
-/* 판매 버튼 */
-
-.sellButton {
-  
-}
-
-.sell {
-  
-  
-}
 
 /* 로그인/회원가입/마이페이지 */
 
@@ -206,76 +191,6 @@ body {
   background-color: white;
   color: black;
 }
-.title{
-  text-align: left;
-  margin-left: 200px;
-  font-size: 40px;
-}
-.title-sub{
-  text-align: center;
-  margin-top: 50px;
-  margin-right: 150px;
-  font-size: 24px;
-}
-.detail-listing, .detail-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.item-details{
-  text-align: center;
-}
-
-.detail-list-title {
-  text-decoration: underline;
-  padding: 10px;
-  font-size: 24px;
-}
-
-.detail-content {
- 
-  margin: 20px auto;
-  width: 100%;
-  max-width: 1000px;
-  background-color: white;
-  color: black;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.item {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.img-list-detail {
-  width: 40%;
-  height: auto;
-  margin-right: 10px;
-}
-
-.item-info {
-  flex: 1;
-  text-align: left;
-}
-
-.item-info h2 {
-  margin-left: 150px;
-  
-  text-decoration: underline;
-  font-size: 50px;
-  font-weight: bold;
-}
-
-.item-info p {
-  margin-left: 150px;
-  text-decoration: underline;
-  font-size: 30px;
-  color: brown;
-}
 
 /* 화면 크기가 768px 이하일 때 스타일을 조정 */
 @media (max-width: 768px) {
@@ -298,54 +213,8 @@ body {
   margin-right: 60px;
   text-decoration: none;
 }
-.food-img{
-  width: 100%;
-  height: auto;
-}
-
-.search {
-  margin-top: 0px;
-  top: 0px;
-  margin-left: 550px;
-  right: 100px;
-  height: 40px;
-  outline: auto;
-  padding-inline-start: 100px;
-  position: relative;
-  width: 40%; 
-}
-
-/* 버튼에 스타일을 적용합니다. */
-.search-button {
-  padding: 10px 20px; /* 버튼의 내부 여백 설정 */
-  background-color: black; /* 배경색 설정 */
-  color: #fff; /* 글자색 설정 */
-  border: none; /* 테두리 제거 */
-  border-radius: 5px; /* 둥근 모서리 설정 */
-  cursor: pointer; /* 커서 스타일 변경 */
-  margin-left: -100px; /* 입력 필드와 버튼 사이 여백 설정 */
-}
 
 
-/* 입력 필드와 버튼을 감싸는 컨테이너에 스타일을 적용합니다. */
-
-.bid-button, .bookmark-button {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  background-color: brown;
-  color: #fff;
-  border-radius: 5px;
-  margin-top: 20px;
-  margin-right: 10px; /* 버튼 오른쪽에 마진 추가 */
-}
-
-/* 버튼들을 가로로 나란히 배치하고 왼쪽 공간을 띄움 */
-.button-container {
-  display: flex;
-  align-items: center; /* 버튼을 세로 가운데 정렬 */
-  margin-left: 20px; /* 왼쪽 공간을 마진으로 둠 */
-}
 
 /* 미디어 쿼리를 사용하여 화면 크기에 따라 스타일 조정 */
 @media (max-width: 768px) {
@@ -361,69 +230,6 @@ body {
 
 
 
-
-
-
-/* 상품 리스트 컨테이너 */
-.item-list {
-  text-align: center;
-  padding: 20px;
-}
-
-
-
-.show-item-list-wrap {
-  flex-basis: calc(25% - 20px); /* 한 행에 4개의 상품을 표시하려면 25%로 설정 */
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-/* 상품 이미지 스타일 */
-.item_img {
-  width: 100%; /* 이미지 너비 100%로 설정하여 컨테이너에 맞게 조절 */
-  max-height: 150px; /* 최대 높이 설정 */
-}
-
-/* 상품 정보 스타일 */
-.item_info {
-  text-align: left;
-}
-
-/* 상품 타이틀 스타일 */
-.item_title  {
-  list-style: none;
-  font-weight: bold;
-  font-size: 18px;
-  
-}
-
-/* .row-items를 Flex 컨테이너로 설정 */
-.row-items  {
-  
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* 오른쪽 정렬 */
-}
-
-/* 각 상품 아이템 스타일 */
-.product-item {
-  
-  flex-basis: calc(25% - 20px); /* 한 행에 4개의 상품을 표시하려면 25%로 설정 */
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.item-price{
-  color: chocolate;
-}
 
 /* 기본 스타일 */
 .all-comment {
@@ -523,4 +329,90 @@ textarea {
 .darkMode
 {
   @apply bg-gray-900 text-slate-200
+}
+
+
+/* search bar */
+
+.search-wrapper {
+  position: absolute;
+  transform: translate(10%, -40%);
+  top:17%;
+  left:67%;
+}
+.search-wrapper.active {}
+
+.search-wrapper .input-holder {    
+  height: 70px;
+  width:70px;
+  overflow: hidden;
+  background: rgba(255,255,255,0);
+  border-radius:6px;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+
+}
+.search-wrapper.active .input-holder {
+  width:450px;
+  border-radius: 50px;
+  background: rgba(0,0,0,0.5);
+  transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+}
+.search-wrapper .input-holder .search-input {
+  width:100%;
+  height: 50px;
+  padding:0px 70px 0 20px;
+  opacity: 0;
+  position: absolute;
+  top:0px;
+  left:0px;
+  background: transparent;
+  box-sizing: border-box;
+  border:none;
+  outline:none;
+  font-family:"Open Sans", Arial, Verdana;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color:#FFF;
+  transform: translate(0, 60px);
+  transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+  transition-delay: 0.3s;
+}
+.search-wrapper.active .input-holder .search-input {
+  opacity: 1;
+  transform: translate(0, 10px);
+  cursor: default;
+  caret-color: white;
+  
+}
+.search-wrapper .input-holder .search-icon {
+  width:70px;
+  height:70px;
+  border:none;
+  border-radius:6px;
+  background: #FFF;
+  padding:0px;
+  outline:none;
+  position: relative;
+  z-index: 2;
+  float:right;
+  cursor: pointer;
+  
+  transition: all 0.3s ease-in-out;
+}
+.search-wrapper.active .input-holder .search-icon {
+  width: 50px;
+  height:50px;
+  margin: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  
+}
+.center-icon {
+  display: flex;
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  width: 100%;
+  height: 100%;
 }

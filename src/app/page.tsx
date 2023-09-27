@@ -6,7 +6,7 @@ import Login from './components/login'
 import Nav from './components/nav'
 import Footer from './components/footer'
 import MainList from './components/mainList'
-import SearchBar from './components/searchbar'
+import SearchBar from './components/search'
 
 
 
@@ -27,10 +27,8 @@ export default function Home() {
     <>
 
     <div>
-      <SearchBar/>
       <Nav/>
     </div>
-
     <div>
       <MainList/>
     </div>

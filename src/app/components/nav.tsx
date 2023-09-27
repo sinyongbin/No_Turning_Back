@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { Disclosure } from '@headlessui/react'
 import Dropdown from './dropdown';
+import SearchBar from './searchbar';
 
 // function classNames(...classes: any) {
 //     return classes.filter(Boolean).join(' ')
@@ -39,10 +40,11 @@ export default function Nav() {
                         </div>
                     </div>
                 </div>
+                <SearchBar/>
             </div>
             )}  
         </Disclosure>
-
+        
         
 
         {/* <div className='sellButton'>

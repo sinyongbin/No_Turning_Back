@@ -4,7 +4,8 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import MyModal from './Login/MyModal'
+import { MyModal } from './Login/MyModal'
+
 
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
