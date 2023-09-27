@@ -25,9 +25,7 @@ export default function Home() {
 
   return (
     <>
-    <div>
-      <Login/>
-    </div>
+
     <div>
       <SearchBar/>
       <Nav/>
@@ -36,9 +34,7 @@ export default function Home() {
     <div>
       <MainList/>
     </div>
-    <div>
-      <Footer />
-    </div>
+
     </>
   );
 }
