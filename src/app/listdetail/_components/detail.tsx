@@ -33,7 +33,7 @@ export default function Detail() {
             <img src='back.png'></img>
           </div>
         </div> */}
-        
+
         {/* 오른쪽 컨텐츠 */}
         <div className="lg:w-1/2">
           <div className="lg:pl-4">
@@ -43,7 +43,7 @@ export default function Detail() {
               {/* 메인 제목 */}
               <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">제목: Title</h1>
               {/* 본문 텍스트 */}
-              <p className="mt-6 text-xl leading-8 text-gray-700">시작가: 1000000원</p>
+              <p className="mt-6 text-xl leading-8 text-gray-700">시작가: 9000000원</p>
               <p>필요함?</p>
               {/* 목록 */}
               <ul role="list" className="mt-8 space-y-8 text-gray-600">

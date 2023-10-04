@@ -40,7 +40,9 @@ export default function Nav() {
                         </div>
                     </div>
                 </div>
-                <SearchBar/>
+                <div className="">
+                    <SearchBar/>
+                </div>
             </div>
             )}  
         </Disclosure>

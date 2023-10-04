@@ -137,11 +137,17 @@ export default function SellProduct() {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
+                  {/* <button
+                    type="submit"
+                    className="rounded-md bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  >
+                    작성 완료
+                  </button> */}
                   <button
                     type="submit"
                     className="rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
-                    작성 완료
+                    다음
                   </button>
                 </div>
               </div>
