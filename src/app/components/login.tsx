@@ -7,6 +7,9 @@ export default function Login() {
                 <div className="top_inner">
                     <ul className="top_list">
                         <li className="top_item">
+                            <a href="/sell" className="top_link">물품등록</a>
+                        </li>
+                        <li className="top_item">
                             <a href="/notice" className="top_link">신고</a>
                         </li>
                         <li className="top_item">

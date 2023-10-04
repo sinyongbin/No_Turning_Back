@@ -133,7 +133,7 @@ export default function MainList() {
 
 function HomeMain(){
       return(
-        <div className="relative overflow-hidden bg-white">
+        <div className="relative overflow-hidden bg-slate-300 h-[700px]">
         <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
           <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div className="sm:max-w-lg">
@@ -143,30 +143,36 @@ function HomeMain(){
                 </span>
               </h1>
               <p className="mt-4 text-xl text-gray-500">
-                
               </p>
             </div>
             <div>      
               <div className="absolute  sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
                 <div className="flex items-center space-x-6 lg:space-x-8">
                   <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                    <div className="h-[300px] w-[500px] overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
+                    <div className="h-[400px] w-[600px] overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100 ">
                       <img
                         src="img/back.png"
                         alt=""
-                        className="h-full w-full object-cover object-center"
+                        className="h-full w-full object-cover object-center skew-y-3"
                       />
                     </div>
+                    <img
+                        src="img/back.png"
+                        alt=""
+                        className="h-full w-full object-cover object-center skew-x-6"
+                      />
                   </div>
+                  <img
+                        src="img/back.png"
+                        alt=""
+                        className="h-full w-full object-cover object-center rotate-45"
+                      />
                 </div>
               </div>
             </div>
-              <div className='inline-block border border-transparent  text-center font-medium '>
-                <Link href='/sell'> 
-                  <button className='p-3 bg-amber-400 text-rose-950 rounded-md cursor-pointer'>상품판매</button>
-                </Link>
-              </div>
-
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+              <a href="#">둘러보기</a>
+            </button>
           </div>
         </div>
       </div>
