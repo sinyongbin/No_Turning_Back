@@ -47,6 +47,13 @@ model Category{
     category_type String
     category_tag String
 }
+model Image{
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+   postId String
+}
+model ImageFile{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
 
 enum Role {
   USER
