@@ -22,7 +22,11 @@ export default function Login() {
                 </div>
             </div>
             <div className='text-6xl text-center mx-[100px] py-10'>
-                    <a href="/">JINDDOBAY</a>
+                    <a href="/">
+                        <span className="relative inline-block animate-bounce">
+                            JINDDOBAY 
+                        </span>
+                    </a>
             </div>
         </>
     );

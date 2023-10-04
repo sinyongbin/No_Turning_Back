@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import BottomList from './bottomlist';
+import Modal from './modal';
 // import Modal from './Modal';
 // import MainList from './MainList';
 
 
 
-export default function Test() {
+export default function Detail() {
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -18,7 +19,6 @@ export default function Test() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
   
   return (
     <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -66,8 +66,11 @@ export default function Test() {
               <div className="flex justify-center mt-4">
                 <button className="btn_action w-[500px] bg-zinc-950 text-white px-4 py-4 rounded-lg hover:bg-zinc-800" onClick={openModal}>
                   입찰하기
+                  {/* <Modal></Modal> */}
                 </button>
-                {/* <Modal isOpen={isModalOpen} onClose={closeModal} /> */}
+                {isModalOpen && <Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                {/* isOpen, closeModal는 <Modal> 컴포넌트의 prop(속성) 중 하나이다. 이 prop은 모달 창이 열려 있는지 닫혀 있는지를 나타내는 값을 받는다. */}
+                {/* 여기서는 isModalOpen 변수의 값을 전달하여 모달을 열거나 닫는다 */}
               </div>
               <div className="flex justify-center mt-4">
                 <button className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300">
@@ -94,6 +97,7 @@ export default function Test() {
     </div>
   );
 }
+
 function ProductDetail() {
   return (
     <div className="product_detail_item_wrap detail_item flex justify-center items-center">
@@ -107,7 +111,7 @@ function ProductDetail() {
           <div className="detail_content_images open" style={{ maxHeight: '963px' }}>
             <div className="images">
               <img
-                src="back.png"
+                src="img/경매이미지.png"
                 loading="lazy"
                 alt="Product Image"
               />

@@ -15,7 +15,7 @@ export default function Sell() {
         <div>
             <Upload/>
         </div>
-       
+
     </>
     );
 }
