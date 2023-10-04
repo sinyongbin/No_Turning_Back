@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import BottomList from './bottomlist';
 import Modal from './modal';
+import ImageViewer from './detailImg';
 // import Modal from './Modal';
 // import MainList from './MainList';
 
@@ -25,12 +26,14 @@ export default function Detail() {
       {/* 그리드 레이아웃 */}
       <div className="mx-auto flex flex-col lg:flex-row lg:max-w-7xl lg:px-8">
         {/* 이미지 */}
-        <div className="lg:w-1/2">
+        <ImageViewer/>
+
+        {/* <div className="lg:w-1/2">
           <div className="p-12 lg:sticky lg:top-4 lg:overflow-hidden">
             <img src='back.png'></img>
-
           </div>
-        </div>
+        </div> */}
+        
         {/* 오른쪽 컨텐츠 */}
         <div className="lg:w-1/2">
           <div className="lg:pl-4">
@@ -91,7 +94,6 @@ export default function Detail() {
       
       <ProductDetail/>
       <BottomList/>
-      <div></div>
       
       {/* <MainList/> */}
     </div>
