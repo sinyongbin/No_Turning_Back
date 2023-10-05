@@ -24,13 +24,12 @@ export default function Login() {
                     </ul>   
                 </div>
             </div>
-            <div className='text-6xl text-center mx-[100px] py-10'>
-                    <a href="/">
-                        <span className="relative inline-block animate-bounce">
-                            JINDDOBAY 
-                        </span>
-                    </a>
+            <div className='text-6xl text-center h-50 w-50 flex items-center justify-center'>
+                <a href="/">
+                    <img src="img/3.png" className="mx-auto my-auto" alt="" />
+                </a>
             </div>
+
         </>
     );
 }
