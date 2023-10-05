@@ -133,11 +133,12 @@ export default function MainList() {
 
 function HomeMain(){
       return(
-        <div className="relative overflow-hidden bg-slate-300 h-[700px]">
+        <div className="relative overflow-hidden bg-slate-300 h-[800px]">
         <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
           <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
             <div className="sm:max-w-lg">
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+                <img src='img/진또로고.png'></img>
                 <span className="relative inline-block animate-ping">
                   JINDDOBAY 
                 </span>
