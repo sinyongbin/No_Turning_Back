@@ -1,0 +1,74 @@
+/* Signup.css 파일에 저장하거나 <style> 태그 안에 추가할 수 있습니다. */
+
+/* 폼 컨테이너 스타일 */
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* 제목 스타일 */
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* 라벨 스타일 */
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  /* 입력 필드 스타일 */
+  input[type="text"],
+  input[type="password"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* 주소 입력 필드와 주소 검색 버튼의 레이아웃 스타일 */
+  .address-container {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  /* 주소 입력 필드 스타일 */
+  input[name="address"] {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  /* 주소 검색 버튼 스타일 */
+  button[type="button"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* 가입 버튼 스타일 */
+  button[type="submit"] {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* 메시지 스타일 */
+  .message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+  }

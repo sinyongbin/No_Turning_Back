@@ -1,6 +1,8 @@
 "use client"
 
 import React, { useState } from 'react';
+import DaumPostcode from 'react-daum-postcode';
+import './Signup.css'; // 스타일 파일 추가
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -8,32 +10,48 @@ export default function Signup() {
     password: '',
     address: '', // 변경: 주소 필드 이름 변경
     phoneNum: '',
+    verificationCode: '', 
+    confirmPassword: '',
+    detailAddress: '',
   });
 
   const [message, setMessage] = useState("");
 
-  const [code, setCode] = useState({
-    verificationCode: '',
-  })
-
   function onSubmit(e) {
     e.preventDefault();
-    fetch("/member/member_join", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => { 
-      if (response.status !== 200) {
-        throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
-      }
-    })
-      .catch((error) => {
-        console.error('POST 요청 실패:', error);
-      });
-    console.log('회원가입 데이터:', formData);
+    const email = formData.email;
+    const password = formData.password;
+    const address = formData.address;
+    const phoneNum = formData.phoneNum;
+
+    formData.address = address + ' ' + formData.detailAddress;
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    if (email && password && address && phoneNum) {
+      fetch("/member/member_join", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => { 
+        if (response.status !== 200) {
+          throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
+        } else {
+          alert(`회원가입을 축하합니다! ${email} 님`);
+        }
+      })
+        .catch((error) => {
+          console.error('POST 요청 실패:', error);                                                                                                     
+        });
+      console.log('회원가입 데이터:', formData);
+    } else {
+      alert('입력칸을 전부 입력해주세요!');
+    }
   }
 
   function handleInputChange(e) {
@@ -41,48 +59,51 @@ export default function Signup() {
     setFormData({ ...formData, [name]: value });
   }
 
-  function codeVerify() {
-    // 이메일 주소 유효성 검사
-    const email = formData.email;
-    if (!email) {
-      alert('이메일 주소를 입력하세요.');
+  function codeCheck() {
+    // 사용자가 입력한 인증 코드
+    const userVerificationCode = formData.verificationCode;
+    
+    // 서버에서 받은 인증 코드 (예: 서버에서 저장한 코드를 변수에 할당)
+    const serverVerificationCode = '여기에_서버에서_받은_인증_코드_입력';
+  
+    if (!userVerificationCode) {
+      alert('인증코드를 입력하세요!');
       return;
     }
   
-    // 서버로 이메일 주소를 보내서 인증 코드 발송 요청
-    fetch("/mail/mail_send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded", // 폼 데이터로 보내도록 수정
-      },
-      body: `email=${encodeURIComponent(formData.email)}`, // 폼 데이터 형식으로 전송
-    })    
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.SUCCESS_TEXT) {
-          alert('이메일 인증 코드가 발송되었습니다.');
-        } else {
-          alert('이메일 인증 코드 발송 실패');
-        }
-      })
-      .catch((error) => {
-        console.error('POST 요청 실패:', error);
-      });
-  }
-  
-
-  function codeCheck() {
-    // 인증코드 확인 로직 구현
-    const verificationCode = code.verificationCode;
-    if(!verificationCode) {
-      alert('인증코드를 입력하세요!');
+    // 사용자가 입력한 인증 코드와 서버에서 받은 인증 코드를 비교
+    if (userVerificationCode === serverVerificationCode) {
+      alert('인증코드가 일치합니다. 회원가입을 완료하세요!');
+    } else {
+      alert('인증코드가 일치하지 않습니다. 다시 확인하세요.');
     }
-
-    //보냈던 인증코드와 일치하는지 확인
   }
 
   function addressSearch() {
-    // 주소검색 로직 구현
+    // Daum 우편번호 검색 API를 동적으로 불러오기
+    const script = document.createElement("script");
+    script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+    script.onload = function () {
+      // API가 로드된 후에 팝업 창 열기
+      if (window.daum && window.daum.Postcode) {
+        new window.daum.Postcode({
+          oncomplete: function (data) {
+            // 주소 선택 후 처리
+            const selectedAddress = data.roadAddress || data.jibunAddress;
+            setFormData({
+              ...formData,
+              address: selectedAddress,
+              detailAddress: '', // 상세주소 초기화
+            });
+          },
+        }).open();
+      } else {
+        console.error("Daum 우편번호 검색 API가 로드되지 않았습니다.");
+      }
+    };
+  
+    // 스크립트를 <head> 요소에 추가하여 API를 불러옵니다.
+    document.head.appendChild(script);
   }
 
   return (
@@ -97,17 +118,6 @@ export default function Signup() {
             value={formData.email}
             onChange={handleInputChange}
           />
-          <button type="button" onClick={codeVerify}>인증코드 발송</button>
-        </div>
-        <div>
-          <label>인증코드 입력</label>
-          <input
-            type="text"
-            name="verificationCode"
-            value={code.verificationCode}
-            onChange={handleInputChange}
-          />
-          <button type="button" onClick={codeCheck}>인증코드 확인</button>
         </div>
         <div>
           <label>비밀번호</label>
@@ -122,8 +132,8 @@ export default function Signup() {
           <label>비밀번호 확인</label>
           <input
             type="password"
-            name="password"
-            value={formData.password}
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleInputChange}
           />
         </div>
@@ -133,6 +143,13 @@ export default function Signup() {
             type="text"
             name="address"
             value={formData.address}
+            onChange={handleInputChange}
+          />
+          <label>상세주소</label>
+          <input
+            type="text"
+            name="detailAddress"
+            value={formData.detailAddress}
             onChange={handleInputChange}
           />
           <button type="button" onClick={addressSearch}>주소검색</button>
