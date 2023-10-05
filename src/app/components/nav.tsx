@@ -13,6 +13,7 @@ const navigation = [
     { name: '디지털/가구/가전', href: 'digital', current: false },
     { name: '스포츠', href: 'sport', current: false },
     { name: '자동차', href: 'car', current: false },
+    
 ]
 
 export default function Nav() {
@@ -26,7 +27,7 @@ export default function Nav() {
                         {/* <div className=''>
                             <Dropdown/>
                         </div> */}  
-                        <div className="link-container">
+                        <div className="link-container space-x-6">
                         {navigation.map((item) => (
                             <a
                             key={item.name}
@@ -37,15 +38,20 @@ export default function Nav() {
                             {item.name}
                             </a>
                         ))}
+                        
                         </div>
                     </div>
                 </div>
                 <div className="">
-                    <SearchBar/>
+                    
                 </div>
             </div>
             )}  
         </Disclosure>
+        
+        <SearchBar/>
+        
+        
         
         
 

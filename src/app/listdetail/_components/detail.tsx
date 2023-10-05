@@ -12,7 +12,32 @@ import ImageViewer from './detailImg';
 export default function Detail() {
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
   const [isModalOpen, setModalOpen] = useState(false);
-
+  
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      text: '이것은 첫 번째 댓글입니다.',
+      date: '2023-09-21',
+    },
+    {
+      id: 2,
+      text: '두 번째 댓글입니다.',
+      date: '2023-09-22',
+    },
+]);
+  const addComment = () => {
+    if (newComment.trim() !== '') {
+      const newId = comments.length + 1;
+      const currentDate = new Date().toISOString().slice(0, 10);
+      const newCommentObj = {
+        id: newId,
+        text: newComment,
+        date: currentDate,
+      };
+      setComments([...comments, newCommentObj]); // 기존 comments + 새로 추가된 comment 합쳐서 배열로 생성!
+      setNewComment('');
+    }
+};
   const openModal = () => {
     setModalOpen(true);
   };
@@ -27,12 +52,12 @@ export default function Detail() {
       <div className="mx-auto flex flex-col lg:flex-row lg:max-w-7xl lg:px-8">
         {/* 이미지 */}
         <ImageViewer/>
-
         {/* <div className="lg:w-1/2">
           <div className="p-12 lg:sticky lg:top-4 lg:overflow-hidden">
             <img src='back.png'></img>
+
           </div>
-        </div> */}
+        </div>  */}
 
         {/* 오른쪽 컨텐츠 */}
         <div className="lg:w-1/2">
@@ -94,9 +119,31 @@ export default function Detail() {
       
       <ProductDetail/>
       <BottomList/>
-      
-      {/* <MainList/> */}
+      <div className="comment-form">
+  <textarea
+    placeholder="댓글을 입력하세요..."
+    value={newComment}
+    onChange={(e) => setNewComment(e.target.value)}
+  />
+  <button onClick={addComment} className="comment-button">댓글 추가</button>
+</div>
+<div className="all-comment">
+  {/* 여기서부터 댓글 폼 */}
+  {comments.map((comment) => (
+    <div key={comment.id} className="comment">
+      <div className="comment-header">
+        <div className="id-date">
+          <span className="comment-id">ID: {comment.id}</span>
+          <span className="comment-date">날짜: {comment.date}</span>
+        </div>
+      </div>
+      <div className="comment-text whitespace-pre">{comment.text}</div>
     </div>
+  ))}
+</div>
+
+    </div>
+   
   );
 }
 

@@ -96,22 +96,6 @@ export default function MainList() {
             <HomeMain/>
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
-              {/* <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                {products.map((product) => (
-                  <a key={product.id} href={product.href} className="group">
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                      <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
-                        className="h-full w-full object-cover object-center group-hover:opacity-75"
-                        style={{ width: '280px', height: '280px' }} // 이미지 크기 조정
-                      />
-                    </div>
-                    <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
-                  </a>
-                ))}
-              </div> */}
 
               {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
               <div className="product-grid">
@@ -135,7 +119,7 @@ export default function MainList() {
                 {/* "더 보기" 버튼을 추가하고 클릭 이벤트를 연결합니다. */}
                 <div className="text-center mt-4">
                   {visibleProducts.length < products.length && (
-                    <button className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg" onClick={loadMoreProducts}>
+                    <button className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce" onClick={loadMoreProducts}>
                       더 보기
                     </button>
                   )}
@@ -146,15 +130,19 @@ export default function MainList() {
       )
     }
 
+
 function HomeMain(){
       return(
-        <>
-        {/* <div id="rebranded-home-main-section-top" className="bg-yellow-100">
-          <div id="home-main-top" className="p-6 ">
-            <div className="home-main-desc">
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-normal text-gray-900 leading-tight mb-2">당신 근처의<br />지역 생활 커뮤니티</h1>
-              <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-4">
-                동네라서 가능한 모든 것<br />당근에서 가까운 이웃과 함께해요.
+        <div className="relative overflow-hidden bg-slate-300 h-[700px]">
+        <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
+          <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+            <div className="sm:max-w-lg">
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+                <span className="relative inline-block animate-ping">
+                  JINDDOBAY 
+                </span>
+              </h1>
+              <p className="mt-4 text-xl text-gray-500">
               </p>
               <div id="download-buttons" className="flex space-x-4">
                 <a
@@ -185,134 +173,36 @@ function HomeMain(){
                 </a>
               </div>
             </div>
-            <div className="home-main-image-top mt-4">
-              <img
-                srcSet="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/rebranded-image-top-e765d561ee9df7f5ab897f622b8b5a35aaa70314f734e097ea70e6c83bdd73f1.webp"
-                className="w-[400px] h-[auto]"
-                alt="중고거래, 동네생활 질문글, 알바와 동네가게"
-              />
-            </div>
-          </div>
-        </div>
- */}
-        <div className="relative overflow-hidden bg-yellow-400 h-[800px]">
-          <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-            <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-              <div className="flex flex-col sm:flex-row items-center justify-between sm:max-w-lg">
-
-                <div className="home-main-desc">
-                <span className="text-xl md:text-2xl lg:text-3xl font-normal text-gray-900 leading-tight mb-2">당신 근처의<br />지역 생활 커뮤니티</span>
-                <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-4">
-                  경매 라서 가능한 모든 것<br />진또베이에서 가까운 이웃과 함께해요.
-                </p>
-                <div id="download-buttons" className="flex space-x-4">
-
-                  <div className='inline-block border border-transparent text-center font-medium'>
-                    <Link href='/sell'>
-                      <button className='p-3 bg-purple-200 text-rose-950 rounded-md cursor-pointer'>
-                        상품판매
-                      </button>
-                    </Link>
-                  </div>
-
-                  <a
-                    target="_blank"
-                    className="flex items-center bg-blue-500 text-white text-sm md:text-base lg:text-lg px-3 py-2 rounded-full"
-                    id="header-download-button-ios"
-                    href="https://apps.apple.com/app/id1018769995"
-                  >
+            <div>      
+              <div className="absolute  sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
+                <div className="flex items-center space-x-6 lg:space-x-8">
+                  <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                    <div className="h-[400px] w-[600px] overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100 ">
+                      <img
+                        src="img/back.png"
+                        alt=""
+                        className="h-full w-full object-cover object-center skew-y-3"
+                      />
+                    </div>
                     <img
-                      className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 mr-2"
-                      alt="App Store"
-                      src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/header/apple-store-white-9ebb10b431c549dd19f032f70e6762df307939b5add030265d9c2dea888b2d03.svg"
-                    />
-                    <span className="hidden md:inline">App Store</span>
-                  </a>
-                </div>
-              </div>
-                {/* <div className="mb-8 sm:mb-0 sm:mr-6 lg:mr-0 sm:max-w-lg">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                    <span className="relative inline-block animate-bounce">
-                      JINDDOBAY
-                    </span>
-                  </h1>
-                  <p className="mt-4 text-xl text-gray-500"></p>
-                  <div className='inline-block border border-transparent text-center font-medium'>
-                    <Link href='/sell'>
-                      <button className='p-3 bg-amber-400 text-rose-950 rounded-md cursor-pointer'>
-                        상품판매
-                      </button>
-                    </Link>
+                        src="img/back.png"
+                        alt=""
+                        className="h-full w-full object-cover object-center skew-x-6"
+                      />
                   </div>
-                </div> */}
-                <div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                  <div className="flex items-center space-x-6 lg:space-x-8">
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
-                        <img
-                          src="img/경매이미지.png"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="img/경매이미지.png"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="img/경매이미지.png"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <img
+                        src="img/back.png"
+                        alt=""
+                        className="h-full w-full object-cover object-center rotate-45"
+                      />
                 </div>
               </div>
             </div>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+              <a href="#">둘러보기</a>
+            </button>
           </div>
         </div>
-
-        </>
-
-
-
-        
+      </div>
       )
 }
