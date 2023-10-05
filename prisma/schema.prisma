@@ -1,17 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
-model Test {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+
+model Profile{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  bio Gender 
+  post Post[]
+  email String @unique
+  nickname String
+  signAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+model Post {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  user Profile @relation(fields: [email], references: [email])
+  email String
+  title  String
+  content String
+  comments Comment[]
+  starting_price BigInt
+  current_price BigInt
+  category_type String
+  publicInfo PublicInfo @default(PUBLIC)
+  create_date DateTime @default(now())
+  update_date DateTime @updatedAt
+}
+model Comment {
+  cid String @id @default(auto()) @map("_id") @db.ObjectId
+  post Post @relation(fields: [id],references: [id])
+  id String @db.ObjectId
+  email String
+  publicInfo PublicInfo @default(PUBLIC)
+  createAt DateTime @default(now())
+  update_date DateTime @updatedAt
+}
+model Category{
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    category_type String
+    category_tag String
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+enum PublicInfo {
+  PUBLIC
+  CLOSED
+  DELETE
+  BLOCKED
+}
+enum Gender {
+  FEMALE
+  MALE
+  TRANS
 }
