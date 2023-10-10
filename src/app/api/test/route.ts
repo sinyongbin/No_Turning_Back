@@ -2,7 +2,7 @@ import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
 import axios from "axios";
 export async function GET() {
-    const data = await prisma.test.findMany()
+    const data = await prisma.post.findMany()
     const url = ""
     let sql = await axios.get(url).then(e=>{
         console.log(e)

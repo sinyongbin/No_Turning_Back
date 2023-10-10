@@ -8,7 +8,7 @@ import { MyModal } from '../Login/MyModal'
 const navigation = [
     { name: 'Dashboard', href: '/dashboard', current: true },
     { name: 'Dashboard/test', href: '/dashboard/test', current: false },
-    { name: 'Test', href: '/test', current: false },
+    { name: 'Test', href: '/transaction', current: false },
     { name: 'Calendar', href: '/editor', current: false },
   ]
 //api 에서 추가하라고 함
