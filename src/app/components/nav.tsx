@@ -23,16 +23,18 @@ export default function Nav() {
             {(open) => (
             <div className="">
                 <div className="flex-container justify-center items-center">
+                
                     <div className="flex-item">
+                        <SearchBar/>
                         {/* <div className=''>
                             <Dropdown/>
                         </div> */}  
-                        <div className="link-container space-x-6">
+                        <div className="link-container space-x-6 ">
                         {navigation.map((item) => (
                             <a
                             key={item.name}
                             href={item.href}
-                            className={`nav-link ${item.current ? 'current' : ''} flex-auto text-neutral-400 `}
+                            className={`nav-link ${item.current ? 'current' : ''} flex-auto text-black font-bold text hover:text-orange-400`}
                             aria-current={item.current ? 'page' : undefined}
                             >
                             {item.name}
@@ -49,7 +51,7 @@ export default function Nav() {
             )}  
         </Disclosure>
         
-        <SearchBar/>
+        
         
         
         

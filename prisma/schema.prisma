@@ -11,7 +11,7 @@ datasource db {
 
 model Profile{ // model은 데이터베이스 스키마를 정의하는 부분
   id String @id @default(auto()) @map("_id") @db.ObjectId
-
+  
   // @default(auto())를 사용하여 이 필드가 자동으로 증가되는 값임을 나타내며, @map("_id")를 사용하여 데이터베이스 내부에서 _id 필드로 매핑되도록 지정(DB내에서 id필드는 자동생성)
   // @db.ObjectId를 사용하여 MongoDB에서 ObjectID로 저장되어야 함을 지정
   bio Gender 
@@ -30,9 +30,10 @@ model Post {
   content String
   comments Comment[]// Comment 모델의 배열 형태로, 해당 게시물과 연결된 댓글
   starting_price BigInt
-  current_price BigInt
-  category_type String
-  publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  // current_price BigInt
+  category Category @default(etc)
+  categoryname String
+  // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
   create_date DateTime @default(now())
   update_date DateTime @updatedAt
 }
@@ -46,16 +47,21 @@ model Comment {
   createAt DateTime @default(now())
   update_date DateTime @updatedAt
 }
-model Category{
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    category_type String
-    category_tag String
+
+enum Category {
+    beauty
+    hobby
+    digital
+    sport
+    car
+    etc
 }
 
 enum Role {
   USER
   ADMIN
 }
+
 enum PublicInfo {
   PUBLIC
   CLOSED
@@ -67,3 +73,5 @@ enum Gender {
   MALE
   TRANS
 }
+// npx prisma generate
+// npx prisma db push

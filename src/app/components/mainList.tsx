@@ -94,6 +94,13 @@ export default function MainList() {
         
         <div className="bg-white ">
             <HomeMain/>
+            {/* <div id="app"></div>
+            <Link href="https://dribbble.com/shots/3774469-T-R-A-V-E-L-E-R" target="_blank" className="icon-link">
+              <img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png"/>
+            </Link>
+            <Link href="https://twitter.com/NikolayTalanov" target="_blank" className="icon-link icon-link--twitter">
+              <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+            </Link> */}
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
 

@@ -351,15 +351,15 @@ textarea:focus {
 /* search bar */
 
 .search-wrapper {
-  position: relative;
-  transform: translate(0%, -10%);
+  position: absolute;
+  transform: translate(10%, 30%);
   top:17%;
   left:67%;
   justify-items: center;
   margin-bottom: auto;
 }
 .search-wrapper.active {
-    
+
 }
 
 .search-wrapper .input-holder {    
