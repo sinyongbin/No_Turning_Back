@@ -51,11 +51,14 @@ model Category {
   category_tag  String
 }
 
+//유저 상태를 나타냄
 enum Role {
   USER
   ADMIN
+  BAN
 }
 
+//경매 POST에 대한 상태를 나타냄
 enum PublicInfo {
   PUBLIC
   CLOSED
