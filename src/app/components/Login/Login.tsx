@@ -1,6 +1,7 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
+
 export default function Login() {
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
@@ -22,8 +23,9 @@ export default function Login() {
   {
     setEmail(e.currentTarget.value)
   }
+  
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
-
+    
 
   }
    function newJeansCookie(e: boolean)

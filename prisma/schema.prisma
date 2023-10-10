@@ -21,18 +21,19 @@ model Profile {
 }
 
 model Post {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  user           Profile    @relation(fields: [email], references: [email])
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  user           Profile   @relation(fields: [email], references: [email])
   email          String
   title          String
   content        String
   comments       Comment[] // Comment 모델의 배열 형태로, 해당 게시물과 연결된 댓글
   starting_price BigInt
-  current_price  BigInt
-  category_type  String
-  publicInfo     PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
-  create_date    DateTime   @default(now())
-  update_date    DateTime   @updatedAt
+  // current_price  BigInt
+  category       Category  @default(etc)
+  categoryname   String
+  // publicInfo     PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  create_date    DateTime  @default(now())
+  update_date    DateTime  @updatedAt
 }
 
 model Comment {
@@ -45,10 +46,13 @@ model Comment {
   update_date DateTime   @updatedAt
 }
 
-model Category {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  category_type String
-  category_tag  String
+enum Category {
+  beauty
+  hobby
+  digital
+  sport
+  car
+  etc
 }
 
 //유저 상태를 나타냄
@@ -71,3 +75,6 @@ enum Gender {
   MALE
   TRANS
 }
+
+// npx prisma generate
+// npx prisma db push

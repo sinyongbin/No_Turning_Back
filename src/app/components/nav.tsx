@@ -13,6 +13,7 @@ const navigation = [
     { name: '디지털/가구/가전', href: 'digital', current: false },
     { name: '스포츠', href: 'sport', current: false },
     { name: '자동차', href: 'car', current: false },
+    
 ]
 
 export default function Nav() {
@@ -22,28 +23,37 @@ export default function Nav() {
             {(open) => (
             <div className="">
                 <div className="flex-container justify-center items-center">
+                
                     <div className="flex-item">
+                        <SearchBar/>
                         {/* <div className=''>
                             <Dropdown/>
                         </div> */}  
-                        <div className="link-container">
+                        <div className="link-container space-x-6 ">
                         {navigation.map((item) => (
                             <a
                             key={item.name}
                             href={item.href}
-                            className={`nav-link ${item.current ? 'current' : ''} flex-auto text-neutral-400 `}
+                            className={`nav-link ${item.current ? 'current' : ''} flex-auto text-black font-bold text hover:text-orange-400`}
                             aria-current={item.current ? 'page' : undefined}
                             >
                             {item.name}
                             </a>
                         ))}
+                        
                         </div>
                     </div>
                 </div>
-                <SearchBar/>
+                <div className="">
+                    
+                </div>
             </div>
             )}  
         </Disclosure>
+        
+        
+        
+        
         
         
 

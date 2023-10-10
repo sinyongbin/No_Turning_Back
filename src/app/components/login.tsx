@@ -1,4 +1,6 @@
 
+import Link from "next/link"
+
 export default function Login() {
     return (
         <>  
@@ -6,6 +8,9 @@ export default function Login() {
                 
                 <div className="top_inner">
                     <ul className="top_list">
+                        <li className="top_item">
+                            <a href="/sell" className="top_link">물품등록</a>
+                        </li>
                         <li className="top_item">
                             <a href="/notice" className="top_link">신고</a>
                         </li>
@@ -21,9 +26,14 @@ export default function Login() {
                     </ul>   
                 </div>
             </div>
-            <div className='text-6xl text-center mx-[100px] py-10'>
-                    <a href="/">JINDDOBAY</a>
+            <div className='text-6xl text-center h-50 w-50 flex items-center justify-center'>
+                <a href="/">
+                    <img src="img/3.png" className="mx-auto my-auto" alt="" />
+                </a>
             </div>
+
         </>
     );
 }
+
+
