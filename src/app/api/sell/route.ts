@@ -1,6 +1,7 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
 import { Gender } from "@prisma/client";
+import { Category } from "@prisma/client";
 
 // const jsonData = await req.json();
 
@@ -19,14 +20,26 @@ import { Gender } from "@prisma/client";
 export async function POST(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
-
-    // 세션 스토리지에서 이메일 값을 가져옵니다.
-    //const email = sessionStorage.getItem('email');
-    
-    let { title, categoryname, price, content} = Object.fromEntries(data);
+   
+    let { title, categoryname, price, content, category} = Object.fromEntries(data);
     let body = Object.fromEntries(data);
 
     console.log(body)
+
+    let selectedCategory;
+    if (category === 'beauty') {
+      selectedCategory = Category.beauty;
+    } else if (category === 'hobby') {
+      selectedCategory = Category.hobby;
+    } else if (category === 'digital') {
+      selectedCategory = Category.digital;
+    } else if (category === 'sport') {
+      selectedCategory = Category.sport;
+    } else if (category === 'car') {
+      selectedCategory = Category.car;
+    } else {
+      selectedCategory = Category.etc;
+    }
 
     let insert = {
         email: "te@test.com", 
@@ -34,25 +47,27 @@ export async function POST(req:NextRequest, res: NextResponse) {
         content: content.toString(),
         starting_price: parseInt(price.toString()),
         categoryname: categoryname.toString(),
+        category:selectedCategory,
     }
+    
 
     const post = await prisma.post.create({
         data: insert
     })
     
-    const profile = await prisma.profile.create({
+    // const profile = await prisma.profile.create({
 
-        data:{
-            bio: Gender.FEMALE,
-            email: "te@test.com",
-            nickname :"jjinddo",
-        },
-    })
+    //     data:{
+    //         bio: Gender.FEMALE,
+    //         email: "te@test.com",
+    //         nickname :"jjinddo",
+    //     },
+    // })
 
-    console.log(post);
-    console.log(profile);
+    // console.log(post);
+    // console.log(profile);
     
-    console.log(profile);
+
     // return res.json(profile);
     
     return new Response("OK")
