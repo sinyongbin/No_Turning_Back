@@ -23,7 +23,7 @@ export default function SellProduct() {
 
   useEffect(() => {
     // 서버로부터 닉네임 데이터를 가져오는 API 요청
-    fetch('/api/sell') // 서버의 API 엔드포인트에 따라 수정 필요
+    fetch('http://localhost:3000/api/signup') // 서버의 API 엔드포인트에 따라 수정 필요
       .then((response) => response.json())
       .then((data) => {
         // API 응답에서 가져온 닉네임을 상태에 설정

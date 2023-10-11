@@ -1,8 +1,11 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
+import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 export default function Login() {
+  const router = useRouter()
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
   const [switchOn, setSwitch] = useState(false)
@@ -104,6 +107,11 @@ export default function Login() {
   
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
+
+  // function SignUp() {
+  //   window.location.href = 'SignUp';
+  // }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -150,12 +158,17 @@ export default function Login() {
           </div>
         </div>
       </form>
-      <form id="registerForm">
-        <button type="submit"
-        className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">
-          회원가입
-        </button>
-      </form>
+      
+          <button 
+          type="submit" 
+          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
+          // onClick={()=>{
+          //   router.push("http://localhost:3000//SignUp")
+          // }}
+          onClick={()=>{window.location.href = 'SignUp'}} 
+          >
+            회원가입
+          </button>
     </div>
   )
 }

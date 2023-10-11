@@ -30,6 +30,7 @@ model Post {
   // current_price BigInt
   category Category @default(etc)
   categoryname String
+  images String[]
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
   create_date DateTime @default(now())
   update_date DateTime @updatedAt

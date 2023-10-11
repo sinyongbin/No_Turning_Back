@@ -16,17 +16,15 @@ import { Gender } from "@prisma/client";
 
 // }
 
+
+
 export async function POST(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
 
     let {title, nickname, categoryname, price, content} = Object.fromEntries(data);
-    let body = Object.fromEntries(data);
-
-    console.log(body)
 
     let insert = {
-        // nickname: "신용빈", // nickname || ''
         email: "vin0219@naver.com",
         // nickname: nickname.toString(),
         title: title.toString(),
@@ -39,18 +37,18 @@ export async function POST(req:NextRequest, res: NextResponse) {
         data: insert
     })
 
-    const profile = await prisma.profile.create({
-        data: {
-            email: "jinddo@naver.com",
-            nickname: "진또",
-            bio: Gender.MALE,
-        }
-    })
+    // const profile = await prisma.profile.create({
+    //     data: {
+    //         email: "jinddo1@naver.com",
+    //         nickname: "진또1",
+    //         bio: Gender.MALE,
+    //     }
+    // })
 
     console.log(post);
-    console.log(profile);
+    // console.log(profile);
     // return res.json(profile);
-    
+
     return new Response("OK")
 }
 

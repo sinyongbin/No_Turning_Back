@@ -90,9 +90,6 @@ export default function App() {
       </div>
 
       <MyModal isOpen={isModalOpen} closeModal={closeModal}>
-        <div>
-          <Login/>
-        </div>
       </MyModal>
     </>
   );
