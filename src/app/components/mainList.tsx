@@ -94,6 +94,13 @@ export default function MainList() {
         
         <div className="bg-white ">
             <HomeMain/>
+            {/* <div id="app"></div>
+            <Link href="https://dribbble.com/shots/3774469-T-R-A-V-E-L-E-R" target="_blank" className="icon-link">
+              <img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png"/>
+            </Link>
+            <Link href="https://twitter.com/NikolayTalanov" target="_blank" className="icon-link icon-link--twitter">
+              <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+            </Link> */}
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
 
@@ -145,6 +152,34 @@ function HomeMain(){
               </h1>
               <p className="mt-4 text-xl text-gray-500">
               </p>
+              <div id="download-buttons" className="flex space-x-4">
+                <a
+                  target="_blank"
+                  className="flex items-center bg-blue-500 text-white text-sm md:text-base lg:text-lg px-3 py-2 rounded-full"
+                  id="header-download-button-android"
+                  href="https://play.google.com/store/apps/details?id=com.towneers.www"
+                >
+                  <img
+                    className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 mr-2"
+                    alt="Google Play"
+                    src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/header/google-play-white-0531cab5dbe15262e226cfb4acebeb316708ae0034d50b86ad4d809a03b6f5f0.svg"
+                  />
+                  <span className="hidden md:inline">Google Play</span>
+                </a>
+                <a
+                  target="_blank"
+                  className="flex items-center bg-blue-500 text-white text-sm md:text-base lg:text-lg px-3 py-2 rounded-full"
+                  id="header-download-button-ios"
+                  href="https://apps.apple.com/app/id1018769995"
+                >
+                  <img
+                    className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 mr-2"
+                    alt="App Store"
+                    src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/header/apple-store-white-9ebb10b431c549dd19f032f70e6762df307939b5add030265d9c2dea888b2d03.svg"
+                  />
+                  <span className="hidden md:inline">App Store</span>
+                </a>
+              </div>
             </div>
             <div>      
               <div className="absolute  sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
