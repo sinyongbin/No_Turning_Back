@@ -143,7 +143,7 @@ export default function Detail() {
 </div>
 
     </div>
-   
+  
   );
 }
 
@@ -154,8 +154,8 @@ function ProductDetail() {
         <div className="detail_header_logo_wrap">
           <p className="detail_header_logo_title"></p>
         </div>
-       
-       
+      
+      
         <div className="detail_img_wrap">
           <div className="detail_content_images open" style={{ maxHeight: '963px' }}>
             <div className="images">

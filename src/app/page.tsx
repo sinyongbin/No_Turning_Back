@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import prisma from '@/db'
 
-import Login from './components/login'
+import Login from './components/header'
 import Nav from './components/nav'
 import Footer from './components/footer'
 import MainList from './components/mainList'
