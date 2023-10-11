@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
-import './Signup.css'; // 스타일 파일 추가
+import { usePathname, useRouter } from 'next/navigation'; //13버전부터는 navigation을 사용해야함
 
 export default function Signup() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    address: '', // 변경: 주소 필드 이름 변경
+    address: '', 
     phoneNum: '',
     verificationCode: '', 
     confirmPassword: '',
@@ -16,6 +16,8 @@ export default function Signup() {
   });
 
   const [message, setMessage] = useState("");
+
+  const router = useRouter();
 
   function onSubmit(e) {
     e.preventDefault();
@@ -43,6 +45,7 @@ export default function Signup() {
           throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
         } else {
           alert(`회원가입을 축하합니다! ${email} 님`);
+          router.push('/'); 
         }
       })
         .catch((error) => {
@@ -57,26 +60,6 @@ export default function Signup() {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  }
-
-  function codeCheck() {
-    // 사용자가 입력한 인증 코드
-    const userVerificationCode = formData.verificationCode;
-    
-    // 서버에서 받은 인증 코드 (예: 서버에서 저장한 코드를 변수에 할당)
-    const serverVerificationCode = '여기에_서버에서_받은_인증_코드_입력';
-  
-    if (!userVerificationCode) {
-      alert('인증코드를 입력하세요!');
-      return;
-    }
-  
-    // 사용자가 입력한 인증 코드와 서버에서 받은 인증 코드를 비교
-    if (userVerificationCode === serverVerificationCode) {
-      alert('인증코드가 일치합니다. 회원가입을 완료하세요!');
-    } else {
-      alert('인증코드가 일치하지 않습니다. 다시 확인하세요.');
-    }
   }
 
   function addressSearch() {
@@ -107,65 +90,75 @@ export default function Signup() {
   }
 
   return (
-    <div>
-      <h2>회원가입</h2>
+    <div className="max-w-xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">회원가입</h2>
       <form onSubmit={onSubmit}>
-        <div>
-          <label>이메일</label>
+        <div className="mb-4">
+          <label className="block mb-2">이메일</label>
           <input
             type="text"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
         </div>
-        <div>
-          <label>비밀번호</label>
+        <div className="mb-4">
+          <label className="block mb-2">비밀번호</label>
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
         </div>
-        <div>
-          <label>비밀번호 확인</label>
+        <div className="mb-4">
+          <label className="block mb-2">비밀번호 확인</label>
           <input
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
         </div>
-        <div>
-          <label>주소</label>
+        <div className="mb-4">
+          <label className="block mb-2">주소</label>
           <input
             type="text"
             name="address"
             value={formData.address}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
-          <label>상세주소</label>
+          <label className="block mt-2 mb-2">상세주소</label>
           <input
             type="text"
             name="detailAddress"
             value={formData.detailAddress}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
-          <button type="button" onClick={addressSearch}>주소검색</button>
+          <button type="button" onClick={addressSearch} className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+            주소검색
+          </button>
         </div>
-        <div>
-          <label>전화번호</label>
+        <div className="mb-4">
+          <label className="block mb-2">전화번호</label>
           <input
             type="tel"
             name="phoneNum"
             value={formData.phoneNum}
             onChange={handleInputChange}
+            className="border rounded py-2 px-3 w-full"
           />
         </div>
-        <button type="submit">가입하기</button>
+        <button type="submit" className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600">
+          가입하기
+        </button>
       </form>
-      <div>{message}</div>
+      <div className="mt-4">{message}</div>
     </div>
   );
 }
