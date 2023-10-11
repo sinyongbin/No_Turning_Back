@@ -1,7 +1,7 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
-import { redirect } from 'react-router-dom'
+
 export default function Login() {
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
@@ -24,11 +24,11 @@ export default function Login() {
       myref.current.value = emailS
     }
   },[])
-  function onChange(e) {
+  function onChange(e:any) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
-  async function onSubmit(e) {
+  async function onSubmit(e:any) {
     e.preventDefault();
     const email = formData.email;
     const password = formData.password;
