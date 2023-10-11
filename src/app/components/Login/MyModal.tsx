@@ -4,8 +4,11 @@ import { Fragment, useState } from 'react'
 import {modalControl}from '@/typeModules'
 import  Login  from './Login'
 
-export function MyModal({ closeModal , isOpen} : modalControl) {
+interface ModalProps extends modalControl {
+  children: React.ReactNode;
+}
 
+export default function MyModal({ closeModal , isOpen } : ModalProps) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -44,7 +47,7 @@ export function MyModal({ closeModal , isOpen} : modalControl) {
                   </div>
                   <hr className='text-gray-800'/>
                   <div className="mt-4 text-gray-900">
-                       SSN Login
+                      SSN Login
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
