@@ -8,18 +8,28 @@ const backGroundStyle = {
   backgroundRepeat: "no-repeat", // 이미지 반복 없음
 };
 
+
 export default function SellProduct() {
+  
   // const [categoryType, setCategoryType] = useState(''); // 카테고리 타입 상태
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
-  const [email, setEmail] = useState(''); // 이메일 상태
+  const [sessionEmail, setSessionEmail] = useState('');
 
-  // 컴포넌트가 처음 마운트될 때 세션 스토리지에서 값을 가져온다.
   useEffect(() => {
-    const storedEmail = sessionStorage.getItem('email');
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
+    const email = "test@test.com"; // 이메일 값을 여기에 할당
+    window.sessionStorage.setItem("email", email);
+    const emailFromSession = window.sessionStorage.getItem('email');
+    setSessionEmail(emailFromSession || '');
   }, []);
+  // const [email, setEmail] = useState(''); // 이메일 상태
+
+  // // 컴포넌트가 처음 마운트될 때 세션 스토리지에서 값을 가져온다.
+  // useEffect(() => {
+  //   const storedEmail = sessionStorage.getItem('email');
+  //   if (storedEmail) {
+  //     setEmail(storedEmail);
+  //   }
+  // }, []);
 
   // function handleCategoryTypeSelect(e: ChangeEvent<HTMLInputElement> ) {// 카테고리 타입을 선택할 때 호출되는 함수
   //   setCategoryType(e.target.value);
@@ -29,7 +39,7 @@ export default function SellProduct() {
 
   function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
     // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
-    setEmail(e.target.value);
+    // setEmail(e.target.value);
   }
 
   function handleCategoryTagChange(e: ChangeEvent<HTMLInputElement> ) {// 카테고리 태그를 입력할 때 호출되는 함수
@@ -41,7 +51,7 @@ export default function SellProduct() {
     event.preventDefault();
 
     // 입력된 이메일 값을 세션 스토리지에 저장.
-    sessionStorage.setItem('email', email);
+    // sessionStorage.setItem('email', email);
 
     try {
       const f = new FormData(event.currentTarget)
@@ -87,9 +97,10 @@ export default function SellProduct() {
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="용빈"
-                      value={email} // 입력 필드의 값은 상태(State)에서 가져옵니다.
-                      onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
+                      placeholder="닉네임"
+                      defaultValue={sessionEmail}
+                      // 입력 필드의 값은 상태(State)에서 가져옵니다.
+                      // onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
                     />
                     </div>
                   </div>

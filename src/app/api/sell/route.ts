@@ -15,7 +15,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
     const data = await req.formData();
 
     // 세션 스토리지에서 이메일 값을 가져옵니다.
-    const email = sessionStorage.getItem('email');
+    //const email = sessionStorage.getItem('email');
     
     let { title, categoryname, price, content} = Object.fromEntries(data);
     let body = Object.fromEntries(data);
@@ -24,7 +24,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
 
     
     let insert = {
-        email: email || '', // 원래는 "vin0219@naver.com",
+        email: "te@test.com", 
         title: title.toString(),
         content: content.toString(),
         starting_price: parseInt(price.toString()),
@@ -34,16 +34,19 @@ export async function POST(req:NextRequest, res: NextResponse) {
     const post = await prisma.post.create({
         data: insert
     })
+    
+    const profile = await prisma.profile.create({
 
-    // const profile = await prisma.profile.create({
-    //     data:{
-    //         bio: Gender.FEMALE,
-    //         email: "vin0219@naver.com",
-    //         nickname :"신용빈",
-    //     },
-    // })
+        data:{
+            bio: Gender.FEMALE,
+            email: "te@test.com",
+            nickname :"jjinddo",
+        },
+    })
 
     console.log(post);
+    console.log(profile);
+    
     // return res.json(profile);
     
     return new Response("OK")

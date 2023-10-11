@@ -3,6 +3,7 @@ import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent}
 import { Switch } from '@headlessui/react'
 
 export default function Login() {
+
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
   const [switchOn, setSwitch] = useState(false)
@@ -25,9 +26,35 @@ export default function Login() {
   }
   
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // 기본 제출 동작을 막습니다.
+  
+    // 이메일과 비밀번호 값을 가져옵니다.
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
     
-
+    // 데이터를 서버로 전송합니다.
+    try {
+      const response = await fetch(`http://127.0.0.1:8080/member/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }), // JSON 형태로 변환하여 전송
+      });
+      const result = await response.json();
+      const status = result.status;
+      if (status === "success") {
+        alert('로그인성공~!');
+        window.location.href = '/';
+      } else {
+        window.alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error);
+    }
   }
+  
    function newJeansCookie(e: boolean)
   {
     setSwitch(e)
@@ -67,7 +94,6 @@ export default function Login() {
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
   return (
     <form onSubmit={onSubmit}>
-
       <div className='grid grid-flow-row auto-rows-5'>
         <div className="mb-4">
           <input  
@@ -105,7 +131,6 @@ export default function Login() {
         <div className="text-center">
           <button type="submit" 
           className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg w-full ">로그인</button>
-
         </div>
         <div className="text-center">
           <button type="submit" 

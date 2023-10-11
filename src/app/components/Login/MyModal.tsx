@@ -5,6 +5,7 @@ import {modalControl}from '@/typeModules'
 import  Login  from './Login'
 
 export function MyModal({ closeModal , isOpen} : modalControl) {
+
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
