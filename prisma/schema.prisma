@@ -28,7 +28,7 @@ model Post {
   comments Comment[]// Comment 모델의 배열 형태로, 해당 게시물과 연결된 댓글
   starting_price BigInt
   // current_price BigInt
-  category Category @default(etc)
+  category Category 
   categoryname String
   images String[]
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
