@@ -4,7 +4,7 @@ import React, { Component, useState } from 'react';
 import DetailModal from './_components/modal';
 import Detail from './_components/detail';
 import Nav from '../components/nav';
-import Login from '../components/login';
+import Login from '../components/header';
 import BottomList from './_components/bottomlist';
 
 export default function Buy() {
