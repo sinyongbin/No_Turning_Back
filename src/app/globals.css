@@ -1,14 +1,27 @@
-/* .은 클래스네임 반영구*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* #id 1회용 */
-
-
-.jongil {
-  background-color: blue;
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
-.jongil > h4{
-  color: bisque;
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
-.jongil1 {
-  background-color: blue;
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
