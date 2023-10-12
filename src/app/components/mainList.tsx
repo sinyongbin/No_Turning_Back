@@ -2,79 +2,26 @@
 
 import Image from 'next/image'
 import prisma from '@/db'
-import Link from "next/link"
-import Paging from './paging'
-import { useState } from 'react'
+
+import { useState,useEffect } from 'react'
 
 
 export default function MainList() {
 
-    const [isActive, setIsActive] = useState(false);
-    
-    const products = [
-      {
-        id: 1,
-        name: 'Earthen Bottle',
-        href: '/listdetail',
-        price: '$1148',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Tall slender porcelain bottle with natural clay textured body and cork stopper.',
-      },
-      {
-        id: 2,
-        name: 'Nomad Tumbler',
-        href: '#',
-        price: '$35',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Olive drab green insulated bottle with flared screw lid and flat top.',
-      },
-      {
-        id: 3,
-        name: 'Focus Paper Refill',
-        href: '#',
-        price: '$89',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Person using a pen to cross a task off a productivity paper card.',
-      },
-      {
-        id: 4,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      },
-      {
-        id: 5,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      },
-      {
-        id: 6,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      },
-      {
-        id: 7,
-        name: 'Machined Mechanical Pencil',
-        href: '#',
-        price: '$35',
-        imageSrc: '/img/경매이미지.png',
-        imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
-      },
-    ]
-
+  const [products, setProducts] = useState([]);
+  const [visibleProducts, setVisibleProducts] = useState([]);
   
-    
-    
-    
-    const [visibleProducts, setVisibleProducts] = useState(products.slice(0, 4));
+  useEffect(() => {
+    // API 엔드포인트를 호출하여 데이터 가져오기
+    fetch(`http://localhost:3000/api/beautylist`)
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품 설정
+      })
+      .catch((error) => console.error(error));
+  }, []);
+ 
 
 
     const loadMoreProducts = () => {
@@ -87,8 +34,6 @@ export default function MainList() {
       }
     };
 
-    
-    
     
       return (
         
@@ -107,19 +52,19 @@ export default function MainList() {
               {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
               <div className="product-grid">
                 <div className="grid grid-cols-4 gap-4">
-                  {visibleProducts.map((product) => (
-                    <div key={product.id} className="product-item">
+                  {visibleProducts.map((products:any) => (
+                    <div key={products.id} className="product-item">
                       {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                      <a key={product.id} href={product.href} className="group">
+                      <a key={products.id} href={products.href} className="group">
                         <img
-                          src={product.imageSrc}
-                          alt={product.imageAlt}
+                          src={products.imageSrc}
+                          alt={products.imageAlt}
                           className="h-full w-full object-cover object-center group-hover:opacity-75"
                           style={{ width: '280px', height: '280px' }}
                         />
-                        <h3>{product.name}</h3>
+                        <h3>{products.title}</h3>
                       </a>
-                      <p>{product.price}</p>
+                      <p>{products.starting_price}</p>
                     </div>
                   ))}
                 </div>
