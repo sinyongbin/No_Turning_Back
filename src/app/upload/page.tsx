@@ -1,152 +1,135 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import Image from 'next/image';
-import { FormEvent, useState ,useRef} from 'react';
+import { PlusIcon , TrashIcon} from '@heroicons/react/24/outline';
 
-export default function Upload() {
-    const [search, setSearch] = useState(null)
-    const [onDragging, setOnDragging]= useState(false)
-    const [result, setResult] = useState<any>([])
-    const [previewImg, setPreviewImg] = useState<FileList>()
-    
-    let ref = useRef(null)
-    let file= new FormData();
-   
 
-    function uploadHandler(e : FormEvent<HTMLInputElement>){
-        imageHandler( e.currentTarget.files);
-    }
-    async function imageHandler(files : FileList|null)
-    {   
-        if(files !=null)
-            for(let i = 0; i < files.length; i ++){
-                file.append("image",files[i],files[i].name)
-            }
-    }
-    function fileToByte(file : File)
-    {
-        const reader = new FileReader();
-        return new Promise((resolve,rejects)=>{    
-            reader.onload = () => resolve(reader)
-            reader.onerror=  (err) => rejects(err)
-            reader.readAsDataURL(file)
-        })
-    }
-    function previewImage()
-    {
-        return(
-            <div className='grid grid-rows-2'>
-                <div className="preview">
-                    
-                </div>
-                <div className="grid grid-cols-3 buttoncontainer">
-                        <div><button>prev</button></div>
-                        <div><button>delete</button></div>
-                        <div><button>foward</button></div>
-                </div>
-            </div>
-        )
-    }
-    async function handleSumbit()
-    {
-       let arrayOfImage =await ImageToURL();
-       let body = {
-            imageFile : arrayOfImage
-       } 
-       let data= await fetch("/api/fileUpload",{
+import { useState ,useEffect ,ChangeEvent} from 'react';
 
-            method: "POST",
-            body : JSON.stringify(arrayOfImage)
-        }).then(e=>{
-            return e.json()
-        }).catch((e)=> {throw e})
+export default function Home() {
+    const [previewImg, setPreviewImg] = useState<any>([])
+    useEffect(()=>{
         
-    }
-    async function ImageToURL()
+    },[previewImg])
+    async function onChange(e : ChangeEvent<HTMLInputElement>)
     {
-        let urlData:any = []
-        let msg = "이미지는 최대 8장 까지 가능합니다"
-        if(urlData.length < 9){
-            let image = file.getAll("image")
-            for(let i =0; i < image.length;i++)
-            {
-                let tempImage = image[i] as File
-                let temp = await fileToByte(tempImage)
-                if( temp !=undefined )
-                {
-                    if(urlData.length == 8){
-                        alertMessage("이미지는 최대 8장까지 가능합니다")
-                        break;
-                    }
-                    urlData.push(
-                        {
-                            fileNmae : tempImage.name,
-                            baseUrl:temp.result
-                        });
-                }
-            }
+        let files = e.currentTarget.files
+        let temp :any = []
+        if((files?.length + previewImg.length) >8 )
+        {
+            alert("최대 8장까지")
         }
-        return urlData;
+        else if(files !=null){
+            for(let i =0; i < files.length;i++)
+            {
+                let base = await toBase64(files[i])
+                if(!temp.includes(base))
+                    temp.push(base)
+                else
+                    console.log("duplicated image")
+            }
+            setPreviewImg([...previewImg,...temp])
+        }
     }
-    function alertMessage(msg : string)
-    {
-        alert(msg)
-    }
-    function UpImage()
-    {   
+
+    const toBase64 = (file: File) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+      
+          fileReader.readAsDataURL(file);
+      
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+      
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
+        });
+      };
+    function UploadSubmit(){
+
         return(
-        <div 
-        className={    
-            onDragging ? `col-span-full bg-gray-600 opacity-50`:`col-span-full`} 
-            onDragOver={(e)=>{
-                e.preventDefault()
-                setOnDragging(true)}}
-            onDragLeave={()=>setOnDragging(false)}
-            onDrop={(ev)=>{
-                ev.preventDefault()
-                let data = ev.dataTransfer
-                imageHandler(data.files)
-                setOnDragging(false)
-            }}>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                    <PhotoIcon className={
-                        onDragging ? `opacity-0 mx-auto h-12 w-12 text-gray-300`:`mx-auto h-12 w-12 text-gray-300`} aria-hidden="true" />
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                            htmlFor="file-upload"
-                            className={
-                                onDragging ? ``:
-                                `relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}>
-                            <span>Upload a file</span>
-                            <input 
-                            id="file-upload" 
-                            name="file-upload" 
-                            type="file" 
+        <div className='flex'>
+                <div className='mt-4'>
+                    <div className='w-20 h-20 hover:bg-slate-200 shadow-lg rounded-lg'>
+                        <input 
+                            type='file'
                             accept='image/*'
                             multiple = {true}
-                            className="sr-only" 
-                            onInput={uploadHandler}
-                            />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
+                            className="opacity-0 w-20 h-20 absolute" 
+                            onChange={(e)=>{onChange(e)}}/>
+                        <div className='flex w-full text-center justify-center'>
+                            <span><PlusIcon className='w-20 h-20'/></span>
+                        </div>
                     </div>
-                    <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                    <div className='w-20 h-20 hover:bg-slate-200 shadow-lg rounded-lg'>
+                            <button className='w-20 h-20' onClick={()=>{
+                                    if(previewImg.length==0)
+                                    {
+                                        alert("삭제할 이미지가 없습니다")
+                                    }else
+                                    {   
+                                        let tempData : any = []
+                                        let inputs : any = document.getElementsByClassName("img-input")
+                                        for(let i =0; i < inputs.length;i++)
+                                        {
+                                            if(!inputs[i].className.split(' ').includes("grayscale"))
+                                            {
+                                                let temp  = inputs[i].src;
+                                                tempData.push(temp)
+                                            }
+                                        }
+                                        setPreviewImg(tempData)
+                                    }
+                                }} >
+                                <TrashIcon className='w-20 h-20'/>
+                            </button>
+                    </div>
                 </div>
+            <div className='grid h-52 ml-2 gap-4 mt-4 grid-cols-4'>
+                <Preview/>
             </div>
+            
+            
         </div>)
     }
-    return (
-        <div className='mx-48'>
-            <UpImage/>
-            <button onClick={handleSumbit}>
-                    uploadButton
-            </button>   
-            <div >
-                <input    ref={ref} type='image'/>
-
-            </div>
-        </div>
-    )
+    function Preview(){
+        return(
+            <>
+                {   
+                    previewImg.map((e:any,i:number)=>{
+                        return(
+                            <div key={i} className='mt-5'>
+                            <img 
+                            src={e}
+                            alt={''} 
+                            onClick={(e)=>{
+                               let list = e.currentTarget.className.split(' ')
+                               if(!list.includes('grayscale'))
+                               {
+                                e.currentTarget.className ='img-input object-cover grayscale blur h-48 w-48 outline-2 outline-double outline-red-400'
+                               
+                               }
+                               else{
+                                e.currentTarget.className ='img-input object-cover h-48 w-48 outline-2 outline-double outline-black-400'
+                               }
+                                
+                               
+                            }}
+                                className='img-input object-cover h-48 w-48 outline-2 outline-double outline-black-400'/>
+                                
+                        </div>
+                    )}
+                    
+                    )
+                }
+            </>
+        )
+    }
+  return (
+      <div className='mx-48 flex'>
+            <UploadSubmit/>
+      </div>
+  )
 }
