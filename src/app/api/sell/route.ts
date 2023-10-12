@@ -1,6 +1,7 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
 import { Gender } from "@prisma/client";
+import { Category } from "@prisma/client";
 
 // const jsonData = await req.json();
 
@@ -16,27 +17,64 @@ import { Gender } from "@prisma/client";
 
 // }
 
+
+
 export async function POST(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
 
-    let {title, nickName, categoryname, price, content} = Object.fromEntries(data);
+    let { title, nickname, categoryname, price, content, category} = Object.fromEntries(data);
+    let body = Object.fromEntries(data);
 
+    console.log(body)
+
+    let selectedCategory;
+    if (category === 'beauty') {
+      selectedCategory = Category.beauty;
+    } else if (category === 'hobby') {
+      selectedCategory = Category.hobby;
+    } else if (category === 'digital') {
+      selectedCategory = Category.digital;
+    } else if (category === 'sport') {
+      selectedCategory = Category.sport;
+    } else if (category === 'car') {
+      selectedCategory = Category.car;
+    } else {
+      selectedCategory = Category.etc;
+    }
+
+    let insert = {
+        email: "vin0219@naver.com",
+        // nickname: nickname.toString(),
+        title: title.toString(),
+        content: content.toString(),
+        starting_price: parseInt(price.toString()),
+        categoryname: categoryname.toString(),
+        category:selectedCategory,
+    }
+    
 
     const post = await prisma.post.create({
-        data: {
-            // nickname: "신용빈", // nickname || ''
-            email: "vin0219@naver.com",
-            // nickname: nickName.toString(),
-            title: title.toString(),
-            content: content.toString(),
-            starting_price: parseInt(price.toString()),
-            categoryname: categoryname.toString(),
-        }
+        data: insert
     })
+    
+    // const profile = await prisma.profile.create({
 
     console.log(post);
+    // console.log(profile);
+    //     data:{
+    //         bio: Gender.FEMALE,
+    //         email: "te@test.com",
+    //         nickname :"jjinddo",
+    //     },
+    // })
+
+    // console.log(post);
+    // console.log(profile);
     
+
+    // return res.json(profile);
+
     return new Response("OK")
 }
 

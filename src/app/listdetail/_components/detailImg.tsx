@@ -88,7 +88,7 @@ export default function ImageViewer() {
                     </Tab.List>
                     <button className="text-greay-500 w-[100%]" onClick={() => { handleScrollClick(1) }}>down</button>
                 </div>
-                <div className='flex items-center grid-cols-2 bg-slate-200'>
+                <div className='flex items-center grid-cols-2 bg-white'>
                     <button
                         onClick={() => { handleScrollClick(-1) }}
                         disabled={selectedIndex == 0 ? true : false}

@@ -1,9 +1,12 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
-import { METHODS } from 'http'
+import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 export default function Login() {
+  const router = useRouter()
+
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
   const [switchOn, setSwitch] = useState(false)
@@ -11,6 +14,7 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    nickname: '',
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -45,15 +49,18 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          fetch(`http://localhost:3000/api/login?email=${email}`,
+          fetch(`http://localhost:3000/api/signup?email=${email}`,
           {method: 'GET'})
           .then((response)=>{
             if(response.status===200){
               return response.json().then((data) => {
                 console.log("세션 정보:", data.sessionInfo);
-                sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
-                const nickName=sessionStorage.getItem('nickName');
-                alert(`안녕하세요! ${nickName} 님`);
+                console.log("넘겨준거:", data.nickname);
+
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data.nickname));
+                         
+               
+                alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });
             }
@@ -86,6 +93,9 @@ export default function Login() {
       alert('아이디나 패스워드를 확인해주세요!');
     }
   }
+  
+  
+  
   function newJeansCookie(e: boolean) //id 저장
   {
     setSwitch(e)
@@ -125,6 +135,11 @@ export default function Login() {
   
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
+
+  // function SignUp() {
+  //   window.location.href = 'SignUp';
+  // }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -171,12 +186,17 @@ export default function Login() {
           </div>
         </div>
       </form>
-      <form id="registerForm">
-        <button type="submit"
-        className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">
-          회원가입
-        </button>
-      </form>
+      
+          <button 
+          type="submit" 
+          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
+          // onClick={()=>{
+          //   router.push("http://localhost:3000//SignUp")
+          // }}
+          onClick={()=>{window.location.href = 'SignUp'}} 
+          >
+            회원가입
+          </button>
     </div>
   )
 }

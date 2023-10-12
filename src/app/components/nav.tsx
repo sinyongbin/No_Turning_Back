@@ -13,6 +13,7 @@ const navigation = [
     { name: '디지털/가구/가전', href: 'digital', current: false },
     { name: '스포츠', href: 'sport', current: false },
     { name: '자동차', href: 'car', current: false },
+    { name: '기타', href: 'etc', current: false },
     
 ]
 

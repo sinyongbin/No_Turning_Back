@@ -40,12 +40,12 @@ export default function MyPage() {
         });
     }, []);
 
-    function handleInputChange(e) {
+    function handleInputChange(e: any) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    function passwordChange(e) {
+    function passwordChange(e: any) {
         e.preventDefault();
 
         const sessionData = sessionStorage.getItem('loggedInMember');

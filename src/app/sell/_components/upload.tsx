@@ -9,7 +9,7 @@ const backGroundStyle = {
 };
 
 export default function SellProduct() {
-  
+  const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export default function SellProduct() {
 
   useEffect(() => {
     // 서버로부터 닉네임 데이터를 가져오는 API 요청
-    fetch('/api/sell') // 서버의 API 엔드포인트에 따라 수정 필요
+    fetch('/api/signup') // 서버의 API 엔드포인트에 따라 수정 필요
       .then((response) => response.json())
       .then((data) => {
         // API 응답에서 가져온 닉네임을 상태에 설정
@@ -41,16 +41,21 @@ export default function SellProduct() {
     // }
   }, []);
   
-  function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
-    // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
-    setEmail(e.target.value);
-  }
 
+  // 클라이언트에서 카테고리 선택 시 category 상태 업데이트
+  function handleCategoryChange(e: ChangeEvent<HTMLSelectElement>) {
+    setCategory(e.target.value);
+  }
+  
   // 입력 필드의 값이 변경될 때 호출되는 함수
   function handleCategoryTagChange(e:ChangeEvent<HTMLInputElement>){
     setCategoryTag(e.target.value);
   }
-  
+
+  function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
+    // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
+    setEmail(e.target.value);
+  }
   // const handleCategoryTagChange = (e:any) => {
   //   // 입력 필드의 새로운 값을 상태(State)에 업데이트합니다.
   //   setCategoryTag(e.target.value);
@@ -70,7 +75,7 @@ export default function SellProduct() {
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
-            location.href= '/' //Home 으로 이동 
+            window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
             console.log(res);
       }).catch((e) => {throw e}).finally()
@@ -135,9 +140,22 @@ export default function SellProduct() {
               <div className="border-gray-900/10 pb-12">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-4">
-                    <Dropdown />
-                  </div>
+                  <select
+                      id="category"
+                      name="category"
+                      value={category}
+                      onChange={handleCategoryChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                    >
+                      <option value="beauty">패션/뷰티</option>
+                      <option value="hobby">취미/키덜트</option>
+                      <option value="digital">디지털/가구/가전</option>
+                      <option value="sport">스포츠</option>
+                      <option value="car">자동차</option>
+                      <option value="etc">기타</option>
+                  </select>
                 </div>
+              </div>
 
                 <div className="mt-4">
                   <label htmlFor="categoryTag" className="block text-sm font-medium leading-6 text-gray-900">
