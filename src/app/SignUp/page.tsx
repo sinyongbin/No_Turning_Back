@@ -13,18 +13,23 @@ export default function Signup() {
     verificationCode: '', 
     confirmPassword: '',
     detailAddress: '',
+    nickName:'',
+    bio:'',
+
   });
 
   const [message, setMessage] = useState("");
 
   const router = useRouter();
 
-  function onSubmit(e) {
+  function onSubmit(e:any) {
     e.preventDefault();
     const email = formData.email;
     const password = formData.password;
     const address = formData.address;
     const phoneNum = formData.phoneNum;
+    const nickName = formData.nickName;
+    const bio = formData.bio;
 
     formData.address = address + ' ' + formData.detailAddress;
 
@@ -33,7 +38,7 @@ export default function Signup() {
       return;
     }
     if (email && password && address && phoneNum) {
-      fetch("/member/member_join", {
+      fetch("/member/member_join", {//Next.config에 기본값으로 설정해줌
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -45,19 +50,36 @@ export default function Signup() {
           throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
         } else {
           alert(`회원가입을 축하합니다! ${email} 님`);
-          router.push('/'); 
+          router.push('/'); //메인페이지로 돌아감
         }
       })
         .catch((error) => {
           console.error('POST 요청 실패:', error);                                                                                                     
         });
-      console.log('회원가입 데이터:', formData);
     } else {
       alert('입력칸을 전부 입력해주세요!');
     }
+    if(nickName && bio){
+      try {
+        const f = new FormData(e.currentTarget)
+        const send = fetch('http://localhost:3000/api/signup',{
+          method: 'POST',
+          body : f
+        }).then((res) =>{
+          //성공시 처리 
+            if(res.status == 200)
+              location.href= '/' //Home 으로 이동 
+              //alert("Message : " +200)
+              console.log(res);
+        }).catch((e) => {throw e}).finally()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
   }
 
-  function handleInputChange(e) {
+  function handleInputChange(e:any) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }

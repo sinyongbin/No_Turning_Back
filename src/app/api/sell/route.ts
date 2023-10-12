@@ -20,36 +20,22 @@ export async function POST(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
 
-    let {title, nickname, categoryname, price, content} = Object.fromEntries(data);
-    let body = Object.fromEntries(data);
+    let {title, nickName, categoryname, price, content} = Object.fromEntries(data);
 
-    console.log(body)
-
-    let insert = {
-        // nickname: "신용빈", // nickname || ''
-        email: "vin0219@naver.com",
-        // nickname: nickname.toString(),
-        title: title.toString(),
-        content: content.toString(),
-        starting_price: parseInt(price.toString()),
-        categoryname: categoryname.toString(),
-    }
 
     const post = await prisma.post.create({
-        data: insert
-    })
-
-    const profile = await prisma.profile.create({
         data: {
-            email: "jinddo@naver.com",
-            nickname: "진또",
-            bio: Gender.MALE,
+            // nickname: "신용빈", // nickname || ''
+            email: "vin0219@naver.com",
+            // nickname: nickName.toString(),
+            title: title.toString(),
+            content: content.toString(),
+            starting_price: parseInt(price.toString()),
+            categoryname: categoryname.toString(),
         }
     })
 
     console.log(post);
-    console.log(profile);
-    // return res.json(profile);
     
     return new Response("OK")
 }

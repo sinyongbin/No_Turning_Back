@@ -1,6 +1,7 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
+import { METHODS } from 'http'
 
 export default function Login() {
   const myref = useRef<any>(null)
@@ -28,6 +29,7 @@ export default function Login() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
+
   async function onSubmit(e:any) {
     e.preventDefault();
     const email = formData.email;
@@ -43,23 +45,42 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          // 로그인 성공 시 세션 정보를 받아옵니다.
-          return response.json().then((data) => {
-            console.log("세션 정보:", data.sessionInfo);
-            alert(`안녕하세요! ${email} 님`);
-
-            sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
-
-            console.log("세션 정보:", data.sessionInfo);
-            window.location.href = '/';
+          fetch(`http://localhost:3000/api/login?email=${email}`,
+          {method: 'GET'})
+          .then((response)=>{
+            if(response.status===200){
+              return response.json().then((data) => {
+                console.log("세션 정보:", data.sessionInfo);
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
+                const nickName=sessionStorage.getItem('nickName');
+                alert(`안녕하세요! ${nickName} 님`);
+                window.location.href = '/';
+              });
+            }
+          })
+          .catch((error) => {
+            console.error('mongo GET 요청 실패:', error);
           });
+          // alert(`안녕하세요! ${email} 님`);
+          // window.location.href = '/';
+          // return null;
+          // 로그인 성공 시 세션 정보를 받아옵니다.
+          // return response.json().then((data) => {
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   alert(`안녕하세요! ${email} 님`);
+
+          //   sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
+
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   window.location.href = '/';
+          // });
         } else {
           alert('로그인 실패');
           throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
         }
       })
       .catch((error) => {
-        console.error('POST 요청 실패:', error);                                                                                                     
+        console.error('POST 요청 실패:', error);
       });
     } else {
       alert('아이디나 패스워드를 확인해주세요!');
