@@ -111,6 +111,9 @@ export default function Login() {
       window.localStorage.setItem("switch", "FALSE");
     }
   }
+  function SignUp() {
+    window.location.href = 'SignUp';
+  }
   //email 확인
   /* 
   async function onBlur(e: FocusEvent<HTMLInputElement>) {
@@ -183,6 +186,11 @@ export default function Login() {
           <div className="text-center">
             <button type="submit" 
             className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg w-full ">로그인</button>
+          </div>
+          <div className="text-center">
+            <button type="button"
+            onClick={SignUp} 
+            className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">회원가입</button>
           </div>
         </div>
       </form>

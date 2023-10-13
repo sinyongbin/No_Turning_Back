@@ -29,7 +29,7 @@ export default function Signup() {
     const nickName = formData.nickName;
     const bio = formData.bio;
 
-    formData.address = address + ' ' + formData.detailAddress;
+    formData.address = formData.address + ' ' + formData.detailAddress;
 
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");

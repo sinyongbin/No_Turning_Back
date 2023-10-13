@@ -59,6 +59,10 @@ export default function App() {
                 신고
               </a>
             </li>
+            <li className="top_item">
+              <a href="/MyPage" className="top_link">
+                마이페이지
+              </a>
             {isLoggedIn ? (
               <li className="top_item">
                 <div className="top_link">
@@ -74,8 +78,8 @@ export default function App() {
             )}  
            
             <li className="top_item">
-              <a href="/MyPage" className="top_link">
-                마이페이지
+              <a href="/SignUp" className="top_link">
+                회원가입
               </a>
             </li>
             

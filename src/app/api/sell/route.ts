@@ -17,7 +17,7 @@ import { Category } from "@prisma/client";
 
 // }
 
-
+//물품 등록에 대한 서버 요청
 
 export async function POST(req:NextRequest, res: NextResponse) {
 
@@ -44,8 +44,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
     }
 
     let insert = {
-        email: "vin0219@naver.com",
-        // nickname: nickname.toString(),
+        email: 'sauos12345@gmail.com', // 원래는 "vin0219@naver.com",
         title: title.toString(),
         content: content.toString(),
         starting_price: parseInt(price.toString()),
@@ -57,17 +56,14 @@ export async function POST(req:NextRequest, res: NextResponse) {
     const post = await prisma.post.create({
         data: insert
     })
-    
-    // const profile = await prisma.profile.create({
 
-    console.log(post);
-    // console.log(profile);
-    //     data:{
-    //         bio: Gender.FEMALE,
-    //         email: "te@test.com",
-    //         nickname :"jjinddo",
-    //     },
-    // })
+    const profile = await prisma.profile.create({
+        data:{
+            bio: Gender.FEMALE,
+            email: "sauos12345@gmail.com",
+            nickname :"Lim",
+        },
+    })
 
     // console.log(post);
     // console.log(profile);
