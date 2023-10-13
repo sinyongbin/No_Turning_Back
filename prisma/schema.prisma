@@ -21,8 +21,8 @@ model Profile {
 }
 
 model Post {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  user           Profile   @relation(fields: [email], references: [email])
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  user           Profile    @relation(fields: [email], references: [email])
   email          String
   title          String
   content        String
@@ -32,9 +32,9 @@ model Post {
   category       Category
   categoryname   String
   images         String[]
-  // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
-  create_date    DateTime  @default(now())
-  update_date    DateTime  @updatedAt
+  publicInfo     PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  create_date    DateTime   @default(now())
+  update_date    DateTime   @updatedAt
 }
 
 model Comment {

@@ -9,11 +9,9 @@ export async function GET(request:NextRequest) {
         where:{email:findEmail},
         select:{email:true, nickname:true},
     })
-        //console.log(profile);
+        console.log(profile);
     return new NextResponse(JSON.stringify(profile));
 }
-
-
 
 export async function POST(req:NextRequest, res: NextResponse) {
 
@@ -41,6 +39,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
         }
     })
     console.log(profile);
+
 
     return new Response("OK")
 }
