@@ -32,15 +32,20 @@ model Post {
   categoryname String
   images String[]
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  // create_date DateTime 
+  // end_date BigInt
+  // update_date DateTime @updatedAt
   create_date DateTime @default(now())
   update_date DateTime @updatedAt
 }
+
 
 model Comment {
   cid String @id @default(auto()) @map("_id") @db.ObjectId
   post Post @relation(fields: [id], references: [id])
   id String @db.ObjectId
-  email String
+  guestemail String
+  content String 
   publicInfo PublicInfo @default(PUBLIC)
   createAt DateTime @default(now())
   update_date DateTime @updatedAt

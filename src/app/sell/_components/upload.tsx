@@ -1,6 +1,7 @@
 'use client'
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Dropdown from "../../components/dropdown";
+import UploadSubmit from './uploadSubmit';
 
 const backGroundStyle = {
   // backgroundImage: "url('/img/경매이미지.png')",
@@ -12,33 +13,17 @@ export default function SellProduct() {
   const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
-  const [email, setEmail] = useState('');
+  const [previewImg, setPreviewImg] = useState<any>([]);
 
-  // // 로그인 후 세션 스토리지에 이메일과 닉네임 저장
-  // const handleLogin = () => {
-  //   sessionStorage.setItem('email', email);
-  //   sessionStorage.setItem('nickname', nickname);
-  // };
-  // const [email, setEmail] = useState('');
-
+  // 컴포넌트가 처음 로드될 때 실행
   useEffect(() => {
-    // 서버로부터 닉네임 데이터를 가져오는 API 요청
-    fetch('/api/signup') // 서버의 API 엔드포인트에 따라 수정 필요
-      .then((response) => response.json())
-      .then((data) => {
-        // API 응답에서 가져온 닉네임을 상태에 설정
-        setSessionNickname(data.nickname);
-      })
-      .catch((error) => {
-        console.error('Error nickname:', error);
-      });
-  
-    // const nickname = "신용빈";
-    // window.sessionStorage.setItem("nickname", nickname);
-    // const sessionNickname = sessionStorage.getItem("nickname");
-    // if (sessionNickname) {
-    //   setSessionNickname(sessionNickname || '');
-    // }
+    // sessionStorage에서 nickname 가져오기
+    const nickName = sessionStorage.getItem('loggedInMember'); // localStorage의 키 이름을 "nickName"으로 수정
+    console.log(nickName);
+    if (nickName) {
+      // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
+      setSessionNickname(nickName);
+    }
   }, []);
   
 
@@ -52,10 +37,6 @@ export default function SellProduct() {
     setCategoryTag(e.target.value);
   }
 
-  function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
-    // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
-    setEmail(e.target.value);
-  }
   // const handleCategoryTagChange = (e:any) => {
   //   // 입력 필드의 새로운 값을 상태(State)에 업데이트합니다.
   //   setCategoryTag(e.target.value);
@@ -63,10 +44,6 @@ export default function SellProduct() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    // 입력된 이메일 값을 세션 스토리지에 저장.
-    // sessionStorage.setItem('email', email);
-
     try {
       const f = new FormData(event.currentTarget)
       const send = await fetch('http://localhost:3000/api/sell',{
@@ -107,14 +84,14 @@ export default function SellProduct() {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset">
                     <input
                       type="text"
-                      name="email" 
+                      name="nickname" 
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      // placeholder="용빈"
-                      // value={email} // 입력 필드의 값은 상태(State)에서 가져옵니다.
-                      //onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
-                      defaultValue={sessionNickname}
+                      // onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
+                      // defaultValue={sessionNickname}
+                      defaultValue={sessionNickname}// 입력 필드의 값은 상태(State)에서 가져온다.
+                      readOnly
                     />
                     </div>
                   </div>
@@ -171,6 +148,10 @@ export default function SellProduct() {
                     className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   />
                 </div>
+                
+                <div className='mx-48 flex'>
+                    <UploadSubmit previewImg={previewImg} setPreviewImg={setPreviewImg} />
+                </div>
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
                   <div className="sm:col-span-3">
@@ -178,7 +159,7 @@ export default function SellProduct() {
                       시작 가격
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       id="start-price"
                       name="price"
                       placeholder="가격을 입력해 주세요"
@@ -203,18 +184,13 @@ export default function SellProduct() {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                  {/* <button
-                    type="submit"
-                    className="rounded-md bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                  >
-                    작성 완료
-                  </button> */}
                   <button
                     type="submit"
                     className="rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
-                    다음
+                    등록
                   </button>
+                  
                 </div>
               </div>
             </div>
