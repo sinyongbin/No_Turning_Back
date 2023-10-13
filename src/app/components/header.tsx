@@ -13,12 +13,10 @@ export default function App() {
   
   useEffect(() => {
     // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = sessionStorage.getItem('loggedInMember');
-    console.log(loggedIn?.length);
-    console.log(loggedIn);
-    if (loggedIn?.length != null) {
+    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}');
+    if (loggedIn.nickname?.length != null) {
       setIsLoggedIn(true);
-      setIsLoggedInNickNmae(loggedIn);
+      setIsLoggedInNickNmae(loggedIn.nickname);
     }
   }, []);
 
@@ -59,10 +57,6 @@ export default function App() {
                 신고
               </a>
             </li>
-            <li className="top_item">
-              <a href="/MyPage" className="top_link">
-                마이페이지
-              </a>
             {isLoggedIn ? (
               <li className="top_item">
                 <div className="top_link">
@@ -76,10 +70,9 @@ export default function App() {
                 </a>
               </li>
             )}  
-           
             <li className="top_item">
-              <a href="/SignUp" className="top_link">
-                회원가입
+              <a href="/MyPage" className="top_link">
+                마이페이지
               </a>
             </li>
             

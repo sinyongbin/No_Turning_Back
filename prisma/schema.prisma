@@ -21,8 +21,8 @@ model Profile {
 }
 
 model Post {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  user           Profile    @relation(fields: [email], references: [email])
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  user           Profile   @relation(fields: [email], references: [email])
   email          String
   title          String
   content        String
@@ -32,16 +32,20 @@ model Post {
   category       Category
   categoryname   String
   images         String[]
-  publicInfo     PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
-  create_date    DateTime   @default(now())
-  update_date    DateTime   @updatedAt
+  // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  // create_date DateTime 
+  // end_date BigInt
+  // update_date DateTime @updatedAt
+  create_date    DateTime  @default(now())
+  update_date    DateTime  @updatedAt
 }
 
 model Comment {
   cid         String     @id @default(auto()) @map("_id") @db.ObjectId
   post        Post       @relation(fields: [id], references: [id])
   id          String     @db.ObjectId
-  email       String
+  guestemail  String
+  content     String
   publicInfo  PublicInfo @default(PUBLIC)
   createAt    DateTime   @default(now())
   update_date DateTime   @updatedAt
@@ -56,14 +60,11 @@ enum Category {
   etc
 }
 
-//유저 상태를 나타냄
 enum Role {
   USER
   ADMIN
-  BAN
 }
 
-//경매 POST에 대한 상태를 나타냄
 enum PublicInfo {
   PUBLIC
   CLOSED
