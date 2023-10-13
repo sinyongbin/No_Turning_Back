@@ -8,7 +8,7 @@ export default function Digital() {
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/digitallist`)
+    fetch(`http://localhost:3000/api/getlist/digitallist`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);

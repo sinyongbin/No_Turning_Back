@@ -4,15 +4,19 @@ import React, { useState, useEffect } from 'react';
 import BottomList from './bottomlist';
 import Modal from './modal';
 import ImageViewer from './detailImg';
+import Bidding from '@/app/transaction/components/bidding';
 // import Modal from './Modal';
 // import MainList from './MainList';
 
 
 
 export default function Detail() {
+  
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
   const [isModalOpen, setModalOpen] = useState(false);
-  
+  const [isOpen , setIsOpen] = useState(false);
+ 
+
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -25,18 +29,31 @@ export default function Detail() {
       date: '2023-09-22',
     },
 ]);
-  const addComment = () => {
-    if (newComment.trim() !== '') {
-      const newId = comments.length + 1;
-      const currentDate = new Date().toISOString().slice(0, 10);
-      const newCommentObj = {
-        id: newId,
-        text: newComment,
-        date: currentDate,
-      };
-      setComments([...comments, newCommentObj]); // 기존 comments + 새로 추가된 comment 합쳐서 배열로 생성!
+const addComment = async () => {
+  if (newComment.trim() !== '') {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const newCommentObj = {
+      text: newComment,
+      date: currentDate,
+    };
+
+    // 서버로 댓글을 추가하는 POST 요청을 보냅니다.
+    const response = await fetch('http://localhost:3000/api/commentS', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCommentObj),
+    });
+
+    if (response.status === 200) {
+      // 댓글 추가에 성공한 경우, 서버에서 반환한 데이터를 처리하거나 상태를 업데이트할 수 있습니다.
+      const addedComment = await response.json();
+      // 예: addedComment를 comments 배열에 추가하거나, 상태를 업데이트합니다.
+      setComments([...comments, addedComment]);
       setNewComment('');
     }
+  }
 };
   const openModal = () => {
     setModalOpen(true);
@@ -104,13 +121,17 @@ export default function Detail() {
                 <button className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300">
                   찜하기
                 </button>
+                <div>
+            <button className = "bg-blue-500" onClick={()=>setIsOpen(true)}>입찰하기</button>
+            <Bidding postId= {'asdasd'} closeModal={closeModal} isOpen={isOpen}/>
+        </div>
               </div>
 
               {/* 추가 섹션 제목 */}
               <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">입찰시 주의사항</h2>
 
               {/* 추가 섹션 본문 */}
-              <p className="mt-6">좀 지켜줘라</p>
+              <p className="mt-6">약관의 동의하시오</p>
             </div>
           </div>
         </div>
@@ -120,27 +141,27 @@ export default function Detail() {
       <ProductDetail/>
       <BottomList/>
       <div className="comment-form">
-  <textarea
-    placeholder="댓글을 입력하세요..."
-    value={newComment}
-    onChange={(e) => setNewComment(e.target.value)}
-  />
-  <button onClick={addComment} className="comment-button">댓글 추가</button>
-</div>
-<div className="all-comment">
-  {/* 여기서부터 댓글 폼 */}
-  {comments.map((comment) => (
-    <div key={comment.id} className="comment">
-      <div className="comment-header">
-        <div className="id-date">
-          <span className="comment-id">ID: {comment.id}</span>
-          <span className="comment-date">날짜: {comment.date}</span>
-        </div>
+        <textarea
+          placeholder="댓글을 입력하세요..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <button onClick={addComment} className="comment-button">댓글 추가</button>
       </div>
-      <div className="comment-text whitespace-pre">{comment.text}</div>
-    </div>
-  ))}
-</div>
+      <div className="all-comment">
+        {/* 여기서부터 댓글 폼 */}
+        {comments.map((comment) => (
+          <div key={comment.id} className="comment">
+            <div className="comment-header">
+              <div className="id-date">
+                <span className="comment-id">ID: {comment.id}</span>
+                <span className="comment-date">날짜: {comment.date}</span>
+              </div>
+            </div>
+            <div className="comment-text whitespace-pre">{comment.text}</div>
+          </div>
+        ))}
+      </div>
 
     </div>
   

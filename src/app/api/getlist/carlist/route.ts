@@ -2,6 +2,7 @@ import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
 
 
+
 export async function GET(){
     
     const data = await prisma.post.findMany({
@@ -17,4 +18,5 @@ export async function GET(){
 
     return NextResponse.json(serializedData);
 }
+
 

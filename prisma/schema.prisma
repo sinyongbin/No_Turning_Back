@@ -41,9 +41,10 @@ model Comment {
   post Post @relation(fields: [id], references: [id])
   id String @db.ObjectId
   email String
+  content String
   publicInfo PublicInfo @default(PUBLIC)
-  createAt DateTime @default(now())
-  update_date DateTime @updatedAt
+  create_date DateTime 
+  end_date DateTime
 }
 
 enum Category {
@@ -52,6 +53,7 @@ enum Category {
     digital
     sport
     car
+    report
     etc
 }
 

@@ -12,7 +12,16 @@ export default function SellProduct() {
   const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
-  const [email, setEmail] = useState('');
+// 컴포넌트가 처음 로드될 때 실행
+  useEffect(() => {
+    // localStorage에서 nickname 가져오기
+    const nickName = sessionStorage.getItem('loggedInMember'); // localStorage의 키 이름을 "nickName"으로 수정
+    console.log(nickName);
+    if (nickName) {
+      // localStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
+      setSessionNickname(nickName);
+    }
+  }, []);
 
   // // 로그인 후 세션 스토리지에 이메일과 닉네임 저장
   // const handleLogin = () => {
@@ -52,20 +61,11 @@ export default function SellProduct() {
     setCategoryTag(e.target.value);
   }
 
-  function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
-    // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
-    setEmail(e.target.value);
-  }
-  // const handleCategoryTagChange = (e:any) => {
-  //   // 입력 필드의 새로운 값을 상태(State)에 업데이트합니다.
-  //   setCategoryTag(e.target.value);
-  // };
+ 
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // 입력된 이메일 값을 세션 스토리지에 저장.
-    // sessionStorage.setItem('email', email);
 
     try {
       const f = new FormData(event.currentTarget)
@@ -94,10 +94,8 @@ export default function SellProduct() {
               <span className="tab_hi">경매 올리기</span>
             </div>
           </div>
-
           <div className='mx-[10%]'>
             <div className="border-gray-900/10 pb-12">
-
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
                   <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
@@ -111,10 +109,10 @@ export default function SellProduct() {
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      // placeholder="용빈"
-                      // value={email} // 입력 필드의 값은 상태(State)에서 가져옵니다.
-                      //onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
-                      defaultValue={sessionNickname}
+                      // onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
+                      // defaultValue={sessionNickname}
+                      defaultValue={sessionNickname}// 입력 필드의 값은 상태(State)에서 가져온다.
+                      readOnly
                     />
                     </div>
                   </div>

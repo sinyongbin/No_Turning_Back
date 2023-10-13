@@ -8,7 +8,7 @@ export default function Etc() {
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/etclist`)
+    fetch(`http://localhost:3000/api/carllist`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
