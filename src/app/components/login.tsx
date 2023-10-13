@@ -35,6 +35,7 @@ export default function App() {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
+    location.href=('/');
     sessionStorage.removeItem('loggedInMember');
   };
 
@@ -54,13 +55,13 @@ export default function App() {
               </a>
             </li>
             <li className="top_item">
-              <a href="/SignUp" className="top_link">
-                회원가입
+              <a href="/MyPage" className="top_link">
+                마이페이지
               </a>
             </li>
             <li className="top_item">
-              <a href="/MyPage" className="top_link">
-                마이페이지
+              <a href="/SignUp" className="top_link">
+                회원가입
               </a>
             </li>
             
@@ -88,9 +89,7 @@ export default function App() {
       </div>
 
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <div>
-          <Login/>
-        </div>
+        
       </Modal>
     </>
   );
