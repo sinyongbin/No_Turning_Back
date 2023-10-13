@@ -2,13 +2,13 @@
 
 import { useState,useEffect } from "react";
 
-export default function Beauty() {
+export default function Etc() {
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/beautylist`)
+    fetch(`http://localhost:3000/api/etclist`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);

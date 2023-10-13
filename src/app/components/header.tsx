@@ -1,22 +1,27 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Modal from './Login/MyModal';
-import Login from './Login/Login';
+import MyModal from './Login/MyModal';
+import { redirect } from 'next/dist/server/api-utils';
+
+
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [loggedInNickName,setIsLoggedInNickNmae] = useState('');
+  
   useEffect(() => {
-    // 페이지 로드 시 localStorage에서 로그인 상태를 확인
+    // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
     const loggedIn = sessionStorage.getItem('loggedInMember');
     console.log(loggedIn?.length);
     console.log(loggedIn);
     if (loggedIn?.length != null) {
       setIsLoggedIn(true);
+      setIsLoggedInNickNmae(loggedIn);
     }
   }, []);
+
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,8 +40,8 @@ export default function App() {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
-    location.href=('/');
     sessionStorage.removeItem('loggedInMember');
+    location.href='./';
   };
 
   return (
@@ -58,6 +63,19 @@ export default function App() {
               <a href="/MyPage" className="top_link">
                 마이페이지
               </a>
+            {isLoggedIn ? (
+              <li className="top_item">
+                <div className="top_link">
+                {loggedInNickName}
+                </div>
+              </li>
+            ) : (  
+              <li className="top_item">
+                <a href='SignUp' className="top_link">
+                회원가입
+                </a>
+              </li>
+            )}  
             </li>
             <li className="top_item">
               <a href="/SignUp" className="top_link">
@@ -88,11 +106,11 @@ export default function App() {
         </a>
       </div>
 
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        
-      </Modal>
+      <MyModal isOpen={isModalOpen} closeModal={closeModal}>
+      </MyModal>
     </>
   );
 }
+
 
 

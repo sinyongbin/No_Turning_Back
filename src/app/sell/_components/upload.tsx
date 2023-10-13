@@ -9,39 +9,63 @@ const backGroundStyle = {
 };
 
 export default function SellProduct() {
-  // const [categoryType, setCategoryType] = useState(''); // 카테고리 타입 상태
+  const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
-  const [email, setEmail] = useState(''); // 이메일 상태
+  const [sessionNickname, setSessionNickname] = useState('');
+  const [email, setEmail] = useState('');
 
-  // 컴포넌트가 처음 마운트될 때 세션 스토리지에서 값을 가져온다.
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem('email');
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
-  }, []);
-
-  // function handleCategoryTypeSelect(e: ChangeEvent<HTMLInputElement> ) {// 카테고리 타입을 선택할 때 호출되는 함수
-  //   setCategoryType(e.target.value);
+  // // 로그인 후 세션 스토리지에 이메일과 닉네임 저장
+  // const handleLogin = () => {
+  //   sessionStorage.setItem('email', email);
+  //   sessionStorage.setItem('nickname', nickname);
   // };
-  // target: 이벤트가 부착된 엘리먼트의 하위(자식) 요소만 리턴
-  // currentTarget: 이벤트가 부착된 엘리먼트 요소까지 모두 리턴
+  // const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    // 서버로부터 닉네임 데이터를 가져오는 API 요청
+    fetch('/api/signup') // 서버의 API 엔드포인트에 따라 수정 필요
+      .then((response) => response.json())
+      .then((data) => {
+        // API 응답에서 가져온 닉네임을 상태에 설정
+        setSessionNickname(data.nickname);
+      })
+      .catch((error) => {
+        console.error('Error nickname:', error);
+      });
+  
+    // const nickname = "신용빈";
+    // window.sessionStorage.setItem("nickname", nickname);
+    // const sessionNickname = sessionStorage.getItem("nickname");
+    // if (sessionNickname) {
+    //   setSessionNickname(sessionNickname || '');
+    // }
+  }, []);
+  
+
+  // 클라이언트에서 카테고리 선택 시 category 상태 업데이트
+  function handleCategoryChange(e: ChangeEvent<HTMLSelectElement>) {
+    setCategory(e.target.value);
+  }
+  
+  // 입력 필드의 값이 변경될 때 호출되는 함수
+  function handleCategoryTagChange(e:ChangeEvent<HTMLInputElement>){
+    setCategoryTag(e.target.value);
+  }
 
   function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
     // 이메일 입력 필드 값이 변경될 때마다 상태를 업데이트
     setEmail(e.target.value);
   }
-
-  function handleCategoryTagChange(e: ChangeEvent<HTMLInputElement> ) {// 카테고리 태그를 입력할 때 호출되는 함수
-    setCategoryTag(e.target.value);
-  };
-
+  // const handleCategoryTagChange = (e:any) => {
+  //   // 입력 필드의 새로운 값을 상태(State)에 업데이트합니다.
+  //   setCategoryTag(e.target.value);
+  // };
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     // 입력된 이메일 값을 세션 스토리지에 저장.
-    sessionStorage.setItem('email', email);
+    // sessionStorage.setItem('email', email);
 
     try {
       const f = new FormData(event.currentTarget)
@@ -51,7 +75,7 @@ export default function SellProduct() {
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
-            location.href= '/' //Home 으로 이동 
+            window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
             console.log(res);
       }).catch((e) => {throw e}).finally()
@@ -83,13 +107,14 @@ export default function SellProduct() {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset">
                     <input
                       type="text"
-                      name="email"
+                      name="email" 
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="용빈"
-                      value={email} // 입력 필드의 값은 상태(State)에서 가져옵니다.
-                      onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
+                      // placeholder="용빈"
+                      // value={email} // 입력 필드의 값은 상태(State)에서 가져옵니다.
+                      //onChange={handleEmailChange} // 입력 필드 값이 변경될 때 호출되는 함수
+                      defaultValue={sessionNickname}
                     />
                     </div>
                   </div>
@@ -115,9 +140,22 @@ export default function SellProduct() {
               <div className="border-gray-900/10 pb-12">
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-4">
-                    <Dropdown />
-                  </div>
+                  <select
+                      id="category"
+                      name="category"
+                      value={category}
+                      onChange={handleCategoryChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                    >
+                      <option value="beauty">패션/뷰티</option>
+                      <option value="hobby">취미/키덜트</option>
+                      <option value="digital">디지털/가구/가전</option>
+                      <option value="sport">스포츠</option>
+                      <option value="car">자동차</option>
+                      <option value="etc">기타</option>
+                  </select>
                 </div>
+              </div>
 
                 <div className="mt-4">
                   <label htmlFor="categoryTag" className="block text-sm font-medium leading-6 text-gray-900">

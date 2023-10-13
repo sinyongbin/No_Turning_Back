@@ -1,8 +1,12 @@
 'use clinet'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
-import { redirect } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import Link from "next/link";
+
 export default function Login() {
+  const router = useRouter()
+
   const myref = useRef<any>(null)
   const [show, setShow] = useState<boolean>(true)
   const [switchOn, setSwitch] = useState(false)
@@ -10,6 +14,7 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    nickname: '',
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -24,11 +29,12 @@ export default function Login() {
       myref.current.value = emailS
     }
   },[])
-  function onChange(e : ChangeEvent<HTMLInputElement>) {
+  function onChange(e:any) {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
-  async function onSubmit(e: any) {
+
+  async function onSubmit(e:any) {
     e.preventDefault();
     const email = formData.email;
     const password = formData.password;
@@ -43,15 +49,37 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          alert(`안녕하세요! ${email} 님`);
-            window.location.href = '/';
+          fetch(`http://localhost:3000/api/signup?email=${email}`,
+          {method: 'GET'})
+          .then((response)=>{
+            if(response.status===200){
+              return response.json().then((data) => {
+                console.log("세션 정보:", data.sessionInfo);
+                console.log("넘겨준거:", data.nickname);
+
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data.nickname));
+                         
+               
+                alert(`안녕하세요! ${data.nickname} 님`);
+                window.location.href = '/';
+              });
+            }
+          })
+          .catch((error) => {
+            console.error('mongo GET 요청 실패:', error);
+          });
+          // alert(`안녕하세요! ${email} 님`);
+          // window.location.href = '/';
+          // return null;
           // 로그인 성공 시 세션 정보를 받아옵니다.
-          // return response.json()
-          // .then((data) => {
-            //console.log("세션 정보:", data.sessionInfo);
-            // sessionStorage.setItem('loggedInMember', 'jinddo@naver.com');
-            // sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
-            //console.log("세션 정보:", data.sessionInfo);
+          // return response.json().then((data) => {
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   alert(`안녕하세요! ${email} 님`);
+
+          //   sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
+
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   window.location.href = '/';
           // });
         } else {
           alert('로그인 실패');
@@ -59,12 +87,15 @@ export default function Login() {
         }
       })
       .catch((error) => {
-        console.error('POST 요청 실패:', error);                                                                                                     
+        console.error('POST 요청 실패:', error);
       });
     } else {
       alert('아이디나 패스워드를 확인해주세요!');
     }
   }
+  
+  
+  
   function newJeansCookie(e: boolean) //id 저장
   {
     setSwitch(e)
@@ -107,6 +138,11 @@ export default function Login() {
   
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
+
+  // function SignUp() {
+  //   window.location.href = 'SignUp';
+  // }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -158,6 +194,17 @@ export default function Login() {
           </div>
         </div>
       </form>
+      
+          <button 
+          type="submit" 
+          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
+          // onClick={()=>{
+          //   router.push("http://localhost:3000//SignUp")
+          // }}
+          onClick={()=>{window.location.href = 'SignUp'}} 
+          >
+            회원가입
+          </button>
     </div>
   )
 }

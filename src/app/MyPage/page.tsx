@@ -47,11 +47,13 @@ export default function MyPage() {
     }, []);
 
     function handleInputChange(e: any) {
+    function handleInputChange(e: any) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         setPasswordData({ ...passwordData, [name]: value });
     };
 
+    function passwordChange(e: any) {
     function passwordChange(e: any) {
         e.preventDefault();
 
