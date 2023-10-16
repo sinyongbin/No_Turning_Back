@@ -6,7 +6,12 @@ import axios from "axios";
 
 
 export async function GET() {
-    
+    const data = await prisma.test.findMany()
+    const url = ""
+    let sql = await axios.get(url).then(e=>{
+        console.log(e)
+    })
+    return NextResponse.json(data)
 }
 
 export async function POST(req:NextRequest) {

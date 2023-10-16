@@ -9,16 +9,6 @@ import MainList from './components/mainList'
 
 
 export default function Home() {
-  
-  // async function test(){
-  //   await prisma.test.create({
-  //     data: {
-  //       email: 'elsa@prisma.io',
-  //       name: 'Elsa Prisma',
-  //     },
-  //   });
-  // }
-
   return (
     <>
 
