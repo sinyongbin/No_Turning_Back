@@ -29,7 +29,7 @@ export default function Signup() {
     const nickName = formData.nickName;
     const bio = formData.bio;
 
-    formData.address = address + ' ' + formData.detailAddress;
+    formData.address = formData.address + ' ' + formData.detailAddress;
 
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
@@ -37,7 +37,7 @@ export default function Signup() {
     }
     // Oracle DB로 가는 부분
     if (email && password && address && phoneNum) {
-      fetch("/member/member_join", {
+      fetch("/member/member_join", {// Next.config에 기본값으로 설정해줌
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -53,7 +53,6 @@ export default function Signup() {
         .catch((error) => {
           console.error('POST 요청 실패:', error);                                                                                                     
         });
-      console.log('회원가입 데이터:', formData);
     } else {
       alert('입력칸을 전부 입력해주세요!');
     }

@@ -1,24 +1,25 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-
-import Login from './Login/Login';
 import MyModal from './Login/MyModal';
+import { redirect } from 'next/dist/server/api-utils';
+
 
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [loggedInNickName,setIsLoggedInNickNmae] = useState('');
+  
   useEffect(() => {
-    // 페이지 로드 시 localStorage에서 로그인 상태를 확인
-    const loggedIn = sessionStorage.getItem('loggedInMember');
-    console.log(loggedIn?.length);
-    console.log(loggedIn);
-    if (loggedIn?.length != null) {
+    // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
+    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}');
+    if (loggedIn.nickname?.length != null) {
       setIsLoggedIn(true);
+      setIsLoggedInNickNmae(loggedIn.nickname);
     }
   }, []);
+
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -38,6 +39,7 @@ export default function App() {
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
     sessionStorage.removeItem('loggedInMember');
+    location.href='./';
   };
 
   return (
@@ -55,11 +57,19 @@ export default function App() {
                 신고
               </a>
             </li>
-            <li className="top_item">
-              <a href="/SignUp" className="top_link">
+            {isLoggedIn ? (
+              <li className="top_item">
+                <div className="top_link">
+                {loggedInNickName}
+                </div>
+              </li>
+            ) : (  
+              <li className="top_item">
+                <a href='SignUp' className="top_link">
                 회원가입
-              </a>
-            </li>
+                </a>
+              </li>
+            )}  
             <li className="top_item">
               <a href="/MyPage" className="top_link">
                 마이페이지
@@ -94,6 +104,5 @@ export default function App() {
     </>
   );
 }
-
 
 

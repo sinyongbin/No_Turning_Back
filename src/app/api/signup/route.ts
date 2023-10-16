@@ -3,6 +3,16 @@ import prisma from "@/db";
 import { Gender } from "@prisma/client";
 
 
+export async function GET(request:NextRequest) {
+    const findEmail = (request.nextUrl.searchParams.get('email') as string);
+    const profile = await prisma.profile.findUnique({
+        where:{email:findEmail},
+        select:{email:true, nickname:true},
+    })
+        console.log(profile);
+    return new NextResponse(JSON.stringify(profile));
+}
+
 export async function POST(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
@@ -29,6 +39,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
         }
     })
     console.log(profile);
+
 
     return new Response("OK")
 }

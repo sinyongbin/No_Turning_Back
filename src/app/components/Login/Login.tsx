@@ -14,6 +14,7 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    nickname: '',
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -32,6 +33,7 @@ export default function Login() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   }
+
   async function onSubmit(e:any) {
     e.preventDefault();
     const email = formData.email;
@@ -47,28 +49,53 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          // 로그인 성공 시 세션 정보를 받아옵니다.
-          return response.json().then((data) => {
-            console.log("세션 정보:", data.sessionInfo);
-            alert(`안녕하세요! ${email} 님`);
+          fetch(`http://localhost:3000/api/signup?email=${email}`,
+          {method: 'GET'})
+          .then((response)=>{
+            if(response.status===200){
+              return response.json().then((data) => {
+                console.log("세션 정보:", data.sessionInfo);
+                console.log("넘겨준거:", data.nickname);
 
-            sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
-
-            console.log("세션 정보:", data.sessionInfo);
-            window.location.href = '/';
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data));
+                         
+               
+                alert(`안녕하세요! ${data.nickname} 님`);
+                window.location.href = '/';
+              });
+            }
+          })
+          .catch((error) => {
+            console.error('mongo GET 요청 실패:', error);
           });
+          // alert(`안녕하세요! ${email} 님`);
+          // window.location.href = '/';
+          // return null;
+          // 로그인 성공 시 세션 정보를 받아옵니다.
+          // return response.json().then((data) => {
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   alert(`안녕하세요! ${email} 님`);
+
+          //   sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
+
+          //   console.log("세션 정보:", data.sessionInfo);
+          //   window.location.href = '/';
+          // });
         } else {
           alert('로그인 실패');
           throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
         }
       })
       .catch((error) => {
-        console.error('POST 요청 실패:', error);                                                                                                     
+        console.error('POST 요청 실패:', error);
       });
     } else {
       alert('아이디나 패스워드를 확인해주세요!');
     }
   }
+  
+  
+  
   function newJeansCookie(e: boolean) //id 저장
   {
     setSwitch(e)
@@ -83,6 +110,9 @@ export default function Login() {
       window.localStorage.setItem("email", "")
       window.localStorage.setItem("switch", "FALSE");
     }
+  }
+  function SignUp() {
+    window.location.href = 'SignUp';
   }
   //email 확인
   /* 
@@ -157,19 +187,13 @@ export default function Login() {
             <button type="submit" 
             className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg w-full ">로그인</button>
           </div>
+          <div className="text-center">
+            <button type="button"
+            onClick={SignUp} 
+            className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">회원가입</button>
+          </div>
         </div>
       </form>
-      
-          <button 
-          type="submit" 
-          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
-          // onClick={()=>{
-          //   router.push("http://localhost:3000//SignUp")
-          // }}
-          onClick={()=>{window.location.href = 'SignUp'}} 
-          >
-            회원가입
-          </button>
     </div>
   )
 }

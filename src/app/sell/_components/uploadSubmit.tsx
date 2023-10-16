@@ -61,7 +61,7 @@ export default function UploadSubmit({ previewImg, setPreviewImg }: any){
                         <input 
                             type='file'
                             accept='image/*'
-                            name='images'
+                            // name='images'
                             multiple = {true}
                             className="opacity-0 w-20 h-20 absolute" 
                             onChange={(e)=>{onChange(e)}}/>

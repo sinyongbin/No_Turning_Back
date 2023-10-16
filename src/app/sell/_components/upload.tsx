@@ -13,16 +13,20 @@ export default function SellProduct() {
   const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
+  const [sessionEmail, setSessionEmail] = useState('');
   const [previewImg, setPreviewImg] = useState<any>([]);
+
+  
 
   // 컴포넌트가 처음 로드될 때 실행
   useEffect(() => {
     // sessionStorage에서 nickname 가져오기
-    const nickName = sessionStorage.getItem('loggedInMember'); // localStorage의 키 이름을 "nickName"으로 수정
-    console.log(nickName);
-    if (nickName) {
+    const user = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}'); 
+    // console.log(user.email);
+    if (user.nickname) {
       // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
-      setSessionNickname(nickName);
+      setSessionNickname(user.nickname);
+      setSessionEmail(user.email);
     }
   }, []);
   
@@ -45,16 +49,31 @@ export default function SellProduct() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const f = new FormData(event.currentTarget)
+      const f = await new FormData(event.currentTarget)
+      const jsonData = 
+      [{
+        email: sessionEmail,
+        title : f.get("title")?.toString(), 
+        categoryname:f.get("categoryname")?.toString(), 
+        price: f.get("price")?.toString(),
+        content: f.get("content")?.toString(),
+        category: f.get("category")?.toString(),
+        images:previewImg}
+    ]
+    console.log(jsonData)
       const send = await fetch('http://localhost:3000/api/sell',{
         method: 'POST',
-        body : f
+        body : JSON.stringify(jsonData),
+        headers: {
+          "Content-Type": `application/json`, // application/json 타입 선언
+        }
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
+          console.log('res:',res);
             window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
-            console.log(res);
+            
       }).catch((e) => {throw e}).finally()
     } catch (error) {
       console.log(error)
@@ -103,7 +122,7 @@ export default function SellProduct() {
                   </label>
                   <div className="mt-2 w-[448px]">
                     <input
-                      id="title"
+                      id="titles"
                       name="title"
                       type="text"
                       placeholder="제목"
