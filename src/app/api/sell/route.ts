@@ -16,10 +16,9 @@ export async function POST(req:NextRequest, res: NextResponse) {
     // })
     // let { email, title, categoryname, price, content, category, images} = Object.fromEntries(data);
     
-
-    // console.log('images',images.toString());
+    // console.log('body입니다:', email);
+    // // console.log('images',images.toString());
     console.log('email이라구',data[0].email)
-
     let selectedCategory;
     if (data[0].category === 'beauty') {
       selectedCategory = Category.beauty;

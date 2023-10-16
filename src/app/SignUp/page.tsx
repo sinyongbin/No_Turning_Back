@@ -37,7 +37,7 @@ export default function Signup() {
     }
     // Oracle DB로 가는 부분
     if (email && password && address && phoneNum) {
-      fetch("/member/member_join", {// Next.config에 기본값으로 설정해줌
+      fetch("/member/member_join", {//Next.config에 기본값으로 설정해줌
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
