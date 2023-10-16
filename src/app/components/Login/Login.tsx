@@ -55,12 +55,11 @@ export default function Login() {
             if(response.status===200){
               return response.json().then((data) => {
                 console.log("세션 정보:", data.sessionInfo);
-                console.log("넘겨준거:", data.nickname);
+                console.log("넘겨준거:", data);
 
-                sessionStorage.setItem('loggedInMember', (data.nickname));
-                         
-               
-                Swal.fire(`안녕하세요! ${data.nickname} 님`);
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data));  
+                
+                alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });
             }
@@ -95,6 +94,9 @@ export default function Login() {
       window.localStorage.setItem("email", "")
       window.localStorage.setItem("switch", "FALSE");
     }
+  }
+  function SignUp() {
+    window.location.href = 'SignUp';
   }
 
   const error = 
@@ -145,19 +147,13 @@ export default function Login() {
             <button type="submit" 
             className="bg-blue-400 text-white font-bold py-2 px-4 rounded-lg w-full ">로그인</button>
           </div>
+          <div className="text-center">
+            <button type="button"
+            onClick={SignUp} 
+            className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">회원가입</button>
+          </div>
         </div>
-      </form>
-      
-          <button 
-          type="submit" 
-          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
-          // onClick={()=>{
-          //   router.push("http://localhost:3000//SignUp")
-          // }}
-          onClick={()=>{window.location.href = 'SignUp'}} 
-          >
-            회원가입
-          </button>
+      </form>   
     </div>
   )
 }

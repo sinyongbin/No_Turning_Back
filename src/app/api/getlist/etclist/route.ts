@@ -6,7 +6,15 @@ export async function GET(){
     
     const data = await prisma.post.findMany({
         where: { category: { in: ["etc"] } },
-      });
+      select: {
+          id: true,          
+          title: true,        
+          starting_price: true,
+          category: true,       
+          images: true,
+        
+      },
+  });      
       
      // BigInt 값을 문자열로 변환
      const serializedData = data.map((item) => ({

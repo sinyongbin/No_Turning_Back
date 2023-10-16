@@ -2,6 +2,7 @@
 
 import { useState,useEffect } from "react";
 
+
 export default function Hobby() {
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
@@ -38,7 +39,7 @@ export default function Hobby() {
                       {visibleProducts.map((products:any) => (
                         <div key={products.id} className="product-item">
                           {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                          <a key={products.id} href={products.href} className="group">
+                          <a href={`/listdetail/${products.id}`} className="group">
                             <img
                               src={products.imageSrc}
                               alt={products.imageAlt}

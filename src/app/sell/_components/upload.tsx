@@ -13,22 +13,13 @@ export default function SellProduct() {
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
 // 컴포넌트가 처음 로드될 때 실행
-  useEffect(() => {
-    // localStorage에서 nickname 가져오기
-    const nickName = sessionStorage.getItem('loggedInMember'); // localStorage의 키 이름을 "nickName"으로 수정
-    console.log(nickName);
-    if (nickName) {
-      // localStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
-      setSessionNickname(nickName);
-    }
-  }, []);
-
-  // // 로그인 후 세션 스토리지에 이메일과 닉네임 저장
-  // const handleLogin = () => {
-  //   sessionStorage.setItem('email', email);
-  //   sessionStorage.setItem('nickname', nickname);
-  // };
-  // const [email, setEmail] = useState('');
+useEffect(() => {
+  const storedData = sessionStorage.getItem('loggedInMember');
+  if (storedData) {
+    const { nickname } = JSON.parse(storedData);
+    setSessionNickname(nickname);
+  }
+}, []);
 
   useEffect(() => {
     // 서버로부터 닉네임 데이터를 가져오는 API 요청
@@ -42,12 +33,7 @@ export default function SellProduct() {
         console.error('Error nickname:', error);
       });
   
-    // const nickname = "신용빈";
-    // window.sessionStorage.setItem("nickname", nickname);
-    // const sessionNickname = sessionStorage.getItem("nickname");
-    // if (sessionNickname) {
-    //   setSessionNickname(sessionNickname || '');
-    // }
+
   }, []);
   
 

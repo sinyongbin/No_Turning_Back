@@ -9,16 +9,16 @@ import { redirect } from 'next/dist/server/api-utils';
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedInNickName,setIsLoggedInNickNmae] = useState('');
+  const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
   useEffect(() => {
     // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = sessionStorage.getItem('loggedInMember');
-    console.log(loggedIn?.length);
+    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}'); 
+    console.log(loggedIn.nickname?.length);
     console.log(loggedIn);
-    if (loggedIn?.length != null) {
+    if (loggedIn.nickname?.length != null) {
       setIsLoggedIn(true);
-      setIsLoggedInNickNmae(loggedIn);
+      setIsLoggedInNickName(loggedIn.nickname);
     }
   }, []);
 
@@ -69,14 +69,12 @@ export default function App() {
                 회원가입
                 </a>
               </li>
-            )}  
-           
+            )}            
             <li className="top_item">
               <a href="/MyPage" className="top_link">
                 마이페이지
               </a>
-            </li>
-            
+            </li>        
             {isLoggedIn ? (
               <li className="top_item">
                 <button onClick={handleLogout} className="top_link">
@@ -105,6 +103,3 @@ export default function App() {
     </>
   );
 }
-
-
-

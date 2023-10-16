@@ -34,6 +34,9 @@ model Post {
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
   create_date DateTime @default(now())
   update_date DateTime @updatedAt
+  // create_date DateTime 
+  // end_date BigInt
+  // update_date DateTime @updatedAt
 }
 
 model Comment {
@@ -47,14 +50,21 @@ model Comment {
   end_date DateTime
 }
 
+model Report{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title  String
+  content String
+  create_date DateTime @default(now())
+}
+
 enum Category {
     beauty
     hobby
     digital
     sport
     car
-    report
     etc
+    report
 }
 
 enum Role {
