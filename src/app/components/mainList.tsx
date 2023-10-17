@@ -13,7 +13,7 @@ export default function MainList() {
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/beautylist`)
+    fetch(`http://localhost:3000/api/mainList`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);

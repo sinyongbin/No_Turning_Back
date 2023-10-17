@@ -13,15 +13,8 @@ export default function App() {
   
   useEffect(() => {
     // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}'); 
-    // 기본값으로 빈 객체 사용
-
-    //const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')!); 에서
-    //!의 용도는 null이 아니다라고 알려주는 용도인데, null 또는 undefined가 경우 JSON.parse에 전달되면 런타임에 오류가 발생
-
-    // 수정한 코드에서 || '{}'는 null 또는 undefined일 때, 빈 객체를 기본값으로 사용하기 위해서 추가 by chat gpt
-
-    if (loggedIn.nickname) {
+    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}');
+    if (loggedIn.nickname?.length != null) {
       setIsLoggedIn(true);
       setIsLoggedInNickName(loggedIn.nickname);
       
@@ -77,7 +70,6 @@ export default function App() {
                 </a>
               </li>
             )}  
-            
             <li className="top_item">
               <a href="/user" className="top_link">
                 마이페이지
@@ -112,3 +104,5 @@ export default function App() {
     </>
   );
 }
+
+

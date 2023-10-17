@@ -58,8 +58,8 @@ export default function Login() {
                 // console.log("넘겨준거:", data.nickname);
 
                 sessionStorage.setItem('loggedInMember', JSON.stringify(data));
-                // console.log("data: ", data);
-                // console.log("session: ", sessionStorage);
+                         
+               
                 alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });
