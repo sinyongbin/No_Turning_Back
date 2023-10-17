@@ -9,16 +9,18 @@ import { redirect } from 'next/dist/server/api-utils';
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedInNickName,setIsLoggedInNickNmae] = useState('');
+  const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
   useEffect(() => {
     // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
     const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}');
     if (loggedIn.nickname?.length != null) {
       setIsLoggedIn(true);
-      setIsLoggedInNickNmae(loggedIn.nickname);
+      setIsLoggedInNickName(loggedIn.nickname);
+      
     }
   }, []);
+  
 
 
   const openModal = () => {
@@ -58,20 +60,18 @@ export default function App() {
               </a>
             </li>
             {isLoggedIn ? (
-              <li className="top_item">
-                <div className="top_link">
-                {loggedInNickName}
-                </div>
+              <li className="top_item top_link">   
+                {loggedInNickName+'님'}             
               </li>
             ) : (  
               <li className="top_item">
-                <a href='SignUp' className="top_link">
+                <a href='signup' className="top_link">
                 회원가입
                 </a>
               </li>
             )}  
             <li className="top_item">
-              <a href="/MyPage" className="top_link">
+              <a href="/user" className="top_link">
                 마이페이지
               </a>
             </li>
