@@ -4,7 +4,8 @@ import { Gender } from "@prisma/client";
 import { Category } from "@prisma/client";
 
 export async function POST(req:NextRequest, res: NextResponse) {
- let data = await req.json()
+  let data = await req.json()
+  console.log("데이터좀 보라고: ", data);
 //  console.log(data[0].email)
     // const data = await req.formData();
     // console.log('body입니다:', data);

@@ -2,13 +2,13 @@
 
 import { useState,useEffect } from "react";
 
-export default function Sporty() {
+export default function Beauty() {
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/sportlist`)
+    fetch(`http://localhost:3000/api/beautylist`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -16,7 +16,7 @@ export default function Sporty() {
       })
       .catch((error) => console.error(error));
   }, []);
- 
+
   
       const loadMoreProducts = () => {
           // "더 보기" 버튼을 클릭했을 때 실행되는 함수입니다.

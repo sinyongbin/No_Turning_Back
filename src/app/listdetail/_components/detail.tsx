@@ -9,9 +9,21 @@ import ImageViewer from './detailImg';
 
 
 
-export default function Detail() {
+export default function Detail(id: any) {
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
   const [isModalOpen, setModalOpen] = useState(false);
+  const [postData, setPostData] = useState({});
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/finddetail?id=${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setPostData(data);
+      })
+      .catch((error) => {
+        console.error('서버 요청실패', error);
+      });
+  }, [id]); // id값을 가지고 들어간 데이터각 처음에 보여야 하기 때문
   
   const [comments, setComments] = useState([
     {
