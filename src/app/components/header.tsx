@@ -11,18 +11,16 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
-  useEffect(() => {
-    // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}'); 
-    console.log(loggedIn.nickname?.length);
-    console.log(loggedIn);
-    if (loggedIn.nickname?.length != null) {
-      setIsLoggedIn(true);
-      setIsLoggedInNickName(loggedIn.nickname);
-    }
-  }, []);
-
-
+  // useEffect(() => {
+  //   const loggedIn = (sessionStorage.getItem('loggedInfo') || '{}'); 
+  //   console.log(loggedIn?.length);
+  //   console.log(loggedIn);
+  //   if (loggedIn.length != null) {
+  //     setIsLoggedIn(true);
+  //     setIsLoggedInNickName(loggedIn);
+  //   }
+  // }, []);
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -38,10 +36,10 @@ export default function App() {
 
   const handleLogout = () => {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
-    setIsLoggedIn(false);
-    alert("로그아웃 되었습니다.");
-    sessionStorage.removeItem('loggedInMember');
-    location.href='./';
+    // setIsLoggedIn(false);
+    // alert("로그아웃 되었습니다.");
+    // sessionStorage.removeItem('loggedInfo');
+    // location.href='./';
   };
 
   return (
@@ -65,13 +63,13 @@ export default function App() {
               </li>
             ) : (  
               <li className="top_item">
-                <a href='SignUp' className="top_link">
+                <a href='signup' className="top_link">
                 회원가입
                 </a>
               </li>
             )}  
             <li className="top_item">
-              <a href="/MyPage" className="top_link">
+              <a href="/user" className="top_link">
                 마이페이지
               </a>
             </li>        
@@ -94,7 +92,7 @@ export default function App() {
       </div>
       <div className="text-6xl text-center h-50 w-50 flex items-center justify-center">
         <a href="/">
-          <img src="img/3.png" className="mx-auto my-auto" alt="" />
+          <img src="/img/3.png" className="mx-auto my-auto" alt="" />
         </a>
       </div>
 

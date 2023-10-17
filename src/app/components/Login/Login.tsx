@@ -3,6 +3,7 @@ import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent}
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import { log } from 'console';
 
 export default function Login() {
   const router = useRouter()
@@ -40,46 +41,25 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      fetch("/member/login",{
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const temp =await fetch(`api/login/${email}/${password}`,{
+          method: "GET",
+          headers:{
+            accept : "application/json"
+          }
+      }).then(e=>{
+          // console.log(e.status)
+          let temp = (e.json())         
+         return temp;
       })
-      .then((response) => {
-        if (response.status === 200) {
-          fetch(`http://localhost:3000/api/signup?email=${email}`,
-          {method: 'GET'})
-          .then((response)=>{
-            if(response.status===200){
-              return response.json().then((data) => {
-                console.log("세션 정보:", data.sessionInfo);
-                console.log("넘겨준거:", data);
-
-                sessionStorage.setItem('loggedInMember', JSON.stringify(data));  
-                
-                alert(`안녕하세요! ${data.nickname} 님`);
-                window.location.href = '/';
-              });
-            }
-          })
-          .catch((error) => {
-            console.error('mongo GET 요청 실패:', error);
-          });     
-        } else {
-          alert('로그인 실패');
-          throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
-        }
-      })
-      .catch((error) => {
-        console.error('POST 요청 실패:', error);
-      });
-    } else {
-      alert('아이디나 패스워드를 확인해주세요!');
+      // console.log(temp.result.nickname)
+      
+      // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
+      sessionStorage.setItem('loggedInfo', temp.result.nickname)
+      alert(temp.result.nickname+'님 환영합니다')
+      location.href='./'
     }
   }
-
+  
   function newJeansCookie(e: boolean) //id 저장
   {
     setSwitch(e)

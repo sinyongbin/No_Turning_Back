@@ -5,13 +5,12 @@ import SearchBar from './searchbar';
 
 
 const navigation = [
-    { name: '패션/뷰티', href: 'beauty', current: true },
-    { name: '취미/키덜트', href: 'hobby', current: false },
-    { name: '디지털/가구/가전', href: 'digital', current: false },
-    { name: '스포츠', href: 'sport', current: false },
-    { name: '자동차', href: 'car', current: false },
-    { name: '기타', href: 'etc', current: false },
-    
+    { name: '패션/뷰티', href: 'list/beauty', current: true },
+    { name: '취미/키덜트', href: 'list/hobby', current: false },
+    { name: '디지털/가구/가전', href: 'list/digital', current: false },
+    { name: '스포츠', href: 'list/sport', current: false },
+    { name: '자동차', href: 'list/car', current: false },
+    { name: '기타', href: 'list/etc', current: false },
 ]
 
 export default function Nav() {
@@ -84,8 +83,7 @@ export default function Nav() {
             </div>
             )}  
         </Disclosure>
-        
-        
+
         </>
     );
 }

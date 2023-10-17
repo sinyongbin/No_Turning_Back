@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useEffect, useState } from 'react';
 
-export default function MyPage() {
+export default function User() {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -17,9 +17,9 @@ export default function MyPage() {
     })
 
     useEffect (() => {
-        const memberinfo = JSON.parse(sessionStorage.getItem('loggedInMember')!);
+        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
     
-        fetch(`/member/member_info/${memberinfo.email}`, {
+        fetch(`/member/member_info/${loggedInfo.email}`, {
             method: "GET",
             headers: {
                 'Accept': 'application/json',
@@ -27,9 +27,10 @@ export default function MyPage() {
             }
         }).then(res=>res.json()).then(res=>{
             setFormData(res);
+            console.log(1, res);
         })
         try {
-            fetch('http://localhost:3000/api/MyPage',{
+            fetch('http://localhost:3000/api/user',{
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -43,6 +44,7 @@ export default function MyPage() {
             console.log(error);
         }
 
+
     }, []);
 
     function handleInputChange(e: any) {
@@ -54,11 +56,15 @@ export default function MyPage() {
     function passwordChange(e: any) {
         e.preventDefault();
 
-        const email = 'sauos12345@gmail.com'
-        const nickname = formData.nickname
+        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+
+        if (passwordData.password !== passwordData.ConfirmPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
 
         try{
-            fetch(`/member/member_info/${email}`, {
+            fetch(`/member/member_info/${loggedInfo.email}`, {
                 method: "PUT",
                 body: JSON.stringify(formData || passwordData),
                 headers: {
@@ -69,8 +75,9 @@ export default function MyPage() {
                     console.log(formData || passwordData);
                     throw new Error('서버 응답이 실패했습니다.' + response.status);
                 } else {
-                    alert(`${nickname}님의 비밀번호가 성공적으로 변경되었습니다`);
-                    location.href='MyPage'
+                    
+                    alert(`${loggedInfo.nickname}님의 비밀번호가 성공적으로 변경되었습니다`);
+                    location.href='user'
                 }
             })
         } catch(error) {
@@ -81,18 +88,27 @@ export default function MyPage() {
     async function nicknameChange(e: FormEvent<HTMLFormElement>) { 
 
         e.preventDefault();
-        
+
+        const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+
         try{
             const f = new FormData(e.currentTarget)
-            const send = await fetch('http://localhost:3000/api/MyPage', {
+            const send = await fetch('http://localhost:3000/api/user', {
                 method: "PUT",
                 body: f 
             }).then((response) => {
                 if (response.status !== 200) {
                     console.log(formData);
                 } else {
+
+                    loggedIn.nickname = formData.nickname
+                    sessionStorage.setItem('loggedInMember', JSON.stringify(loggedIn));
+
+                    console.log(sessionStorage);
+
                     alert(`닉네임이 ${formData.nickname}으로 성공적으로 변경되었습니다`);
-                    location.href='MyPage'
+                    location.href='user'
+                    
                 }
             }).catch((e) => {throw e}).finally()
         } catch(error) {
@@ -103,7 +119,8 @@ export default function MyPage() {
 
     return (
         <div className="max-w-xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">마이페이지</h2>
+            <h2 className="text-2xl font-bold mb-4">회원정보</h2>
+            
             <div className="mb-4">
                 <label className="block mb-2">비밀번호</label>
                 <input
@@ -147,23 +164,27 @@ export default function MyPage() {
                     </button>
                 </div>
             </form>
-            <div className="mb-4">    
-                <label className="block mb-2">전화번호</label>
-                <input
-                    type="text"
-                    name="phoneNum"
-                    value={formData.phoneNum}
-                    onChange={handleInputChange}
-                    className="border rounded py-2 px-3 w-full"
-                />
-                <label className="block mb-2">주소</label>
-                <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    className="border rounded py-2 px-3 w-full"
-                />
+            <div className="mb-4">
+                <div className='mb-4'>
+                    <label className="block mb-2">전화번호</label>
+                    <input
+                        type="text"
+                        name="phoneNum"
+                        value={formData.phoneNum}
+                        onChange={handleInputChange}
+                        className="border rounded py-2 px-3 w-full"
+                    />
+                </div>
+                <div className='mb-4'>
+                    <label className="block mb-2">주소</label>
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        className="border rounded py-2 px-3 w-full"
+                    />    
+                </div>      
             </div>
         </div>
     );

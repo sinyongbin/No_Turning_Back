@@ -43,7 +43,8 @@ export async function POST(req:NextRequest, res: NextResponse) {
         category: selectedCategory,
     }
     const post = await prisma.post.create({
-        data: insert
+        data: insert,
+        
     })
     return new Response("OK")
 }

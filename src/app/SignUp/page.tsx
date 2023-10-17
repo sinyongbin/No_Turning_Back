@@ -63,7 +63,7 @@ export default function Signup() {
         //const f = new FormData(e.currentTarget);
         // f.append('bio',bio);
         // f.append('nickName',nickName);
-        await fetch("http://localhost:3000/api/signup", {
+        await fetch("http://localhost:3000/api/login", {
           method: "POST",
           body: new FormData(e.currentTarget),
         })

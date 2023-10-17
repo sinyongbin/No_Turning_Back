@@ -70,13 +70,13 @@ export default function SellProduct() {
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
-          console.log('res:',res);
             window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
             
       }).catch((e) => {throw e}).finally()
     } catch (error) {
       console.log(error)
+      alert("업로드가 실패하였습니다")
     }
   }
 
