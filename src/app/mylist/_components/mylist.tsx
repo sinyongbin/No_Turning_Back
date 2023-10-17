@@ -2,21 +2,44 @@
 
 import { useState,useEffect } from "react";
 
-export default function Sporty() {
-  const [products, setProducts] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState([]);
+export default function MyList() {
+  const [products, setProducts] = useState([
+    {
+      "starting_price": "string",
+      "id": "string",
+      "email": "string",
+      "title": "string",
+      "content": "string",
+      "category": "$Enums.Category",
+      "categoryname": "string",
+      "create_date": "Date",
+      "update_date": "Date",
+    }
+  ]);
+  const [visibleProducts, setVisibleProducts] = useState([
+    {
+      "starting_price": "string",
+      "id": "string",
+      "email": "string",
+      "title": "string",
+      "content": "string",
+      "category": "$Enums.Category",
+      "categoryname": "string",
+      "create_date": "Date",
+      "update_date": "Date",
+    }
+  ]);
   
-  useEffect(() => {
-    // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/sportlist`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품 설정
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
+  // useEffect(() => {
+  //   // API 엔드포인트를 호출하여 데이터 가져오기
+  //   fetch(`http://localhost:3000/api/mylist`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setProducts(data);
+  //       setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품 설정
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
   
       const loadMoreProducts = () => {
           // "더 보기" 버튼을 클릭했을 때 실행되는 함수입니다.

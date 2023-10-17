@@ -9,18 +9,25 @@ import { redirect } from 'next/dist/server/api-utils';
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedInNickName,setIsLoggedInNickNmae] = useState('');
+  const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
   useEffect(() => {
     // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = sessionStorage.getItem('loggedInMember');
-    console.log(loggedIn?.length);
-    console.log(loggedIn);
-    if (loggedIn?.length != null) {
+    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}'); 
+    // 기본값으로 빈 객체 사용
+
+    //const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')!); 에서
+    //!의 용도는 null이 아니다라고 알려주는 용도인데, null 또는 undefined가 경우 JSON.parse에 전달되면 런타임에 오류가 발생
+
+    // 수정한 코드에서 || '{}'는 null 또는 undefined일 때, 빈 객체를 기본값으로 사용하기 위해서 추가 by chat gpt
+
+    if (loggedIn.nickname) {
       setIsLoggedIn(true);
-      setIsLoggedInNickNmae(loggedIn);
+      setIsLoggedInNickName(loggedIn.nickname);
+      
     }
   }, []);
+  
 
 
   const openModal = () => {
@@ -59,27 +66,21 @@ export default function App() {
                 신고
               </a>
             </li>
-            <li className="top_item">
-              <a href="/MyPage" className="top_link">
-                마이페이지
-              </a>
             {isLoggedIn ? (
-              <li className="top_item">
-                <div className="top_link">
-                {loggedInNickName}
-                </div>
+              <li className="top_item top_link">   
+                {loggedInNickName+'님'}             
               </li>
             ) : (  
               <li className="top_item">
-                <a href='SignUp' className="top_link">
+                <a href='signup' className="top_link">
                 회원가입
                 </a>
               </li>
             )}  
-            </li>
+            
             <li className="top_item">
-              <a href="/SignUp" className="top_link">
-                회원가입
+              <a href="/user" className="top_link">
+                마이페이지
               </a>
             </li>
             
@@ -111,6 +112,3 @@ export default function App() {
     </>
   );
 }
-
-
-

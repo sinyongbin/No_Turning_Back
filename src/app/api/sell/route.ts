@@ -44,7 +44,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
     }
 
     let insert = {
-        email: 'sauos12345@gmail.com', // 원래는 "vin0219@naver.com",
+        email: 'ss@gmail.com', // 원래는 "vin0219@naver.com",
         title: title.toString(),
         content: content.toString(),
         starting_price: parseInt(price.toString()),
@@ -57,13 +57,13 @@ export async function POST(req:NextRequest, res: NextResponse) {
         data: insert
     })
 
-    const profile = await prisma.profile.create({
-        data:{
-            bio: Gender.FEMALE,
-            email: "sauos12345@gmail.com",
-            nickname :"Lim",
-        },
-    })
+    // const profile = await prisma.profile.create({
+    //     data:{
+    //         bio: Gender.FEMALE,
+    //         email: "sauos12345@gmail.com",
+    //         nickname :"Lim",
+    //     },
+    // })
 
     // console.log(post);
     // console.log(profile);

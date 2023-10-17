@@ -54,12 +54,12 @@ export default function Login() {
           .then((response)=>{
             if(response.status===200){
               return response.json().then((data) => {
-                console.log("세션 정보:", data.sessionInfo);
-                console.log("넘겨준거:", data.nickname);
+                // console.log("세션 정보:", data.sessionInfo);
+                // console.log("넘겨준거:", data.nickname);
 
-                sessionStorage.setItem('loggedInMember', JSON.stringify(data.nickname));
-                         
-               
+                sessionStorage.setItem('loggedInMember', JSON.stringify(data));
+                // console.log("data: ", data);
+                // console.log("session: ", sessionStorage);
                 alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });
@@ -194,17 +194,6 @@ export default function Login() {
           </div>
         </div>
       </form>
-      
-          <button 
-          type="submit" 
-          className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg"
-          // onClick={()=>{
-          //   router.push("http://localhost:3000//SignUp")
-          // }}
-          onClick={()=>{window.location.href = 'SignUp'}} 
-          >
-            회원가입
-          </button>
     </div>
   )
 }

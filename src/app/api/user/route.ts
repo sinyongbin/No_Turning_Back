@@ -5,13 +5,13 @@ import prisma from "@/db";
 
 export async function GET() {
     const data = await prisma.profile.findMany({
-    select :  {
-        nickname: true,
-        email: true,
-    },
-    where : {
-        email: 'sauos12345@gmail.com',
-    }
+        select :  {
+            nickname: true,
+            email: true,
+        },
+        where : {
+            email: 'ss@gmail.com'
+        }
     })
     return NextResponse.json(data)
 }
@@ -30,7 +30,7 @@ export async function PUT(req:NextRequest, res: NextResponse) {
             nickname: nickname.toString(),
         },
         where : {
-            email: 'sauos12345@gmail.com'
+            email: 'ss@gmail.com'
         }
     })
     return new Response("OK")

@@ -75,12 +75,14 @@ export default function SellProduct() {
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
+            alert("업로드가 성공하였습니다")
             window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
             console.log(res);
       }).catch((e) => {throw e}).finally()
     } catch (error) {
       console.log(error)
+      alert("업로드가 실패하였습니다")
     }
   }
 
