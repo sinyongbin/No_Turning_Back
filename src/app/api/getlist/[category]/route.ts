@@ -4,6 +4,7 @@ import { Category } from "@prisma/client";
 
 export async function GET(req: NextRequest, context: { params: any }) {
     let category = context.params.category;
+    console.log("category",category);
     let selectedCategory;
     if (category === 'beauty') {
       selectedCategory = Category.beauty;
@@ -21,9 +22,10 @@ export async function GET(req: NextRequest, context: { params: any }) {
 
     try{
         const result = await prisma.post.findMany({where:{category:selectedCategory},
-        orderBy:{
-            create_date:"desc",
-        }},
+        // orderBy:{
+        //     create_date:"desc",
+        // }
+      },
             );
         return NextResponse.json(result);
     }catch(err)

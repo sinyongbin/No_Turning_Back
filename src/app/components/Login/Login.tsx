@@ -55,7 +55,7 @@ export default function Login() {
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
       sessionStorage.setItem('loggedInfo', temp.result.nickname)
       alert(temp.result.nickname+'님 환영합니다')
-      location.href='./'
+      // location.href='./'
     }
   }
   

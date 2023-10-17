@@ -1,14 +1,12 @@
 "use client"
 
-import { log } from "console";
 import { useState,useEffect } from "react";
-import { clearScreenDown } from "readline";
 
 export default function Page(query:{params : any}) {
     const [products, setProducts] = useState([]);
     const [visibleProducts, setVisibleProducts] = useState([]);
 
-    let category = query.params.slug[0]
+    let category = query.params.slug[0];
     
     useEffect(()=>{
         getData();
