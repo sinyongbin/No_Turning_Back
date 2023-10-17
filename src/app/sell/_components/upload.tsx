@@ -1,6 +1,7 @@
 'use client'
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Dropdown from "../../components/dropdown";
+import UploadSubmit from './uploadSubmit';
 
 const backGroundStyle = {
   // backgroundImage: "url('/img/경매이미지.png')",
@@ -12,28 +13,21 @@ export default function SellProduct() {
   const [category, setCategory] = useState('');
   const [categoryTag, setCategoryTag] = useState(''); // 카테고리 태그 상태
   const [sessionNickname, setSessionNickname] = useState('');
-// 컴포넌트가 처음 로드될 때 실행
-useEffect(() => {
-  const storedData = sessionStorage.getItem('loggedInMember');
-  if (storedData) {
-    const { nickname } = JSON.parse(storedData);
-    setSessionNickname(nickname);
-  }
-}, []);
+  const [sessionEmail, setSessionEmail] = useState('');
+  const [previewImg, setPreviewImg] = useState<any>([]);
 
-  useEffect(() => {
-    // 서버로부터 닉네임 데이터를 가져오는 API 요청
-    fetch('/api/signup') // 서버의 API 엔드포인트에 따라 수정 필요
-      .then((response) => response.json())
-      .then((data) => {
-        // API 응답에서 가져온 닉네임을 상태에 설정
-        setSessionNickname(data.nickname);
-      })
-      .catch((error) => {
-        console.error('Error nickname:', error);
-      });
   
 
+  // 컴포넌트가 처음 로드될 때 실행
+  useEffect(() => {
+    // sessionStorage에서 nickname 가져오기
+    const user = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}'); 
+    // console.log(user.email);
+    if (user.nickname) {
+      // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
+      setSessionNickname(user.nickname);
+      setSessionEmail(user.email);
+    }
   }, []);
   
 
@@ -47,23 +41,39 @@ useEffect(() => {
     setCategoryTag(e.target.value);
   }
 
- 
+  // const handleCategoryTagChange = (e:any) => {
+  //   // 입력 필드의 새로운 값을 상태(State)에 업데이트합니다.
+  //   setCategoryTag(e.target.value);
+  // };
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-
     try {
-      const f = new FormData(event.currentTarget)
+      const f = await new FormData(event.currentTarget)
+      const jsonData = 
+      [{
+        email: sessionEmail,
+        title : f.get("title")?.toString(), 
+        categoryname:f.get("categoryname")?.toString(), 
+        price: f.get("price")?.toString(),
+        content: f.get("content")?.toString(),
+        category: f.get("category")?.toString(),
+        images:previewImg}
+    ]
+    console.log(jsonData)
       const send = await fetch('http://localhost:3000/api/sell',{
         method: 'POST',
-        body : f
+        body : JSON.stringify(jsonData),
+        headers: {
+          "Content-Type": `application/json`, // application/json 타입 선언
+        }
       }).then((res) =>{
         //성공시 처리 
           if(res.status == 200)
+          console.log('res:',res);
             window.location.href= '/' //Home 으로 이동 
             //alert("Message : " +200)
-            console.log(res);
+            
       }).catch((e) => {throw e}).finally()
     } catch (error) {
       console.log(error)
@@ -91,7 +101,7 @@ useEffect(() => {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset">
                     <input
                       type="text"
-                      name="email" 
+                      name="nickname" 
                       id="username"
                       autoComplete="username"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
@@ -110,7 +120,7 @@ useEffect(() => {
                   </label>
                   <div className="mt-2 w-[448px]">
                     <input
-                      id="title"
+                      id="titles"
                       name="title"
                       type="text"
                       placeholder="제목"
@@ -155,6 +165,10 @@ useEffect(() => {
                     className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   />
                 </div>
+                
+                <div className='mx-48 flex'>
+                    <UploadSubmit previewImg={previewImg} setPreviewImg={setPreviewImg} />
+                </div>
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1">
                   <div className="sm:col-span-3">
@@ -162,7 +176,7 @@ useEffect(() => {
                       시작 가격
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       id="start-price"
                       name="price"
                       placeholder="가격을 입력해 주세요"
@@ -187,18 +201,13 @@ useEffect(() => {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                  {/* <button
-                    type="submit"
-                    className="rounded-md bg-red-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                  >
-                    작성 완료
-                  </button> */}
                   <button
                     type="submit"
                     className="rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                   >
-                    다음
+                    등록
                   </button>
+                  
                 </div>
               </div>
             </div>

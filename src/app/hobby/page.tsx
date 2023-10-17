@@ -41,7 +41,7 @@ export default function Hobby() {
                           {/* 상품 정보를 표시하는 코드를 추가하세요. */}
                           <a href={`/listdetail/${products.id}`} className="group">
                             <img
-                              src={products.imageSrc}
+                              src={products.images}
                               alt={products.imageAlt}
                               className="h-full w-full object-cover object-center group-hover:opacity-75"
                               style={{ width: '280px', height: '280px' }}

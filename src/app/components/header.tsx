@@ -69,7 +69,7 @@ export default function App() {
                 회원가입
                 </a>
               </li>
-            )}            
+            )}  
             <li className="top_item">
               <a href="/MyPage" className="top_link">
                 마이페이지
@@ -103,3 +103,5 @@ export default function App() {
     </>
   );
 }
+
+

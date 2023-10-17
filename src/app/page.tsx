@@ -8,9 +8,6 @@ import MainList from './components/mainList'
 
 
 
-
-
-
 export default function Home() {
   
   // async function test(){

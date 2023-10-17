@@ -3,9 +3,6 @@ import { Disclosure } from '@headlessui/react'
 import Dropdown from './dropdown';
 import SearchBar from './searchbar';
 
-// function classNames(...classes: any) {
-//     return classes.filter(Boolean).join(' ')
-// }
 
 const navigation = [
     { name: '패션/뷰티', href: 'beauty', current: true },

@@ -12,8 +12,8 @@ export async function GET(){
           starting_price: true,
           category: true,       
           images: true,
-        
       },
+      orderBy: { create_date: "desc" },
   });      
       
      // BigInt 값을 문자열로 변환

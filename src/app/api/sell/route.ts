@@ -5,7 +5,7 @@ import { Category } from "@prisma/client";
 
 export async function POST(req:NextRequest, res: NextResponse) {
   let data = await req.json()
-  console.log("데이터좀 보라고: ", data);
+  // console.log("데이터좀 보라고: ", data);
 //  console.log(data[0].email)
     // const data = await req.formData();
     // console.log('body입니다:', data);
@@ -18,7 +18,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
     
     // console.log('body입니다:', email);
     // // console.log('images',images.toString());
-    console.log('email이라구',data[0].email)
+    // console.log('email이라구',data[0].email)
     let selectedCategory;
     if (data[0].category === 'beauty') {
       selectedCategory = Category.beauty;
