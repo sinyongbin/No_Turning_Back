@@ -2,13 +2,13 @@
 
 import { useState,useEffect } from "react";
 
-export default function Etc() {
+export default function Hobby() {
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`http://localhost:3000/api/etclist`)
+    fetch(`http://localhost:3000/api/hobbylist`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -38,9 +38,9 @@ export default function Etc() {
                       {visibleProducts.map((products:any) => (
                         <div key={products.id} className="product-item">
                           {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                          <a key={products.id} href={products.href} className="group">
+                          <a key={products.id} href='listdetail' className="group">
                             <img
-                              src={products.imageSrc}
+                              src={products.images}
                               alt={products.imageAlt}
                               className="h-full w-full object-cover object-center group-hover:opacity-75"
                               style={{ width: '280px', height: '280px' }}

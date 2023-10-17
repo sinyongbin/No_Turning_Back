@@ -1,8 +1,8 @@
 'use client'
 
+import Nav from '@/app/components/nav';
 import React, { Component, useState } from 'react';
-import Detail from './_components/detail';
-import Nav from '../components/nav';
+import Detail from '../_components/detail';
 
 
 export default function Buy() {

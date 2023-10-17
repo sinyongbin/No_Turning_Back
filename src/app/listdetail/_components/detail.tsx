@@ -14,15 +14,26 @@ export default function Detail(id: any) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [postData, setPostData] = useState({});
 
+
+  // async function getId() {
+  //   await fetch(`http://localhost:3000/api/finddetail/${id}`)
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     setPostData(data);
+  //   })
+  //   .catch((error) => {
+  //     console.error('서버 요청실패', error);
+  //   });
+  // }
   useEffect(() => {
-    fetch(`http://localhost:3000/api/finddetail?id=${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPostData(data);
-      })
-      .catch((error) => {
-        console.error('서버 요청실패', error);
-      });
+    fetch(`http://localhost:3000/api/listdetail/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+      setPostData(data);
+    })
+    .catch((error) => {
+      console.error('서버 요청실패', error);
+    });
   }, [id]); // id값을 가지고 들어간 데이터각 처음에 보여야 하기 때문
   
   const [comments, setComments] = useState([
@@ -108,7 +119,7 @@ export default function Detail(id: any) {
                   입찰하기
                   {/* <Modal></Modal> */}
                 </button>
-                {isModalOpen && <Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                {isModalOpen && < Modal isOpen={isModalOpen} closeModal={closeModal} />}
                 {/* isOpen, closeModal는 <Modal> 컴포넌트의 prop(속성) 중 하나이다. 이 prop은 모달 창이 열려 있는지 닫혀 있는지를 나타내는 값을 받는다. */}
                 {/* 여기서는 isModalOpen 변수의 값을 전달하여 모달을 열거나 닫는다 */}
               </div>

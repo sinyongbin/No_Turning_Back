@@ -16,7 +16,7 @@ export default function Login() {
     password: '',
     nickname: '',
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(()=>{
     const emailS =window.localStorage.getItem("email")
@@ -54,12 +54,13 @@ export default function Login() {
           .then((response)=>{
             if(response.status===200){
               return response.json().then((data) => {
-                console.log("세션 정보:", data.sessionInfo);
+                console.log("세션 정보:", data.sessionInfo); // f12 콘솔창에 찍힘
                 console.log("넘겨준거:", data.nickname);
 
                 sessionStorage.setItem('loggedInMember', JSON.stringify(data));
-                         
-               
+                sessionStorage.setItem('email', data.email);
+                sessionStorage.setItem('nickname', data.nickname);
+
                 alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });

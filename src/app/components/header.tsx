@@ -53,7 +53,7 @@ export default function App() {
               </a>
             </li>
             <li className="top_item">
-              <a href="/notice" className="top_link">
+              <a href="/report" className="top_link">
                 신고
               </a>
             </li>
