@@ -81,7 +81,6 @@ export default function ImageViewer() {
                                 overflowX: 'hidden',
                                 scrollbarColor:'transparent transparent'
                             }}>
-             
                             <TabListItem />
                         </div>
 

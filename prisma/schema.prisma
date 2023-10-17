@@ -35,8 +35,8 @@ model Post {
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
   // create_date DateTime 
   // end_date BigInt
-  // update_date DateTime @updatedAt
-  create_date    DateTime  @default(now())
+  // create_date    DateTime
+  // end_date       BigInt
   update_date    DateTime  @updatedAt
 }
 
@@ -59,11 +59,13 @@ enum Category {
   car
   etc
 }
-model Image{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+model Image {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
   postId String
 }
-model ImageFile{
+
+model ImageFile {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
