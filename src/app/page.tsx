@@ -11,7 +11,6 @@ import MainList from './components/mainList'
 export default function Home() {
   return (
     <>
-
     <div>
       <Nav/>
     </div>

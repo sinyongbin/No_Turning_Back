@@ -1,6 +1,5 @@
 "use client"
 
-import { log } from 'console';
 import React, { FormEvent, useEffect, useState } from 'react';
 
 export default function User() {

@@ -27,12 +27,14 @@ model Post {
   title          String
   content        String
   comments       Comment[] // Comment 모델의 배열 형태로, 해당 게시물과 연결된 댓글
-  starting_price BigInt
+  starting_price Int
   // current_price BigInt
   category       Category
   categoryname   String
   images         String[]
   // publicInfo PublicInfo @default(PUBLIC) // 기본값으로 PUBLIC를 설정한다
+  create_date    DateTime  @default(now())
+  update_date    DateTime  @updatedAt
   // create_date DateTime 
   // end_date BigInt
   // create_date    DateTime
@@ -44,11 +46,19 @@ model Comment {
   cid         String     @id @default(auto()) @map("_id") @db.ObjectId
   post        Post       @relation(fields: [id], references: [id])
   id          String     @db.ObjectId
-  guestemail  String
+  email       String
   content     String
   publicInfo  PublicInfo @default(PUBLIC)
-  createAt    DateTime   @default(now())
-  update_date DateTime   @updatedAt
+  create_date DateTime
+  end_date    DateTime
+}
+
+model Report {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  title       String
+  content     String
+  create_date DateTime @default(now())
 }
 
 enum Category {
@@ -58,6 +68,16 @@ enum Category {
   sport
   car
   etc
+  report
+}
+
+model Image {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  postId String
+}
+
+model ImageFile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model Image {
