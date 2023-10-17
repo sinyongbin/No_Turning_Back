@@ -21,7 +21,7 @@ export async function GET() {
 export async function PUT(req:NextRequest, res: NextResponse) {
 
     const data = await req.formData();
-    console.log("몽고로 넘어온 data: ",data);
+    console.log("몽고로 넘어온 닉네임 수정 data: ",data);
 
     let { nickname } = Object.fromEntries(data);
 

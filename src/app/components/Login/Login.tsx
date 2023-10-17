@@ -2,7 +2,7 @@
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
-import Link from "next/link";
+
 
 export default function Login() {
   const router = useRouter()
@@ -16,7 +16,7 @@ export default function Login() {
     password: '',
     nickname: '',
   });
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(()=>{
     const emailS =window.localStorage.getItem("email")
@@ -49,7 +49,7 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          fetch(`http://localhost:3000/api/signup?email=${email}`,
+          fetch(`http://localhost:3000/api/login?email=${email}`,
           {method: 'GET'})
           .then((response)=>{
             if(response.status===200){

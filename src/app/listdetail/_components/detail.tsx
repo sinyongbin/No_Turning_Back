@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import BottomList from './bottomlist';
-import Modal from './modal';
+
 import ImageViewer from './detailImg';
 // import Modal from './Modal';
 // import MainList from './MainList';
@@ -128,7 +128,7 @@ export default function Detail(id: any) {
                   입찰하기
                   {/* <Modal></Modal> */}
                 </button>
-                {isModalOpen && < Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                
                 {/* isOpen, closeModal는 <Modal> 컴포넌트의 prop(속성) 중 하나이다. 이 prop은 모달 창이 열려 있는지 닫혀 있는지를 나타내는 값을 받는다. */}
                 {/* 여기서는 isModalOpen 변수의 값을 전달하여 모달을 열거나 닫는다 */}
               </div>

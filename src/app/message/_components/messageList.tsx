@@ -2,8 +2,18 @@
 
 import { log } from 'console';
 import React, { FormEvent, useEffect, useState } from 'react';
+import Modal from './modal';
 
-export default function User() {
+export default function MessageList() {
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [postData, setPostData] = useState({});
+    const [messages, setMessages] = useState([]);
+
+    // 이후 쪽지 추가를 위한 함수
+    const addMessage = (message) => {
+      setMessages([...messages, message]);
+    };
+  
 
     const [formData, setFormData] = useState({
         email: '',
@@ -111,77 +121,60 @@ export default function User() {
             console.log('UPDATE 요청 실패!:', error)
         }
 
+
     }
+    const openModal = () => {
+        setModalOpen(true);
+    };
+    
+      const closeModal = () => {
+        setModalOpen(false);
+    };
+      
 
     return (
-        <div className="max-w-xl mx-auto p-4">
-            <h2 className="text-2xl font-bold mb-4">회원정보</h2>
-            
-            <div className="mb-4">
-                <label className="block mb-2">비밀번호</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={passwordData.password}
-                    onChange={handleInputChange}
-                    className="border rounded py-2 px-3 w-full"
-                />
-                <label className="block mt-2 mb-2">비밀번호 확인</label>
-                <input
-                    type="password"
-                    name="ConfirmPassword"
-                    value={passwordData.ConfirmPassword}
-                    onChange={handleInputChange}
-                    className="border rounded py-2 px-3 w-full"
-                />
-                <button
-                    type="button"
-                    onClick={passwordChange}
-                    className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                    비밀번호 변경
-                </button>
-            </div>
-            <form onSubmit={nicknameChange}>
+        <>
+            <div className="mx-48 p-4 ">
+                <div>
+                    <button className="btn_action w-auto text-2xl font-bold mb-4 bg-orange-600 text-white px-4 py-4 rounded-lg hover:bg-red-300 " onClick={openModal}>
+                        쪽지보내기(이건 입찰하기버튼 아래 넣을건데 여기에 일단 띄움)
+                    </button>
+                    {isModalOpen && < Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                </div>
+
                 <div className="mb-4">
-                    <label className="block mb-2">닉네임</label>
-                    <input
-                        type="text"
-                        name="nickname"
-                        value={formData.nickname}
-                        onChange={handleInputChange}
-                        className="border rounded py-2 px-3 w-full"
-                    />
-                    <button
-                        type="submit"
-                        className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    >
-                        닉네임 변경
+                    <table className="border-collapse w-full">
+                        <thead>
+                            <tr>
+                            <th className="border border-gray-300 p-2 w-7/12">제목</th>
+                            <th className="border border-gray-300 p-2 w-2/12">닉네임</th>
+                            <th className="border border-gray-300 p-2 w-2/12">올린 날짜</th>
+                            <th className="border border-gray-300 p-2 w-1/12 ">답장</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {messages.map((message, index) => (
+                            <tr key={index}>
+                            <td className="border border-gray-300 p-2">{message.title}</td>
+                            <td className="border border-gray-300 p-2">{message.nickname}</td>
+                            <td className="border border-gray-300 p-2">{message.date}</td>
+                            <td className="border border-gray-300 p-2">
+                                <button className="bg-blue-500 text-white py-1 px-6 rounded-md hover:bg-blue-700 flex items-center justify-center" onClick={openModal}>
+                                답장
+                                </button>
+                                {isModalOpen && < Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                            </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    {/* 새 쪽지 추가 버튼 */}
+                    <button onClick={() => addMessage({ title: 'ㅇ11', nickname: 'ㅇ11', date: '2023-10-15' })}>
+                        새 쪽지 추가
                     </button>
                 </div>
-            </form>
-            <div className="mb-4">
-                <div className='mb-4'>
-                    <label className="block mb-2">전화번호</label>
-                    <input
-                        type="text"
-                        name="phoneNum"
-                        value={formData.phoneNum}
-                        onChange={handleInputChange}
-                        className="border rounded py-2 px-3 w-full"
-                    />
-                </div>
-                <div className='mb-4'>
-                    <label className="block mb-2">주소</label>
-                    <input
-                        type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        className="border rounded py-2 px-3 w-full"
-                    />    
-                </div>      
+                
             </div>
-        </div>
+        </>
     );
 }

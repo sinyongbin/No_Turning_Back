@@ -50,12 +50,12 @@ export default function App() {
         <div className="top_inner">
           <ul className="top_list">
             <li className="top_item">
-              <a href="/sell" className="top_link">
+              <a href="sell" className="top_link">
                 물품등록
               </a>
             </li>
             <li className="top_item">
-              <a href="/report" className="top_link">
+              <a href="report" className="top_link">
                 신고
               </a>
             </li>
@@ -65,13 +65,13 @@ export default function App() {
               </li>
             ) : (  
               <li className="top_item">
-                <a href='signup' className="top_link">
+                <a href='Signup' className="top_link">  
                 회원가입
                 </a>
               </li>
             )}  
             <li className="top_item">
-              <a href="/user" className="top_link">
+              <a href="user" className="top_link">
                 마이페이지
               </a>
             </li>
@@ -95,7 +95,7 @@ export default function App() {
       </div>
       <div className="text-6xl text-center h-50 w-50 flex items-center justify-center">
         <a href="/">
-          <img src="img/3.png" className="mx-auto my-auto" alt="" />
+          <img src="/img/3.png" className="mx-auto my-auto" alt="" />
         </a>
       </div>
 
