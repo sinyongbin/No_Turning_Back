@@ -3,6 +3,7 @@ import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent}
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
+import { Z_FIXED } from 'zlib';
 
 export default function Login() {
   const router = useRouter()
@@ -49,7 +50,7 @@ export default function Login() {
       })
       .then((response) => {
         if (response.status === 200) {
-          fetch(`http://localhost:3000/api/signup?email=${email}`,
+          fetch(`http://localhost:3000/api/longin/${email}`,
           {method: 'GET'})
           .then((response)=>{
             if(response.status===200){
@@ -58,7 +59,9 @@ export default function Login() {
                 // console.log("넘겨준거:", data.nickname);
 
                 sessionStorage.setItem('loggedInMember', JSON.stringify(data));
-                         
+                // sessionStorage.setItem('loggedInMember', data.email);
+                // sessionStorage.setItem('loggedInMember', data.nickname);
+
                
                 alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';

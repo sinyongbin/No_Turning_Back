@@ -10,7 +10,7 @@ export async function GET() {
             email: true,
         },
         where : {
-            email: 'ss@gmail.com'
+            email: 'q@naver.com'
         }
     })
     return NextResponse.json(data)
@@ -30,7 +30,7 @@ export async function PUT(req:NextRequest, res: NextResponse) {
             nickname: nickname.toString(),
         },
         where : {
-            email: 'ss@gmail.com'
+            email: 'q@naver.com'
         }
     })
     return new Response("OK")
