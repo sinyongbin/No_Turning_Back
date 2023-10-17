@@ -25,8 +25,17 @@ export default function Detail(id: any) {
   //     console.error('서버 요청실패', error);
   //   });
   // }
+  // fetch(`http://localhost:3000/api/listdetail/` + id)
+  //           .then(res=>res.json())
+  //           .then(result=>{
+  //               console.log(result);
+  //               const lastid = result.id; // result의 id값을 받았다
+  //               router.refresh();
+  //               router.push(`/read/${lastid}`); // 방금 생성한글로 redirection시킴 
+  //           })
+  
   useEffect(() => {
-    fetch(`http://localhost:3000/api/listdetail/${id}`)
+    fetch(`http://localhost:3000/api/listdetail/` + id)
     .then((response) => response.json())
     .then((data) => {
       setPostData(data);

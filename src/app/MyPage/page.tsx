@@ -21,10 +21,10 @@ export default function MyPage() {
     
         fetch(`/member/member_info/${email}`, {
             method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            // headers: {
+            //     'Accept': 'application/json',
+            //     'Content-Type': 'application/json'
+            // }
         }).then(res=>res.json()).then(res=>{
             setFormData(res);
             console.log(1, res);
@@ -32,10 +32,10 @@ export default function MyPage() {
         try {
             fetch('http://localhost:3000/api/MyPage',{
                 method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+                // headers: {
+                //     'Accept': 'application/json',
+                //     'Content-Type': 'application/json'
+                // }
             }).then(res=>res.json()).then(res =>{
                 setFormData(res[0]);
                 console.log(1, res);
