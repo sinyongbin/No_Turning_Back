@@ -2,7 +2,6 @@
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2';
 import { log } from 'console';
 
 export default function Login() {
@@ -41,20 +40,18 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      const temp =await fetch(`api/login/${email}/${password}`,{
+      const temp =await fetch(`http://localhost:3000/api/login/${email}/${password}`,{
           method: "GET",
           headers:{
             accept : "application/json"
           }
       }).then(e=>{
-          // console.log(e.status)
-          let temp = (e.json())         
+          let temp = (e.json());         
          return temp;
       })
-      // console.log(temp.result.nickname)
-      
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
-      sessionStorage.setItem('loggedInfo', temp.result.nickname)
+      sessionStorage.setItem('loggedInfo', temp.result.nickname);
+      sessionStorage.setItem('loggedEmail',temp.result.email);
       alert(temp.result.nickname+'님 환영합니다')
       location.href='./'
     }

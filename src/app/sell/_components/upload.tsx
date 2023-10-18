@@ -21,12 +21,14 @@ export default function SellProduct() {
   // 컴포넌트가 처음 로드될 때 실행
   useEffect(() => {
     // sessionStorage에서 nickname 가져오기
-    const user = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}'); 
+    const user = (sessionStorage.getItem('loggedInfo')||'{}'); 
+    const userEmail = (sessionStorage.getItem('loggedEmail')||'{}'); 
+
     // console.log(user.email);
-    if (user.nickname) {
+    if (user) {
       // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
-      setSessionNickname(user.nickname);
-      setSessionEmail(user.email);
+      setSessionNickname(user);
+      setSessionEmail(userEmail);
     }
   }, []);
   
