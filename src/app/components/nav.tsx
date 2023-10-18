@@ -3,18 +3,14 @@ import { Disclosure } from '@headlessui/react'
 import Dropdown from './dropdown';
 import SearchBar from './searchbar';
 
-// function classNames(...classes: any) {
-//     return classes.filter(Boolean).join(' ')
-// }
 
 const navigation = [
-    { name: '패션/뷰티', href: 'beauty', current: true },
-    { name: '취미/키덜트', href: 'hobby', current: false },
-    { name: '디지털/가구/가전', href: 'digital', current: false },
-    { name: '스포츠', href: 'sport', current: false },
-    { name: '자동차', href: 'car', current: false },
-    { name: '기타', href: 'etc', current: false },
-    
+    { name: '패션/뷰티', href: 'list/beauty', current: true },
+    { name: '취미/키덜트', href: 'list/hobby', current: false },
+    { name: '디지털/가구/가전', href: 'list/digital', current: false },
+    { name: '스포츠', href: 'list/sport', current: false },
+    { name: '자동차', href: 'list/car', current: false },
+    { name: '기타', href: 'list/etc', current: false },
 ]
 
 export default function Nav() {
@@ -55,9 +51,9 @@ export default function Nav() {
                                     onChange={handleInputChange}/> )}
                                 <button className="search-icon" onClick={searchToggle}>
                                 <div className="center-icon"> {/* 아이콘을 중앙에 배치하기 위한 래퍼 요소 */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                    </svg> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"           stroke="currentColor" className="w-8 h-8 text-current">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
                                 </div>
                                 </button>
                             </div>
@@ -87,19 +83,7 @@ export default function Nav() {
             </div>
             )}  
         </Disclosure>
-        
-        
-        
-        
-        
-        
 
-        {/* <div className='sellButton'>
-            <Link href='/sell'> 
-                <button className='sell'>상품판매</button>
-            </Link>
-        </div> */}
-        
         </>
     );
 }

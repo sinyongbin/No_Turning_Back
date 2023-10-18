@@ -90,10 +90,8 @@ export default function SellProduct() {
               <span className="tab_hi">경매 올리기</span>
             </div>
           </div>
-
           <div className='mx-[10%]'>
             <div className="border-gray-900/10 pb-12">
-
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
                   <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">

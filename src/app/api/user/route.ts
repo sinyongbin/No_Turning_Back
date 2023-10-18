@@ -23,11 +23,12 @@ export async function PUT(req:NextRequest, res: NextResponse) {
     const data = await req.formData();
     console.log("몽고로 넘어온 data: ",data);
 
-    let { nickname } = Object.fromEntries(data);
+    let { nickname,email } = Object.fromEntries(data);
 
     const update = await prisma.profile.updateMany({
         data: {
             nickname: nickname.toString(),
+            email:email.toString()
         },
         where : {
             email: 'ss@gmail.com'
