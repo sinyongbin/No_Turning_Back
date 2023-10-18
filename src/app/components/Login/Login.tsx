@@ -58,8 +58,8 @@ export default function Login() {
                 // console.log("넘겨준거:", data.nickname);
 
                 sessionStorage.setItem('loggedInMember', JSON.stringify(data));
-                         
-               
+              
+              
                 alert(`안녕하세요! ${data.nickname} 님`);
                 window.location.href = '/';
               });
@@ -138,10 +138,6 @@ export default function Login() {
   
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
-
-  // function SignUp() {
-  //   window.location.href = 'SignUp';
-  // }
 
   return (
     <div>

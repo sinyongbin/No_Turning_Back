@@ -60,22 +60,18 @@ export default function App() {
               </a>
             </li>
             {isLoggedIn ? (
-              <li className="top_item top_link">   
-                {loggedInNickName+'님'}             
+              <li className="top_item">
+                <a href="/user" className="top_link">
+                  {loggedInNickName+'님'}    
+                </a>   
               </li>
             ) : (  
               <li className="top_item">
-                <a href='signup' className="top_link">
+                <a href='/signup' className="top_link">
                 회원가입
                 </a>
               </li>
             )}  
-            <li className="top_item">
-              <a href="/user" className="top_link">
-                마이페이지
-              </a>
-            </li>
-            
             {isLoggedIn ? (
               <li className="top_item">
                 <button onClick={handleLogout} className="top_link">

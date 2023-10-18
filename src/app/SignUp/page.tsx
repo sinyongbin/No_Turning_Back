@@ -29,8 +29,14 @@ export default function Signup() {
     const nickName = formData.nickName;
     const bio = formData.bio;
 
+    const phoneNumValue = parseFloat(formData.phoneNum); // 숫자 유효성 검사
+
     formData.address = formData.address + ' ' + formData.detailAddress;
 
+    if (isNaN(phoneNumValue)) {
+      alert("숫자 형태로 입력해주세요!");
+      return;
+    }
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;

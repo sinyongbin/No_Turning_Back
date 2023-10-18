@@ -31,7 +31,7 @@ export default function User() {
             console.log(1, res);
         })
         try {
-            fetch('http://localhost:3000/api/user',{
+            fetch(`http://localhost:3000/api/signup?email=${loggedInfo.email}`,{
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -59,6 +59,11 @@ export default function User() {
 
         const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
 
+        if (passwordData.password !== passwordData.ConfirmPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
         try{
             fetch(`/member/member_info/${loggedInfo.email}`, {
                 method: "PUT",
@@ -73,7 +78,7 @@ export default function User() {
                 } else {
                     
                     alert(`${loggedInfo.nickname}님의 비밀번호가 성공적으로 변경되었습니다`);
-                    location.href='MyPage'
+                    location.href='user'
                 }
             })
         } catch(error) {
@@ -103,7 +108,7 @@ export default function User() {
                     console.log(sessionStorage);
 
                     alert(`닉네임이 ${formData.nickname}으로 성공적으로 변경되었습니다`);
-                    location.href='MyPage'
+                    location.href='user'
                     
                 }
             }).catch((e) => {throw e}).finally()
