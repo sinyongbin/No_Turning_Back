@@ -8,8 +8,10 @@ export default function Page() {
     useEffect(()=>{
         getData()
     },[])
-    useEffect(()=>{      
+    useEffect(()=>{  
+        
     },[data])
+
     async function getData() {
         const result =  await fetch(`api/getlist`,{
             method:"GET",
@@ -21,9 +23,9 @@ export default function Page() {
         })
         setData(result)
     }
+
     async function handleOnClick(i : number)
     {   
-
         location.href= `getlist/${data[i].category_type}/${data[i].id}`
     }
 

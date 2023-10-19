@@ -1,11 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
+import ImageViewer from "@/app/listdetail/_components/detailImg";
+import { log } from "console";
 import { useState,useEffect } from "react";
+
 
 export default function Page(query:{params : any}) {
     const [products, setProducts] = useState([]);
     const [visibleProducts, setVisibleProducts] = useState([]);
+    const [isOpen , setIsOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [postData, setPostData] = useState<any>([]);
 
     let category = query.params.slug[0];
     
@@ -34,6 +40,17 @@ export default function Page(query:{params : any}) {
           setVisibleProducts((prevProducts) => [...prevProducts, ...nextProducts]);
         }
       };
+
+      const openModal = () => {
+    
+        setModalOpen(true);
+      };
+      
+      const closeModal = () => {
+        setModalOpen(false);
+      };
+    
+    
 
       return (
             

@@ -21,7 +21,7 @@ export default function MainList() {
       })
       .catch((error) => console.error(error));
   }, []);
- 
+
 
 
     const loadMoreProducts = () => {
@@ -48,16 +48,15 @@ export default function MainList() {
             </Link> */}
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
-
               {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
               <div className="product-grid">
                 <div className="grid grid-cols-4 gap-4">
                   {visibleProducts.map((products:any) => (
                     <div key={products.id} className="product-item">
                       {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                      <a key={products.id} href={products.href} className="group">
+                      <a href={`listdetail/${products.id}`} className="group">
                         <img
-                          src={products.imageSrc}
+                          src={products.images}
                           alt={products.imageAlt}
                           className="h-full w-full object-cover object-center group-hover:opacity-75"
                           style={{ width: '280px', height: '280px' }}

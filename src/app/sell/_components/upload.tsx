@@ -167,7 +167,7 @@ export default function SellProduct() {
                     className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   />
                 </div>
-                
+
                 <div className='mx-48 flex'>
                     <UploadSubmit previewImg={previewImg} setPreviewImg={setPreviewImg} />
                 </div>

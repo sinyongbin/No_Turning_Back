@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
@@ -18,7 +18,7 @@ export default function Login() {
 
 
   useEffect(()=>{
-    const emailS =window.localStorage.getItem("email")
+    const emailS = window.localStorage.getItem("email")
     const toggle : boolean = window.localStorage.getItem("switch") === "TRUE" ? true : false
     if(toggle && emailS != "")
     {  
@@ -51,11 +51,14 @@ export default function Login() {
           return temp2;
       })
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
-      console.log('닉네임은?: ',temp.result.nickname);
-      
-      sessionStorage.setItem('loggedInfo', temp.result.nickname);
-      sessionStorage.setItem('loggedEmail',temp.result.email);
-      alert(temp.result.nickname+'님 환영합니다')
+
+      if (temp.result.nickName == undefined) {
+        alert('다시 시도해주세요!')
+      } else {
+        sessionStorage.setItem('loggedInfo', temp.result.nickname);
+        sessionStorage.setItem('loggedEmail',temp.result.email);
+        alert(temp.result.nickname+'님 환영합니다')
+      }
 
       location.href='/'
     }
@@ -77,7 +80,7 @@ export default function Login() {
     }
   }
   function SignUp() {
-    window.location.href = 'SignUp';
+    window.location.href = 'signup';
   }
 
   const error = 

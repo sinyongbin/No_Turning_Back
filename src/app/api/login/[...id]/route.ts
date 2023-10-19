@@ -5,7 +5,6 @@ import prisma from "@/db";
 
 export async function GET(request:NextRequest,context: { params: any }) {
     let query = context.params.id;
-    // console.log(query)
     try{
         const result = await fetch("http://localhost:8080/member/login",{
             method : "POST",

@@ -51,7 +51,9 @@ export default function DetailModal({ isOpen, closeModal }: ModalProps) {
                 <div className="flex flex-col mt-4">
                     <div className="flex items-center">
                         <h3 className="text-lg font-semibold whitespace-nowrap mr-5">진또페이</h3>
-                        <span className="text-xl w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">100,000 원</span>
+                        <input
+                            className="text-xl w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">100,000 원
+                        </input>
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
@@ -70,8 +72,8 @@ export default function DetailModal({ isOpen, closeModal }: ModalProps) {
                     <div className="flex items-center">
                     <h3 className="text-lg font-semibold whitespace-nowrap mr-5">입찰 금액</h3>
                     <form onSubmit={handleSubmit}>
-                        <input
-                        type="number"
+                        <textarea
+                        rows={5}
                         value={bidAmount}
                         onChange={(e) => setBidAmount(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
