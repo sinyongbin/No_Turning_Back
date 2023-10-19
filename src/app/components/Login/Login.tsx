@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,7 @@ export default function Login() {
 
 
   useEffect(()=>{
-    const emailS =window.localStorage.getItem("email")
+    const emailS = window.localStorage.getItem("email")
     const toggle : boolean = window.localStorage.getItem("switch") === "TRUE" ? true : false
     if(toggle && emailS != "")
     {  
@@ -40,62 +40,27 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      fetch("/member/login",{
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const temp =await fetch(`http://localhost:3000/api/login/${email}/${password}`,{
+          method: "GET",
+          headers:{
+            accept : "application/json"
+          }
+      }).then(e=>{
+          // console.log(e.status)
+          let temp = (e.json())         
+        return temp;
       })
-      .then((response) => {
-        if (response.status === 200) {
-          fetch(`http://localhost:3000/api/login?email=${email}`,
-          {method: 'GET'})
-          .then((response)=>{
-            if(response.status===200){
-              return response.json().then((data) => {
-                // console.log("세션 정보:", data.sessionInfo);
-                // console.log("넘겨준거:", data.nickname);
+      // console.log(temp.result.nickname)
+      
+      // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
+      sessionStorage.setItem('loggedInfo', temp.result.nickname)
+      sessionStorage.setItem('loggedEmail', temp.result.email)
+      console.log("이메일은!!!! ", temp.result.email);
+      alert(temp.result.nickname+'님 환영합니다')
 
-                sessionStorage.setItem('loggedInMember', JSON.stringify(data));
-                sessionStorage.setItem('email', data.email);
-                sessionStorage.setItem('nickname', data.nickname);
-
-                alert(`안녕하세요! ${data.nickname} 님`);
-                window.location.href = '/';
-              });
-            }
-          })
-          .catch((error) => {
-            console.error('mongo GET 요청 실패:', error);
-          });
-          // alert(`안녕하세요! ${email} 님`);
-          // window.location.href = '/';
-          // return null;
-          // 로그인 성공 시 세션 정보를 받아옵니다.
-          // return response.json().then((data) => {
-          //   console.log("세션 정보:", data.sessionInfo);
-          //   alert(`안녕하세요! ${email} 님`);
-
-          //   sessionStorage.setItem('loggedInMember', JSON.stringify(data.sessionInfo));
-
-          //   console.log("세션 정보:", data.sessionInfo);
-          //   window.location.href = '/';
-          // });
-        } else {
-          alert('로그인 실패');
-          throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
-        }
-      })
-      .catch((error) => {
-        console.error('POST 요청 실패:', error);
-      });
-    } else {
-      alert('아이디나 패스워드를 확인해주세요!');
+      location.href='/'
     }
   }
-  
-  
   
   function newJeansCookie(e: boolean) //id 저장
   {
@@ -115,34 +80,10 @@ export default function Login() {
   function SignUp() {
     window.location.href = 'SignUp';
   }
-  //email 확인
-  /* 
-  async function onBlur(e: FocusEvent<HTMLInputElement>) {
-    const send = e.currentTarget.value
-    const email = formData.email
-    const message = await fetch(`/member/email_check/${email}`, {
-      method: 'POST',
-      body: JSON.stringify({ email: send })
-    }).then(res => {
-      return res.json()
-    }).then(data => {
-      setShow(true)
-      const msg = data.message
-      if(msg > 0 ){
-        setEmail(send)
-      }
 
-      if (msg == 0 && send != "")
-        setShow(false)
-    })
-  }*/
-  
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
 
-  // function SignUp() {
-  //   window.location.href = 'SignUp';
-  // }
 
   return (
     <div>
@@ -194,7 +135,7 @@ export default function Login() {
             className="bg-blue-400 mt-2 text-white font-bold py-2 px-4 w-full rounded-lg">회원가입</button>
           </div>
         </div>
-      </form>
+      </form>   
     </div>
   )
 }

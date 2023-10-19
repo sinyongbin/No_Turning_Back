@@ -15,12 +15,12 @@ const [sessionEmail, setSessionEmail] = useState('');
 // 올리는 사람 닉네임 세션에담아 가져오는 부분
 useEffect(() => {
     // sessionStorage에서 nickname 가져오기
-    const user = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}'); 
+    const user = (sessionStorage.getItem('loggedInfo')||'{}'); 
     // JSON.parse(...)는 가져온 문자열 데이터를 JavaScript 객체로 변환
-    if (user.nickname) {
+    if (user) {
     // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
-    setSessionNickname(user.nickname);
-    setSessionEmail(user.email);
+    setSessionNickname(user);
+    setSessionEmail(user);
     }
 }, []);
 
@@ -29,7 +29,7 @@ async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
         const data = new FormData(event.currentTarget)
-        let email:any = sessionStorage.getItem('email');
+        const email:any = sessionStorage.getItem('loggedEmail');
         
         data.append("email", email)
         const send = await fetch('api/report',{

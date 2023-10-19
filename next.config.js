@@ -2,7 +2,10 @@
 const nextConfig = {}
 
 module.exports = {
-	async rewrites() {
+
+}
+/**
+ * 	async rewrites() {
 		return [
 			{
 				source: "/:path*",
@@ -10,4 +13,4 @@ module.exports = {
 			},
 		];
 	},
-}
+ */

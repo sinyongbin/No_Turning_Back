@@ -21,12 +21,12 @@ export default function SellProduct() {
   // 컴포넌트가 처음 로드될 때 실행
   useEffect(() => {
     // sessionStorage에서 nickname 가져오기
-    const user = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}'); 
+    const user = (sessionStorage.getItem('loggedInfo')||'{}'); 
     // console.log(user.email);
-    if (user.nickname) {
+    if (user) {
       // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
-      setSessionNickname(user.nickname);
-      setSessionEmail(user.email);
+      setSessionNickname(user);
+      setSessionEmail(user);
     }
   }, []);
   
@@ -90,10 +90,8 @@ export default function SellProduct() {
               <span className="tab_hi">경매 올리기</span>
             </div>
           </div>
-
           <div className='mx-[10%]'>
             <div className="border-gray-900/10 pb-12">
-
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
                   <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">

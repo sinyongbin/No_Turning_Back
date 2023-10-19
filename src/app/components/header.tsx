@@ -12,17 +12,15 @@ export default function App() {
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
   useEffect(() => {
-    // 페이지 로드 시 sessionStorage에서 로그인 상태를 확인
-    const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember')||'{}');
-    if (loggedIn.nickname?.length != null) {
+    const loggedIn = (sessionStorage.getItem('loggedInfo') || '{}'); 
+    console.log(loggedIn?.length);
+    console.log(loggedIn);
+    if (loggedIn.length != null) {
       setIsLoggedIn(true);
-      setIsLoggedInNickName(loggedIn.nickname);
-      
+      setIsLoggedInNickName(loggedIn);
     }
   }, []);
   
-
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -40,8 +38,8 @@ export default function App() {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
-    sessionStorage.removeItem('loggedInMember');
-    location.href='./';
+    sessionStorage.removeItem('loggedInfo');
+    // location.href='/';
   };
 
   return (
@@ -74,8 +72,7 @@ export default function App() {
               <a href="user" className="top_link">
                 마이페이지
               </a>
-            </li>
-            
+            </li>        
             {isLoggedIn ? (
               <li className="top_item">
                 <button onClick={handleLogout} className="top_link">

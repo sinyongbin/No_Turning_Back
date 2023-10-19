@@ -1,6 +1,5 @@
 "use client"
 
-import { log } from 'console';
 import React, { FormEvent, useEffect, useState } from 'react';
 
 export default function User() {
@@ -58,6 +57,11 @@ export default function User() {
         e.preventDefault();
 
         const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+
+        if (passwordData.password !== passwordData.ConfirmPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
 
         try{
             fetch(`/member/member_info/${loggedInfo.email}`, {
