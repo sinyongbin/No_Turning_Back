@@ -44,15 +44,15 @@ export default function Login() {
           headers:{
             accept : "application/json"
           }
-      }).then(e=>{
-          let temp2 = (e.json())         
-          console.log('몽고에 요청하고 받은 데이터:', temp2);
+      }).then(async e=>{
+          let temp2 = (await e.json())
+          console.log('몽고에 요청하고 받은 데이터:', temp2.result.nickname);
 
           return temp2;
       })
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
-
-      if (temp.result.nickName == undefined) {
+      
+      if (temp.result.nickname == undefined) {
         alert('다시 시도해주세요!')
       } else {
         sessionStorage.setItem('loggedInfo', temp.result.nickname);

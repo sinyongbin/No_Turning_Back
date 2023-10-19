@@ -1,4 +1,6 @@
 
+"use client"
+
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import MyModal from '@/app/components/PayJoin/MyModal';
 
@@ -8,7 +10,7 @@ export default function Pay() {
 
     const [formData, setFormData] = useState({
         email: '',
-        balance: '1000',
+        balance: '',
         deposit: '',
         Withdraw: '',
     })
@@ -22,14 +24,6 @@ export default function Pay() {
         location.href = '/' //모달창 바깥 눌렀을 때 쓰는 용도
     }
 
-    //페이 index 버튼
-    
-    //잔액 표시는 get 사용 //실제 연결 전까지 404 뜨니까 상관 x
-
-    //가입 여부 확인은 balance 확인 
-    
-    //null && undefinde && ''이면 진또페이 값이 없다고 판단하여 접근 x 및 Modal 창을 통해서 가입 유도
-
     useEffect(() => {
         const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
         
@@ -38,8 +32,7 @@ export default function Pay() {
                 fetch(`/${loggedInfo.email}`, {
                     method: "GET",
                     headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        Accept: 'application/json',
                     }
                 }).then(res => res.json()).then(res => {
                     // 데이터를 가져온 후의 로직 (추가 로직을 여기에 추가하세요)
@@ -59,7 +52,7 @@ export default function Pay() {
     function Deposit () { //입급
         //e.preventDefault();
 
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const loggedInfo =sessionStorage.getItem('loggedInEmail');
 
         const depositValue = parseFloat(formData.deposit); // 입력 값을 숫자로 변환
 
@@ -70,7 +63,7 @@ export default function Pay() {
         }
 
         if (confirm("정말로 입급하실래요?")) {
-            fetch(`/${loggedInfo.email}`, {
+            fetch(`/${loggedInfo}`, {
                 method: "PUT",
                 body: JSON.stringify(formData),
                 headers: {
