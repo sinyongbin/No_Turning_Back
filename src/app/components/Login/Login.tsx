@@ -2,8 +2,7 @@
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2';
-import { log } from 'console';
+
 
 export default function Login() {
   const router = useRouter()
@@ -17,7 +16,7 @@ export default function Login() {
     password: '',
     nickname: '',
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(()=>{
     const emailS =window.localStorage.getItem("email")
@@ -41,7 +40,7 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      const temp =await fetch(`api/login/${email}/${password}`,{
+      const temp =await fetch(`/api/login/${email}/${password}`,{
           method: "GET",
           headers:{
             accept : "application/json"
@@ -49,14 +48,16 @@ export default function Login() {
       }).then(e=>{
           // console.log(e.status)
           let temp = (e.json())         
-         return temp;
+          return temp;
       })
       // console.log(temp.result.nickname)
       
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
       sessionStorage.setItem('loggedInfo', temp.result.nickname)
+      sessionStorage.setItem('loggedEmail', temp.result.email)
       alert(temp.result.nickname+'님 환영합니다')
-      location.href='./'
+
+      location.href='/'
     }
   }
   
@@ -82,9 +83,6 @@ export default function Login() {
   const error = 
     show ? <></> : <p className="text-red-500 text-xs italic">이메일이 존재하지 않습니다 이메일을 다시 확인부탁 드립니다.</p>
 
-  // function SignUp() {
-  //   window.location.href = 'SignUp';
-  // }
 
   return (
     <div>

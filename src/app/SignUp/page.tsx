@@ -64,12 +64,12 @@ export default function Signup() {
     }
 
     // MongoDB로 가는 부분
-    if(nickName && bio){
+    if(email && password && address && phoneNum && nickName && bio){
       try {
         //const f = new FormData(e.currentTarget);
         // f.append('bio',bio);
         // f.append('nickName',nickName);
-        await fetch("http://localhost:3000/api/login", {
+        await fetch("/api/signup", {
           method: "POST",
           body: new FormData(e.currentTarget),
         })

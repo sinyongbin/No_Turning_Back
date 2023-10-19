@@ -11,15 +11,13 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
-  // useEffect(() => {
-  //   const loggedIn = (sessionStorage.getItem('loggedInfo') || '{}'); 
-  //   console.log(loggedIn?.length);
-  //   console.log(loggedIn);
-  //   if (loggedIn.length != null) {
-  //     setIsLoggedIn(true);
-  //     setIsLoggedInNickName(loggedIn);
-  //   }
-  // }, []);
+  useEffect(() => { // 
+    const loggedIn = sessionStorage.getItem('loggedInfo');
+    if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
+      setIsLoggedIn(true);
+      setIsLoggedInNickName(loggedIn);
+    }
+  }, []);
   
   const openModal = () => {
     setIsModalOpen(true);
@@ -36,10 +34,10 @@ export default function App() {
 
   const handleLogout = () => {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
-    // setIsLoggedIn(false);
-    // alert("로그아웃 되었습니다.");
-    // sessionStorage.removeItem('loggedInfo');
-    // location.href='./';
+    setIsLoggedIn(false);
+    alert("로그아웃 되었습니다.");
+    sessionStorage.removeItem('loggedInfo');
+    location.href='./';
   };
 
   return (
