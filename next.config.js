@@ -4,7 +4,7 @@ const nextConfig = {
 }
 
 module.exports = {
-
+	reactStrictMode: false,
 }
 /**
  * 	async rewrites() {
