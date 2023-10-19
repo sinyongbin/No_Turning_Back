@@ -11,11 +11,9 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
-  useEffect(() => {
-    const loggedIn = (sessionStorage.getItem('loggedInfo') || '{}'); 
-    console.log(loggedIn?.length);
-    console.log(loggedIn);
-    if (loggedIn.length != null) {
+  useEffect(() => { // 
+    const loggedIn = sessionStorage.getItem('loggedInfo');
+    if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
       setIsLoggedIn(true);
       setIsLoggedInNickName(loggedIn);
     }
@@ -39,7 +37,7 @@ export default function App() {
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
     sessionStorage.removeItem('loggedInfo');
-    
+    location.href='./';
   };
 
   return (
@@ -58,21 +56,18 @@ export default function App() {
               </a>
             </li>
             {isLoggedIn ? (
-              <li className="top_item top_link">   
-                {loggedInNickName+'님'}             
+              <li className="top_item">
+                <a href="/user" className="top_link">
+                  {loggedInNickName+'님'}    
+                </a>   
               </li>
             ) : (  
               <li className="top_item">
-                <a href='Signup' className="top_link">  
+                <a href='/signup' className="top_link">
                 회원가입
                 </a>
               </li>
             )}  
-            <li className="top_item">
-              <a href="user" className="top_link">
-                마이페이지
-              </a>
-            </li>        
             {isLoggedIn ? (
               <li className="top_item">
                 <button onClick={handleLogout} className="top_link">
@@ -95,10 +90,10 @@ export default function App() {
           <img src="/img/3.png" className="mx-auto my-auto" alt="" />
         </a>
       </div>
+
       <MyModal isOpen={isModalOpen} closeModal={closeModal}>
       </MyModal>
     </>
   );
 }
-
 

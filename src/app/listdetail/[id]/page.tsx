@@ -13,17 +13,20 @@ export default function Detail( query:{params:any}  ) {
   const [isOpen , setIsOpen] = useState(false);
   const [postData, setPostData] = useState<any>({});
   const [nick,setNick] = useState<string>("")
+
   let id = query.params.id;
 
+  // console.log("id값:",id);  //두번씩찍힘
+  
   useEffect(() => { // id값만 넘어온다
-    console.log(id)
     getData(id);
   }, []);
-
-  useEffect(() => { //id값으로 요청한뒤 서버에서 리턴받은걸 화면에 실질적으로 정보를 뿌려준다
+  useEffect(() => {
       console.log(postData)
   }, [postData]);
 
+  // 왜 두번씩실행되고 첫번째 실행된 데이터는 없고 두번쨰실행됬을때만 데이터가 담겨있음
+  
   
   async function getData(id: any) // 서버로 id값을 가지고 요청하는 로직
   {
@@ -36,7 +39,7 @@ export default function Detail( query:{params:any}  ) {
       console.error('서버 요청실패', error);
     });
     console.log(detailData);
-    setNick(detailData[1].nickname); // { nickname: '진또' }를 가져오는 로직
+    setNick(detailData[1].nickname)
     setPostData(detailData[0]);
   }
   
@@ -152,12 +155,10 @@ export default function Detail( query:{params:any}  ) {
     )
   }
 
-    return( // 페이지의 실행을 위한 리턴
-      <>
-      {postData.post == undefined? <div></div>:<Main/> } 
-      {/* 페이지가 렌더링 될때 데이터의 유무를 판단해서 Main 함수를 실행 */}
-      </>
-    )
+    return(<>
+      {postData == undefined? <div></div>:<Main/> }
+      
+    </>)
   }
   
 

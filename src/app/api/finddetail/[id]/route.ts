@@ -12,6 +12,7 @@ export async function GET(req: NextRequest, context: { params: any }){
                 id: findId,
             },
             select:{
+                id:true,
                 email:true,
                 title:true,
                 content:true,
@@ -24,6 +25,7 @@ export async function GET(req: NextRequest, context: { params: any }){
                     email : detailData?.email
                 },
                 select:{
+                    
                     nickname:true
                 }
             }

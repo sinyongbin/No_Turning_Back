@@ -40,14 +40,15 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      const temp =await fetch(`http://localhost:3000/api/login/${email}/${password}`,{
+      const temp =await fetch(`/api/login/${email}/${password}`,{
           method: "GET",
           headers:{
             accept : "application/json"
           }
       }).then(e=>{
-          let temp = (e.json());         
-         return temp;
+          // console.log(e.status)
+          let temp = (e.json())         
+          return temp;
       })
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
       sessionStorage.setItem('loggedInfo', temp.result.nickname);
