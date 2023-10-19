@@ -26,7 +26,7 @@ export async function GET(request:NextRequest,context: { params: any }) {
                     nickname:true,
                 }
             })
-            console.log('prismaData:',prismaData);  
+            // console.log('prismaData:',prismaData);  
             return NextResponse.json({result:prismaData},{status : 200});
         }
     }

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
 import { useState,useEffect } from "react";
@@ -38,24 +39,24 @@ export default function Page(query:{params : any}) {
             
         <div className="bg-white ">
             <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-              {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
               <div className="product-grid">
                 <div className="grid grid-cols-4 gap-4">
-                  {visibleProducts.map((products:any) => (
-                    <div key={products.id} className="product-item">
-                      {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                      <a key={products.id} href={`../listdetail/${products.id}`} className="group">
+                  {visibleProducts.map((e:any, key: number) => (
+                    <div key={key} className="product-item">
+                      <a href={`/listdetail/${e.id}`} className="group">
                         <img
-                          src={products.images}
-                          alt={products.imageAlt}
+                          src={e.images[0]}
+                          alt={e.imageAlt}
                           className="h-full w-full object-cover object-center group-hover:opacity-75"
                           style={{ width: '280px', height: '280px' }}
                         />
-                        <h3>{products.title}</h3>
+                        <h3>{e.title}</h3>
                       </a>
-                      <p>{products.starting_price}원</p>
+                      <p>{e.starting_price}원</p>
                     </div>
                   ))}
+
+
                 </div>
                 {/* "더 보기" 버튼을 추가하고 클릭 이벤트를 연결합니다. */}
                 <div className="text-center mt-4">
@@ -70,3 +71,4 @@ export default function Page(query:{params : any}) {
           </div>
       )
     }
+  
