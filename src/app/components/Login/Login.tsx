@@ -49,9 +49,8 @@ export default function Login() {
           let temp = (e.json())
           return temp;
       })
-      // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
 
-      if (temp.result.nickName == undefined) {
+      if (temp.result.nickname == undefined) {
         alert('다시 시도해주세요!')
       } else {
         sessionStorage.setItem('loggedInfo', temp.result.nickname);

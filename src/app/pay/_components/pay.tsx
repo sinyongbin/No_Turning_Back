@@ -1,3 +1,4 @@
+"use client"
 
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import MyModal from '@/app/components/PayJoin/MyModal';

@@ -43,27 +43,26 @@ export default function User() {
     function passwordChange(e: any) {
         e.preventDefault();
 
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const loggedEmail = sessionStorage.getItem('loggedEmail');
 
         if (passwordData.password !== passwordData.ConfirmPassword) {
             alert("비밀번호가 일치하지 않습니다.");
             return;
-        }
+        } 
 
         try{
-            fetch(`/member/member_info/${loggedInfo.email}`, {
+            fetch(`http://localhost:8080/member/member_info/${loggedEmail}`, {
                 method: "PUT",
-                body: JSON.stringify(formData || passwordData),
+                body: JSON.stringify(passwordData),
                 headers: {
                     "Content-Type": "application/json",
                 },
             }).then((response) => {
                 if (response.status !== 200) {
-                    console.log(formData || passwordData);
-                    throw new Error('서버 응답이 실패했습니다.' + response.status);
+
                 } else {
                     
-                    alert(`${loggedInfo.nickname}님의 비밀번호가 성공적으로 변경되었습니다`);
+                    alert(`비밀번호가 성공적으로 변경되었습니다`);
                     location.href='user'
                 }
             })
