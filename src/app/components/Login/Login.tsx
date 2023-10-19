@@ -46,14 +46,18 @@ export default function Login() {
             accept : "application/json"
           }
       }).then(e=>{
-          // console.log(e.status)
-          let temp = (e.json())         
+          let temp = (e.json())
           return temp;
       })
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
-      sessionStorage.setItem('loggedInfo', temp.result.nickname);
-      sessionStorage.setItem('loggedEmail',temp.result.email);
-      alert(temp.result.nickname+'님 환영합니다')
+
+      if (temp.result.nickName == undefined) {
+        alert('다시 시도해주세요!')
+      } else {
+        sessionStorage.setItem('loggedInfo', temp.result.nickname);
+        sessionStorage.setItem('loggedEmail',temp.result.email);
+        alert(temp.result.nickname+'님 환영합니다')
+      }
 
       location.href='/'
     }
@@ -75,7 +79,7 @@ export default function Login() {
     }
   }
   function SignUp() {
-    window.location.href = 'SignUp';
+    window.location.href = 'signup';
   }
 
   const error = 
