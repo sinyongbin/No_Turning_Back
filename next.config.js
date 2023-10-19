@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-	//reactStrictMode: false,  // 요 부분을 false로 변경
-}
+const nextConfig = {};
 
 module.exports = {
-	reactStrictMode: false,
-}
+  reactStrictMode: false,
+};
 /**
  * 	async rewrites() {
 		return [

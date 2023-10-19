@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react"
-import Bidding from "./components/bidding";
-
+import Bidding from "./components/Bidding";
 
 export default function ListView() {
     const [isOpen , setIsOpen] = useState(false);

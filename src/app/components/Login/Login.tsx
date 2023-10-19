@@ -2,7 +2,6 @@
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
-import { log } from 'console';
 
 export default function Login() {
   const router = useRouter()
@@ -45,9 +44,11 @@ export default function Login() {
           headers:{
             accept : "application/json"
           }
-      }).then(e=>{
-          let temp = (e.json())
-          return temp;
+      }).then(async e=>{
+          let temp2 = (await e.json())
+          console.log('몽고에 요청하고 받은 데이터:', temp2.result.nickname);
+
+          return temp2;
       })
 
       if (temp.result.nickname == undefined) {

@@ -19,14 +19,13 @@ export default function User() {
         const loggedEmail = sessionStorage.getItem('loggedEmail');
 
         try {
-            fetch(`api/user/${loggedEmail}`,{
+            fetch(`/api/user/${loggedEmail}`,{
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
                 }
             }).then(res=>res.json()).then(res =>{
                 setFormData(res);
-                console.log(res);
             })
         } catch (error) {
             console.log(error);
