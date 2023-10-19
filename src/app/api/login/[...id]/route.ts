@@ -17,8 +17,10 @@ export async function GET(request:NextRequest,context: { params: any }) {
                 'Content-Type':'application/json'
             }}
         )
+
         if(result.status === 200)
         {
+            
             const prismaData = await prisma.profile.findUnique({
                 where : {email : query[0]},
                 select:{
@@ -26,7 +28,7 @@ export async function GET(request:NextRequest,context: { params: any }) {
                     nickname:true,
                 }
             })
-            // console.log('prismaData:',prismaData); 
+            console.log('prismaData:',prismaData); 
             return NextResponse.json({result:prismaData},{status : 200});
         }
     }

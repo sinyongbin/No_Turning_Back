@@ -14,6 +14,8 @@ export default function App() {
   useEffect(() => { // 
     const loggedIn = sessionStorage.getItem('loggedInfo');
     if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
+      console.log('받아온닉네임: ', loggedIn);
+      
       setIsLoggedIn(true);
       setIsLoggedInNickName(loggedIn);
     }

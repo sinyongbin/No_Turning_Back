@@ -41,27 +41,6 @@ export default function Signup() {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
-    // Oracle DB로 가는 부분
-    if (email && password && address && phoneNum) {
-      fetch("http:localhost:8080/member/member_join", {//Next.config에 기본값으로 설정해줌
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => { 
-        if (response.status !== 200) {
-          throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
-        } else {
-        }
-      })
-        .catch((error) => {
-          console.error('POST 요청 실패:', error);                                                                                                     
-        });
-    } else {
-      alert('입력칸을 전부 입력해주세요!');
-    }
 
     // MongoDB로 가는 부분
     if(email && password && address && phoneNum && nickName && bio){
@@ -84,7 +63,6 @@ export default function Signup() {
           .catch((error) => {
             console.error('POST 요청 실패:', error);                                                                                                     
           }).finally();
-        console.log('몽고 회원가입 데이터:', formData);
       } catch (error) {
         console.log(error)
       } 
