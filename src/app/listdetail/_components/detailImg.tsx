@@ -7,7 +7,8 @@ type imgFile = {
     id:string,
     src: any
 }[];
-export default function ImageViewer({id} : any) {
+
+export default function ImageViewer({id} : any) { // id값 넘겨받음
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [imgFile, setProducts] = useState<any>([]);
     const scrollRef = useRef(null);

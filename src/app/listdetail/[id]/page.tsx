@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
-import Modal from '../_components/modal';
 
-
+import BottomList from '../_components/bottomlist';
+import Modal from '@/app/message/_components/modal';
 
 export default function Detail( query:{params:any}  ) {
   
@@ -15,20 +15,20 @@ export default function Detail( query:{params:any}  ) {
   const [nick,setNick] = useState<string>("")
 
   let id = query.params.id;
+
   // console.log("id값:",id);  //두번씩찍힘
   
-  useEffect(() => {
+  useEffect(() => { // id값만 넘어온다
     getData(id);
   }, []);
-
   useEffect(() => {
-      // console.log("post[0]:",postData[1].post.title);
+      console.log(postData)
   }, [postData]);
 
   // 왜 두번씩실행되고 첫번째 실행된 데이터는 없고 두번쨰실행됬을때만 데이터가 담겨있음
   
   
-  async function getData(id:any)
+  async function getData(id: any) // 서버로 id값을 가지고 요청하는 로직
   {
     const detailData=await fetch(`/api/finddetail/${id}`)
     .then((data) => data.json())
@@ -38,6 +38,7 @@ export default function Detail( query:{params:any}  ) {
     .catch((error) => {
       console.error('서버 요청실패', error);
     });
+    console.log(detailData);
     setNick(detailData[1].nickname)
     setPostData(detailData[0]);
   }
@@ -51,14 +52,16 @@ export default function Detail( query:{params:any}  ) {
   const closeModal = () => {
     setModalOpen(false);
   };
-  function Main()
-  {
+
+  function Main() {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
       {/* 그리드 레이아웃 */}
       <div className="mx-auto flex flex-col lg:flex-row lg:max-w-7xl lg:px-8">
+
         {/* 이미지 */}
-        <ImageViewer id={id}/>
+        <ImageViewer id={id}/> {/* props를 ImageViewer로 넘겨줌 */}
+
         {/* <div className="lg:w-1/2">
           <div className="p-12 lg:sticky lg:top-4 lg:overflow-hidden">
             <img src='back.png'></img>
@@ -71,7 +74,7 @@ export default function Detail( query:{params:any}  ) {
           <div className="lg:pl-4">
             <div className="lg:max-w-lg">
             {/* 섹션 제목 */} 
-         
+
             <div key={postData.id} className="group">     
               <p className="text-base font-semibold leading-7 text-indigo-600">판매자:{nick}</p>
               {/* 메인 제목 */}
@@ -148,44 +151,14 @@ export default function Detail( query:{params:any}  ) {
           </div>
         </div>
       </div>
-  
-      {/* <ProductDetail/> */}
-   
-      <div className="comment-form">
-        {/* <textarea
-          placeholder="댓글을 입력하세요..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button onClick={addComment} className="comment-button">댓글 추가</button>
-      </div>
-      <div className="all-comment">
-        {/* 여기서부터 댓글 폼 
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment">
-            <div className="comment-header">
-              <div className="id-date">
-                <span className="comment-id">ID: {comment.id}</span>
-                <span className="comment-date">날짜: {comment.date}</span>
-              </div>
-            </div>
-            <div className="comment-text whitespace-pre">{comment.text}</div>
-          </div>
-        ))}
-      </div> */}
-      </div>
     </div>
     )
   }
 
     return(<>
-          {
-      postData.post == undefined ? <div>데이터 로딩중</div>:
-
-      <Main/>
-    }
-
-    </>)  
+      {postData == undefined? <div></div>:<Main/> }
+      
+    </>)
   }
   
 

@@ -23,7 +23,7 @@ export async function GET(request:NextRequest,context: { params: any }) {
                 select :  {
                     nickname: true,
                 },
-                where : {
+                where : {   
                     email: myemail
                 }
             });

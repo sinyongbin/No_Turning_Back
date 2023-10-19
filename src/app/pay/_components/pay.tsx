@@ -91,7 +91,7 @@ export default function Pay() {
             })
         }
     }
-    
+
     function Withdraw () { //출금
         //e.preventDefault();
 

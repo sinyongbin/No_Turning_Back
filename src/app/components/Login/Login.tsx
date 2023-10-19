@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,7 @@ export default function Login() {
 
 
   useEffect(()=>{
-    const emailS =window.localStorage.getItem("email")
+    const emailS = window.localStorage.getItem("email")
     const toggle : boolean = window.localStorage.getItem("switch") === "TRUE" ? true : false
     if(toggle && emailS != "")
     {  

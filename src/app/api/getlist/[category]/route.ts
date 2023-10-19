@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, context: { params: any }) {
     try{
         const result = await prisma.post.findMany({where:{category:selectedCategory},
         orderBy:{
-            create_date:"desc",
+            create_date: "desc",
         }},
             );
         return NextResponse.json(result);
