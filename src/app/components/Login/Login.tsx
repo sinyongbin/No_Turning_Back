@@ -2,7 +2,7 @@
 import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent} from 'react'
 import { Switch } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
-
+import { log } from 'console';
 
 export default function Login() {
   const router = useRouter()
@@ -46,16 +46,12 @@ export default function Login() {
             accept : "application/json"
           }
       }).then(e=>{
-          // console.log(e.status)
-          let temp = (e.json())         
-        return temp;
+          let temp = (e.json());         
+         return temp;
       })
-      // console.log(temp.result.nickname)
-      
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
-      sessionStorage.setItem('loggedInfo', temp.result.nickname)
-      sessionStorage.setItem('loggedEmail', temp.result.email)
-      console.log("이메일은!!!! ", temp.result.email);
+      sessionStorage.setItem('loggedInfo', temp.result.nickname);
+      sessionStorage.setItem('loggedEmail',temp.result.email);
       alert(temp.result.nickname+'님 환영합니다')
 
       location.href='/'

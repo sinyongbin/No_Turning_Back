@@ -39,7 +39,7 @@ export default function App() {
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
     sessionStorage.removeItem('loggedInfo');
-    // location.href='/';
+    
   };
 
   return (
@@ -95,7 +95,6 @@ export default function App() {
           <img src="/img/3.png" className="mx-auto my-auto" alt="" />
         </a>
       </div>
-
       <MyModal isOpen={isModalOpen} closeModal={closeModal}>
       </MyModal>
     </>

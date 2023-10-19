@@ -1,6 +1,5 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
-import { Gender } from "@prisma/client";
 import { Category } from "@prisma/client";
 
 export async function POST(req:NextRequest, res: NextResponse) {

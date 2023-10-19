@@ -22,11 +22,13 @@ export default function SellProduct() {
   useEffect(() => {
     // sessionStorage에서 nickname 가져오기
     const user = (sessionStorage.getItem('loggedInfo')||'{}'); 
+    const userEmail = (sessionStorage.getItem('loggedEmail')||'{}'); 
+
     // console.log(user.email);
     if (user) {
       // sessionStorage에 nickname이 있는 경우, 상태(State)에 설정하여 화면에 표시
       setSessionNickname(user);
-      setSessionEmail(user);
+      setSessionEmail(userEmail);
     }
   }, []);
   
@@ -165,7 +167,7 @@ export default function SellProduct() {
                     className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   />
                 </div>
-                
+
                 <div className='mx-48 flex'>
                     <UploadSubmit previewImg={previewImg} setPreviewImg={setPreviewImg} />
                 </div>

@@ -37,7 +37,7 @@ export default function Signup() {
     }
     // Oracle DB로 가는 부분
     if (email && password && address && phoneNum) {
-      fetch("/member/member_join", {//Next.config에 기본값으로 설정해줌
+      fetch("http:localhost:8080/member/member_join", {//Next.config에 기본값으로 설정해줌
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -63,7 +63,7 @@ export default function Signup() {
         //const f = new FormData(e.currentTarget);
         // f.append('bio',bio);
         // f.append('nickName',nickName);
-        await fetch("http://localhost:3000/api/login", {
+        await fetch("http://localhost:3000/api/signup", {
           method: "POST",
           body: new FormData(e.currentTarget),
         })
