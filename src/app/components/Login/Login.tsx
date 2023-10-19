@@ -17,7 +17,7 @@ export default function Login() {
     password: '',
     nickname: '',
   });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   useEffect(()=>{
     const emailS =window.localStorage.getItem("email")
@@ -41,20 +41,22 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      const temp =await fetch(`http://localhost:3000/api/login/${email}/${password}`,{
+      const temp =await fetch(`/api/login/${email}/${password}`,{
           method: "GET",
           headers:{
             accept : "application/json"
           }
       }).then(e=>{
-          let temp = (e.json());         
-         return temp;
+          // console.log(e.status)
+          let temp = (e.json())         
+          return temp;
       })
       // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
       sessionStorage.setItem('loggedInfo', temp.result.nickname);
       sessionStorage.setItem('loggedEmail',temp.result.email);
       alert(temp.result.nickname+'님 환영합니다')
-      // location.href='./'
+
+      location.href='/'
     }
   }
   

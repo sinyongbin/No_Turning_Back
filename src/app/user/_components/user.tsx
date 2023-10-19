@@ -5,7 +5,6 @@ import React, { FormEvent, useEffect, useState } from 'react';
 export default function User() {
 
     const [formData, setFormData] = useState({
-        email: '',
         phoneNum: '',
         address: '',
         nickname:'',
@@ -17,33 +16,21 @@ export default function User() {
     })
 
     useEffect (() => {
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
-    
-        fetch(`/member/member_info/${loggedInfo.email}`, {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(res=>res.json()).then(res=>{
-            setFormData(res);
-            console.log(1, res);
-        })
+        const loggedEmail = sessionStorage.getItem('loggedEmail');
+
         try {
-            fetch('http://localhost:3000/api/user',{
+            fetch(`api/user/${loggedEmail}`,{
                 method: 'GET',
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
                 }
             }).then(res=>res.json()).then(res =>{
-                setFormData(res[0]);
-                console.log(1, res);
+                setFormData(res);
+                console.log(res);
             })
         } catch (error) {
             console.log(error);
         }
-
 
     }, []);
 
@@ -89,22 +76,21 @@ export default function User() {
 
         e.preventDefault();
 
-        const loggedIn = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const loggedEmail = sessionStorage.getItem('loggedEmail');
+        let loggedInfo = sessionStorage.getItem('loggedInfo');
 
         try{
             const f = new FormData(e.currentTarget)
-            const send = await fetch('http://localhost:3000/api/user', {
+            const send = await fetch(`api/user/${loggedEmail}`, {
                 method: "PUT",
-                body: f 
+                body: f,
             }).then((response) => {
                 if (response.status !== 200) {
                     console.log(formData);
                 } else {
 
-                    loggedIn.nickname = formData.nickname
-                    sessionStorage.setItem('loggedInMember', JSON.stringify(loggedIn));
-
-                    console.log(sessionStorage);
+                    loggedInfo = formData.nickname
+                    sessionStorage.setItem('loggedInfo', loggedInfo);
 
                     alert(`닉네임이 ${formData.nickname}으로 성공적으로 변경되었습니다`);
                     location.href='user'
