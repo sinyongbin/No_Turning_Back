@@ -13,7 +13,7 @@ export default function Page(query:{params : any}) {
     },[])
 
     async function getData() {
-        await fetch(`http://localhost:3000/api/getlist/${category}`,{
+        await fetch(`/api/getlist/${category}`,{
             method:"GET"
         })
         .then((e) => e.json())
