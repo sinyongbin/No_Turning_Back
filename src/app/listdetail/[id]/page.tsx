@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
+import Bidding from '@/app/transaction/components/bidding';
 
-import BottomList from '../_components/bottomlist';
-import Modal from '@/app/message/_components/modal';
+
 
 export default function Detail( query:{params:any}  ) {
   
@@ -15,20 +15,20 @@ export default function Detail( query:{params:any}  ) {
   const [nick,setNick] = useState<string>("")
 
   let id = query.params.id;
-
   // console.log("id값:",id);  //두번씩찍힘
   
-  useEffect(() => { // id값만 넘어온다
+  useEffect(() => {
     getData(id);
   }, []);
+
   useEffect(() => {
-      console.log(postData)
+      // console.log("post[0]:",postData[1].post.title);
   }, [postData]);
 
   // 왜 두번씩실행되고 첫번째 실행된 데이터는 없고 두번쨰실행됬을때만 데이터가 담겨있음
   
   
-  async function getData(id: any) // 서버로 id값을 가지고 요청하는 로직
+  async function getData(id:any)
   {
     const detailData=await fetch(`/api/finddetail/${id}`)
     .then((data) => data.json())
@@ -38,7 +38,6 @@ export default function Detail( query:{params:any}  ) {
     .catch((error) => {
       console.error('서버 요청실패', error);
     });
-    console.log(detailData);
     setNick(detailData[1].nickname)
     setPostData(detailData[0]);
   }
@@ -52,29 +51,21 @@ export default function Detail( query:{params:any}  ) {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  function Main() {
+  function Main()
+  {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
       {/* 그리드 레이아웃 */}
       <div className="mx-auto flex flex-col lg:flex-row lg:max-w-7xl lg:px-8">
-
         {/* 이미지 */}
-        <ImageViewer id={id}/> {/* props를 ImageViewer로 넘겨줌 */}
+        <ImageViewer id={id}/>
 
-        {/* <div className="lg:w-1/2">
-          <div className="p-12 lg:sticky lg:top-4 lg:overflow-hidden">
-            <img src='back.png'></img>
-    
-          </div>
-        </div>  */}
-    
         {/* 오른쪽 컨텐츠 */}
         <div className="lg:w-1/2">
           <div className="lg:pl-4">
             <div className="lg:max-w-lg">
             {/* 섹션 제목 */} 
-
+         
             <div key={postData.id} className="group">     
               <p className="text-base font-semibold leading-7 text-indigo-600">판매자:{nick}</p>
               {/* 메인 제목 */}
@@ -108,7 +99,9 @@ export default function Detail( query:{params:any}  ) {
                   입찰하기
                   {/* <Modal></Modal> */}
                 </button>
-                {isModalOpen && <Modal isOpen={isModalOpen} closeModal={closeModal} />}
+                  {/* <Bidding postId= {'asdasd'} closeModal={closeModal} isOpen={isOpen}/> */}
+
+                {/* {isModalOpen && <Modal isOpen={isModalOpen} closeModal={closeModal} />} */}
                 {/* isOpen, closeModal는 <Modal> 컴포넌트의 prop(속성) 중 하나이다. 이 prop은 모달 창이 열려 있는지 닫혀 있는지를 나타내는 값을 받는다. */}
                 {/* 여기서는 isModalOpen 변수의 값을 전달하여 모달을 열거나 닫는다 */}
               </div>
@@ -118,7 +111,6 @@ export default function Detail( query:{params:any}  ) {
                 </button>
                 <div>
             <button className = "bg-blue-500" onClick={()=>setIsOpen(true)}>입찰하기</button>
-            {/* <Bidding postId= {'asdasd'} closeModal={closeModal} isOpen={isOpen}/> */}
             </div>
           </div>
         </div>
@@ -138,7 +130,7 @@ export default function Detail( query:{params:any}  ) {
           <div className="detail_img_wrap">
             <div className="detail_content_images open" style={{ maxHeight: '963px' }}>
               <div className="images">
-              <div className='content text-center mt-32'>
+              <div className='content text-center mt-32 text-3xl'>
                   <p>{postData.post.content}</p>
                 </div>
                 {/* <img
@@ -151,14 +143,44 @@ export default function Detail( query:{params:any}  ) {
           </div>
         </div>
       </div>
+  
+      {/* <ProductDetail/> */}
+   
+      <div className="comment-form">
+        {/* <textarea
+          placeholder="댓글을 입력하세요..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <button onClick={addComment} className="comment-button">댓글 추가</button>
+      </div>
+      <div className="all-comment">
+        {/* 여기서부터 댓글 폼 
+        {comments.map((comment) => (
+          <div key={comment.id} className="comment">
+            <div className="comment-header">
+              <div className="id-date">
+                <span className="comment-id">ID: {comment.id}</span>
+                <span className="comment-date">날짜: {comment.date}</span>
+              </div>
+            </div>
+            <div className="comment-text whitespace-pre">{comment.text}</div>
+          </div>
+        ))}
+      </div> */}
+      </div>
     </div>
     )
   }
 
     return(<>
-      {postData == undefined? <div></div>:<Main/> }
-      
-    </>)
+      {
+      postData.post == undefined ? <div>데이터 로딩중</div>:
+
+      <Main/>
+    }
+
+    </>)  
   }
   
 
