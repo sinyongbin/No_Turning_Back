@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
 import Modal from '../_components/modal';
-import BottomList from '../_components/bottomlist';
+
+
 
 export default function Detail( query:{params:any}  ) {
   
@@ -12,15 +13,20 @@ export default function Detail( query:{params:any}  ) {
   const [isOpen , setIsOpen] = useState(false);
   const [postData, setPostData] = useState<any>({});
   const [nick,setNick] = useState<string>("")
+
   let id = query.params.id;
+  // console.log("id값:",id);  //두번씩찍힘
+  
   useEffect(() => {
-    console.log(id)
     getData(id);
   }, []);
+
   useEffect(() => {
-      console.log(postData)
+      // console.log("post[0]:",postData[1].post.title);
   }, [postData]);
 
+  // 왜 두번씩실행되고 첫번째 실행된 데이터는 없고 두번쨰실행됬을때만 데이터가 담겨있음
+  
   
   async function getData(id:any)
   {
@@ -32,7 +38,6 @@ export default function Detail( query:{params:any}  ) {
     .catch((error) => {
       console.error('서버 요청실패', error);
     });
-    console.log(detailData);
     setNick(detailData[1].nickname)
     setPostData(detailData[0]);
   }
@@ -174,9 +179,13 @@ export default function Detail( query:{params:any}  ) {
   }
 
     return(<>
-      {postData == undefined? <div></div>:<Main/> }
-      
-    </>)
+          {
+      postData.post == undefined ? <div>데이터 로딩중</div>:
+
+      <Main/>
+    }
+
+    </>)  
   }
   
 
