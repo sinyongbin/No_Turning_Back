@@ -4,20 +4,7 @@ import { Category } from "@prisma/client";
 
 export async function POST(req:NextRequest, res: NextResponse) {
   let data = await req.json()
-  // console.log("데이터좀 보라고: ", data);
-//  console.log(data[0].email)
-    // const data = await req.formData();
-    // console.log('body입니다:', data);
 
-    // //const images = data.getAll('images'); // 이미지 파일을 모두 가져옴
-    // data.getAll("images").forEach((e,i)=>{
-    //   console.log(e.slice(0,10))
-    // })
-    // let { email, title, categoryname, price, content, category, images} = Object.fromEntries(data);
-    
-    // console.log('body입니다:', email);
-    // // console.log('images',images.toString());
-    // console.log('email이라구',data[0].email)
     let selectedCategory;
     if (data[0].category === 'beauty') {
       selectedCategory = Category.beauty;
@@ -40,6 +27,8 @@ export async function POST(req:NextRequest, res: NextResponse) {
         categoryname: data[0].categoryname,
         images: data[0].images,
         category: selectedCategory,
+        
+        
     }
     const post = await prisma.post.create({
         data: insert,

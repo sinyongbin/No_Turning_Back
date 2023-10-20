@@ -4,93 +4,92 @@ import {Fragment,useState,useEffect, useRef} from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import { TransactionInfo } from '@/typeModules'
 
-
 export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo)
 {
   
-    // const [data , setData] = useState<any>([])
-    // const ref = useRef<any>(null);
-    // useEffect(()=>{
-    //   getData()
-    // },[data])
-    // function updateValue(price : string)
-    // {
-    //   let parseNumber = parseInt(price)
-    //   if(data.sellerEmail != sessionStorage.getItem("loginEmail")){
-    //         if(parseNumber === -1)
-    //         {   
-    //             let cusVal = parseInt(ref.current?.value)
-    //             let min = (parseInt(data.currentPrice) * 1.01).toFixed(0)
+    const [data , setData] = useState<any>([])
+    const ref = useRef<any>(null);
+    useEffect(()=>{
+      getData()
+    },[data])
+    function updateValue(price : string)
+    {
+      let parseNumber = parseInt(price)
+      if(data.sellerEmail != sessionStorage.getItem("loginEmail")){
+            if(parseNumber === -1)
+            {   
+                let cusVal = parseInt(ref.current?.value)
+                let min = (parseInt(data.currentPrice) * 1.01).toFixed(0)
 
-    //             if(cusVal >= parseInt(min))
-    //             {
-    //               requestUpdate(cusVal)
-    //             }
-    //             else
-    //             {
-    //               alert("최소금액은: "+min)
-    //             }
-    //         }
-    //       if(data.maxEmail != sessionStorage.getItem("loginEmail"))
-    //       {
-    //         requestUpdate(parseNumber)
-    //       }
-    //   }
+                if(cusVal >= parseInt(min))
+                {
+                  requestUpdate(cusVal)
+                }
+                else
+                {
+                  alert("최소금액은: "+min)
+                }
+            }
+          if(data.maxEmail != sessionStorage.getItem("loginEmail"))
+          {
+            requestUpdate(parseNumber)
+          }
+      }
     
-    // }
-    // async function requestUpdate(price : number){
-    //     let currentPrice = parseInt(data.currentPrice)
-    //     let maxPrice = parseInt(data.maxPrice)
-    //     if(data.maxEmail ==sessionStorage.getItem("loginEmail")&& maxPrice < price)
-    //     {
-    //       console.log(data.maxEmail)
-    //       data.maxPrice = price
-    //     }
-    //     else 
-    //     {
-    //       if(maxPrice < price)
-    //       {
-
-    //         if(data.maxEmail != sessionStorage.getItem("loginEmail")){
-
-    //           data.maxEmail =sessionStorage.getItem("loginEmail")
-    //         }
-    //           data.maxPrice = price
-    //           let newcurr= maxPrice * 1.02;
-    //           if(newcurr < price)
-    //             data.currentPrice = newcurr
-    //           else
-    //             data.currentPrice = maxPrice
-    //         }
-    //         else if(currentPrice <  price)
-    //         {
-    //           data.currentPrice = price;
-    //         }
-    //     }
-    //     await fetch(`api/transaction/${postId}`,{
-    //       method: "POST",
-    //       headers:{
-    //         "Content-Type": "application/json"
-    //       },
-    //       body: JSON.stringify(data)
-    //     }).then(e=>{
-    //       return e.json()
-    //     }).then(e=>{
-    //       setData(e)
-    //     })
-    // }
-    // async function getData()
-    // {
-    //   let temp = await fetch(`api/transaction/${postId}`,{
-    //       method : "GET"
-    //   }).then(e =>{
-    //     return e.json()
-    //   }).then(e=>{
-    //     setData(e)
-    //   })
     }
-   
-    {/* {data !== undefined ?
+    async function requestUpdate(price : number){
+        let currentPrice = parseInt(data.currentPrice)
+        let maxPrice = parseInt(data.maxPrice)
+        if(data.maxEmail ==sessionStorage.getItem("loginEmail")&& maxPrice < price)
+        {
+          console.log(data.maxEmail)
+          data.maxPrice = price
+        }
+        else 
+        {
+          if(maxPrice < price)
+          {
+
+            if(data.maxEmail != sessionStorage.getItem("loginEmail")){
+
+              data.maxEmail =sessionStorage.getItem("loginEmail")
+            }
+              data.maxPrice = price
+              let newcurr= maxPrice * 1.02;
+              if(newcurr < price)
+                data.currentPrice = newcurr
+              else
+                data.currentPrice = maxPrice
+            }
+            else if(currentPrice <  price)
+            {
+              data.currentPrice = price;
+            }
+        }
+        await fetch(`api/transaction/${postId}`,{
+          method: "POST",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        }).then(e=>{
+          return e.json()
+        }).then(e=>{
+          setData(e)
+        })
+    }
+    async function getData()
+    {
+      let temp = await fetch(`api/transaction/${postId}`,{
+          method : "GET"
+      }).then(e =>{
+        return e.json()
+      }).then(e=>{
+        setData(e)
+      })
+    }
+    return(<>
+    {data !== undefined ?
         <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -201,4 +200,5 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
           </div>
         </Dialog>
       </Transition>:""}
-    </>) */}
+    </>)
+}

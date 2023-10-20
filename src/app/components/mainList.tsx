@@ -37,50 +37,44 @@ export default function MainList() {
     
       return (
         
-        <div className="bg-white ">
-            <HomeMain/>
-            {/* <div id="app"></div>
-            <Link href="https://dribbble.com/shots/3774469-T-R-A-V-E-L-E-R" target="_blank" className="icon-link">
-              <img src="http://icons.iconarchive.com/icons/uiconstock/socialmedia/256/Dribbble-icon.png"/>
-            </Link>
-            <Link href="https://twitter.com/NikolayTalanov" target="_blank" className="icon-link icon-link--twitter">
-              <img src="https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
-            </Link> */}
-            <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-
-              {/* 상품 목록을 매핑하여 화면에 표시합니다. */}
-              <div className="product-grid">
-                <div className="grid grid-cols-4 gap-4">
-                  {visibleProducts.map((products:any) => (
-                    <div key={products.id} className="product-item">
-                      {/* 상품 정보를 표시하는 코드를 추가하세요. */}
-                      <a href={`listdetail/${products.id}`} className="group">
-                        <img
-                          src={products.images}
-                          alt={products.imageAlt}
-                          className="h-full w-full object-cover object-center group-hover:opacity-75"
-                          style={{ width: '280px', height: '280px' }}
-                        />
-                        <h3>{products.title}</h3>
-                      </a>
-                      <p>{products.starting_price}</p>
-                    </div>
-                  ))}
-                </div>
-                {/* "더 보기" 버튼을 추가하고 클릭 이벤트를 연결합니다. */}
-                <div className="text-center mt-4">
-                  {visibleProducts.length < products.length && (
-                    <button className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce" onClick={loadMoreProducts}>
-                      더 보기
-                    </button>
-                  )}
-                </div>
+        <div className="bg-white">
+          <HomeMain/>
+        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+          <h2 className="sr-only">Products</h2>
+  
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            {visibleProducts.map((e: any, key: number) => (
+              <div key={key} className="product-item">
+                <a href={`/listdetail/${e.id}`} className="group">
+                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                    <img
+                      src={e.images[0]}
+                      alt={e.imageAlt} 
+                      className="h-full w-full object-cover object-center group-hover:opacity-75"
+                      style={{ width: '280px', height: '280px' }}
+                    />
+                  </div>
+                  <h3 className="mt-4 text-sm text-gray-700">{e.title}</h3>
+                  <p className="mt-1 text-lg font-medium text-gray-900">{e.starting_price}</p>
+                </a>
               </div>
-            </div>
+            ))}
           </div>
-      )
-    }
-
+          <div className="text-center mt-4">
+            {visibleProducts.length < products.length && (
+              <button
+                className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce"
+                onClick={loadMoreProducts}
+              >
+                더 보기
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
 
 function HomeMain(){
       return(
