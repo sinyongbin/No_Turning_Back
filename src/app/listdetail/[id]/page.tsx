@@ -19,7 +19,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   }, []);
 
   useEffect(() => {
-    console.log(postData);
+
   }, [postData]);
 
   async function getData(id: any) {
@@ -42,7 +42,8 @@ export default function Detail({ params }: { params: { id: string } }) {
   };
 
   const closeModal = () => {
-    setModalOpen(false);
+
+    setIsOpen(false);
   };
 
   function Main() {
@@ -83,7 +84,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </li>
                   </ul>
                   <div>
-                    <button className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700" onClick={() => setIsOpen(true)}>
+                    <button className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700" onClick={()=>setIsOpen(true)}>
                       입찰하기
                     </button>
                     <Bidding postId= {id} closeModal={closeModal} isOpen={isOpen}/>
@@ -95,7 +96,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                     >
                       문의하기
                     </button>
-                    {isModalOpen && <DetailModal id={id} isOpen={isModalOpen} closeModal={closeModal} nickname={nick} />}   
+                    {isModalOpen && <></>/*<DetailModal id={id} isOpen={} closeModal={} nickname={nick} />*/}   
                   </div>
                 </div>
                 <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">입찰시 주의사항</h2>

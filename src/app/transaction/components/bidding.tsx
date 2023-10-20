@@ -8,10 +8,14 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
 {
   
     const [data , setData] = useState<any>([])
+  
     const ref = useRef<any>(null);
     useEffect(()=>{
-      getData()
-    },[data])
+      console.log(data.length)
+      const interval = setInterval(() => {getData()},5000)
+      return () => clearInterval(interval)
+    },[])
+    useEffect(()=>{getData},[])
     function updateValue(price : string)
     {
       let parseNumber = parseInt(price)
@@ -66,7 +70,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
               data.currentPrice = price;
             }
         }
-        await fetch(`api/transaction/${postId}`,{
+        await fetch(`/api/transaction/${postId}`,{
           method: "POST",
           headers:{
             "Content-Type": "application/json"
@@ -80,13 +84,18 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
     }
     async function getData()
     {
-      let temp = await fetch(`api/transaction/${postId}`,{
-          method : "GET"
+      let temp = await fetch(`/api/transaction/${postId}`,{
+          method : "GET",
+          headers:{
+            accept : "application/json"
+          }
       }).then(e =>{
         return e.json()
-      }).then(e=>{
-        setData(e)
       })
+      
+      setData(temp);
+      console.log("temp")
+      console.log(temp)
     }
     return(<>
     {data !== undefined ?
@@ -120,7 +129,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                     as="h3"
                     className=" font-medium leading-6 text-gray-900">
                     <div className="titleSection text-left flex">
-                      <h1 className='text-xl'>입찰에 참가: {postId}</h1>
+                      <h1 className='text-xl'>입찰에 참가: </h1>
                       <div className="ml-auto right">
                           <button onClick={closeModal}>
                               <XCircleIcon style={
@@ -199,6 +208,6 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
             </div>
           </div>
         </Dialog>
-      </Transition>:""}
+      </Transition>:"loading"}
     </>)
 }
