@@ -42,27 +42,31 @@ export default function User() {
     function passwordChange(e: any) {
         e.preventDefault();
 
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const loggedEmail = sessionStorage.getItem('loggedEmail');
 
         if (passwordData.password !== passwordData.ConfirmPassword) {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
+        
+        if (passwordData.password.length < 8) {
+            alert("비밀번호는 최소 8자 입력해주세요!")
+            return;
+        }
 
         try{
-            fetch(`/member/member_info/${loggedInfo.email}`, {
+            fetch(`http://localhost:8080/member/member_info/${loggedEmail}`, {
                 method: "PUT",
-                body: JSON.stringify(formData || passwordData),
+                body: JSON.stringify(passwordData),
                 headers: {
                     "Content-Type": "application/json",
                 },
             }).then((response) => {
                 if (response.status !== 200) {
-                    console.log(formData || passwordData);
-                    throw new Error('서버 응답이 실패했습니다.' + response.status);
+
                 } else {
                     
-                    alert(`${loggedInfo.nickname}님의 비밀번호가 성공적으로 변경되었습니다`);
+                    alert(`비밀번호가 성공적으로 변경되었습니다`);
                     location.href='user'
                 }
             })
@@ -103,9 +107,9 @@ export default function User() {
     }
 
     return (
-        <div className="max-w-xl mx-auto p-4">
+        <div className="max-w-xl mx-auto p-4 border border-gray-300">
             <h2 className="text-2xl font-bold mb-4">회원정보</h2>
-            
+            <hr className="my-4 border-t border-gray-300" />
             <div className="mb-4">
                 <label className="block mb-2">비밀번호</label>
                 <input
@@ -126,11 +130,12 @@ export default function User() {
                 <button
                     type="button"
                     onClick={passwordChange}
-                    className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600"
                 >
                     비밀번호 변경
                 </button>
             </div>
+            <hr className="my-4 border-t border-gray-300" />
             <form onSubmit={nicknameChange}>
                 <div className="mb-4">
                     <label className="block mb-2">닉네임</label>
@@ -149,6 +154,7 @@ export default function User() {
                     </button>
                 </div>
             </form>
+            <hr className="my-4 border-t border-gray-300" />
             <div className="mb-4">
                 <div className='mb-4'>
                     <label className="block mb-2">전화번호</label>

@@ -50,7 +50,6 @@ export default function Login() {
 
           return temp2;
       })
-      // alert(sessionStorage.setItem('loggedInfo',temp.result.nickname));
       if (temp.result.nickname == undefined) {
         alert('다시 시도해주세요!')
       } else {
