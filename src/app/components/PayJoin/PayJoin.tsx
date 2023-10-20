@@ -3,22 +3,33 @@ import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent}
 
 export default function PayJoin() {
 
+  const [loggedEmail, setloggedEmail] = useState("");
+
+  useEffect(()=>{
+    const loggedInfo = sessionStorage.getItem('loggedEmail')||'{}';
+    console.log('loggedInfo',loggedInfo);
+    
+    setloggedEmail(loggedInfo||"");
+  },[])
+
   async function onSubmit(e:any) {
-    const loggedInfo = sessionStorage.getItem('loggedEmail');
-    console.log('loggedInfo: ',loggedInfo);
     
     try {
+      const jsonData =[{
+        email:loggedEmail
+      }]
+        console.log(jsonData);
+        
         await fetch(`http://localhost:8080/jinddoPay/create`, 
         {
-          method: 'POST',
-          body: JSON.stringify({
-            email:loggedInfo,
-          }),
+          method: "POST",
+          body: JSON.stringify(jsonData[0]),
           headers: {
-            "Content-Type": "application/json",
-          }
+            'Content-Type': 'application/json',
+          },
         })
         .then((res)=>{
+          console.log('res: ', res.status)
             if(res.status===200){
                 alert(`진또페이의 세계에 오신걸 환영합니다`);
                 location.href = '/';
@@ -27,7 +38,7 @@ export default function PayJoin() {
             }
         });
     } catch (error) {
-        alert(`다시 시도해주세요!`)
+        alert(`다시 시도해주세요222!`)
     }
   }
 

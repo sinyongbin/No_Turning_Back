@@ -42,6 +42,11 @@ export default function Signup() {
       return;
     }
 
+    if (formData.password.length > 8) {
+      alert("비밀번호는 최소 8자 입력해주세요!")
+      return;
+    }
+    
     // MongoDB로 가는 부분
     if(email && password && address && phoneNum && nickName && bio){
       try {
@@ -106,8 +111,9 @@ export default function Signup() {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4">
+    <div className="max-w-xl mx-auto p-4 border border-gray-300">
       <h2 className="text-2xl font-bold mb-4">회원가입</h2>
+      <hr className="my-4 border-t border-gray-300" />
       <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label className="block mb-2">이메일</label>
@@ -120,6 +126,7 @@ export default function Signup() {
             className="border rounded py-2 px-3 w-full"
           />
         </div>
+        <hr className="my-4 border-t border-gray-300" />
         <div className="mb-4">
           <label className="block mb-2">비밀번호</label>
           <input
@@ -145,6 +152,7 @@ export default function Signup() {
                 주소검색
           </button>
         </div> */}
+        <hr className="my-4 border-t border-gray-300" />
         <div className="mb-4">
           <div className='justify-between'>
             <label className="block mb-2">
@@ -172,6 +180,7 @@ export default function Signup() {
           />
           
         </div>
+        <hr className="my-4 border-t border-gray-300" />
         <div className="mb-4">
           <label className="block mb-2">전화번호</label>
           <input
@@ -182,6 +191,7 @@ export default function Signup() {
             className="border rounded py-2 px-3 w-full"
           />
         </div>
+        <hr className="my-4 border-t border-gray-300" />
         <div className="mb-4">
           <label className="block mb-2">닉네임</label>
           <input
@@ -192,6 +202,7 @@ export default function Signup() {
             className="border rounded py-2 px-3 w-full"
           />
         </div>
+        <hr className="my-4 border-t border-gray-300" />
         <div className="relative mb-14">
           <div>
             <label className="block mb-2">성별 선택</label>
@@ -208,7 +219,7 @@ export default function Signup() {
             </select>
           </div>
         </div>
-        
+        <hr className="my-4 border-t border-gray-300" />
         <div className='flex justify-between'> 
           <button type="submit" className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 ">
             가입하기

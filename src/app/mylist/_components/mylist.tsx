@@ -31,20 +31,22 @@ export default function Page(query:{params : any}) {
         .catch((error) => console.error(error));
     }
 
-    async function Delete() {
+    async function Delete(postId:any) {
       const loggedEmail = sessionStorage.getItem('loggedEmail');
-
-        await fetch(`/api/mylist/${loggedEmail}`,{
-          method:"POST"
-          
+    
+      await fetch(`/api/mylist/${loggedEmail}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id:postId}), // 게시물 ID를 전달
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          alert(data);
+          getData();
         })
-        .then((e) => e.json())
-        .then((e) => {
-          alert("정상적으로 삭제되었습니다")
-          setProducts(e);
-          setVisibleProducts(e.slice(0, 8));
-        })
-        .catch((error) => console.error(error))
+        .catch((error) => console.error(error));
     }
 
     const loadMoreProducts = () => {
@@ -87,8 +89,8 @@ export default function Page(query:{params : any}) {
                       </a>
                       <p>{e.starting_price}원</p>
                       <button type="button"
-                      onClick={Delete}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        onClick={() => Delete(e.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                         삭제
                       </button>
                     </div>

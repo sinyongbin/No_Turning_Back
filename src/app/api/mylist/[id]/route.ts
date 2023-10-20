@@ -32,15 +32,21 @@ export async function GET(request:NextRequest,context: { params: any }){
     return NextResponse.json(changeData);
 }
 
-// export async function POST(request:NextRequest,context: { params: any }){
-//     let myemail = context.params.id;
+export async function POST(request:NextRequest,context: { params: any }) {
+    const myemail = context.params.id;
+    const data = await request.json();
 
-//     const data = await prisma.post.delete({
-//         where: {
-//             email: myemail
-//         },
-//         select: {
-//             id: 
-//         }
-//     });
-// }
+    console.log(data);
+
+    console.log(data.id);
+
+    // let { id } = Object.fromEntries(data);
+
+    const deletedPost = await prisma.post.deleteMany({
+        where: {
+            id: data.id
+        },
+    });
+    return NextResponse.json("정상적으로 삭제되었습니다.")
+
+}

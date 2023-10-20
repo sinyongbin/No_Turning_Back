@@ -1,9 +1,8 @@
 "use client"
 
-"use client"
-
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import MyModal from '@/app/components/PayJoin/MyModal';
+import { stringify } from 'querystring';
 
 export default function Pay() {
 
@@ -26,25 +25,45 @@ export default function Pay() {
     }
 
     useEffect(() => {
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const loggedInfo = sessionStorage.getItem('loggedEmail');
         
-        if (formData.balance !== null && formData.balance !== undefined && formData.balance !== '') {
-            try {
-                fetch(`/${loggedInfo.email}`, {
-                    method: "GET",
-                    headers: {
-                        Accept: 'application/json',
-                    }
-                }).then(res => res.json()).then(res => {
-                    // 데이터를 가져온 후의 로직 (추가 로직을 여기에 추가하세요)
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
+        try {
+            fetch(`http://localhost:8080/jinddoPay/create/${loggedInfo}`, {
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                }
+            }).then(res => {
+
+                if (res.status === 204) {
+                    console.log("서버로부터 받은 데이터는 null입니다.");
+                    // 데이터가 null인 경우에 대한 처리를 추가
+                    return null;
+                } else if(res.status==500) {
+                    console.log("서버로부터 받은 데이터는 오라클 오류입니다.");
+                }else {
+                    return res.json(); // JSON 응답을 파싱
+                }
+            })
+            .then(data => {
+                console.log('백에서 가져온 값:', data);
+                if(data==null){
+                    alert("진또페이를 사용해주세요!");
+                    openModal();
+                }else{
+                    console.log('백에서 받아오는 잔액:', data.balance);
+                    setFormData({...formData,balance:data.balance});
+                    return;
+                }
+            });
+        } catch (error) {
             alert("진또페이를 사용해주세요!");
             openModal();
         }
+        
+        // if (formData.balance == null && formData.balance == undefined && formData.balance == '') {
+            
+        // } 
     }, []);
     
 
@@ -53,7 +72,7 @@ export default function Pay() {
     function Deposit () { //입급
         //e.preventDefault();
 
-        const loggedInfo =sessionStorage.getItem('loggedInEmail');
+        const email = sessionStorage.getItem('loggedEmail');
 
         const depositValue = parseFloat(formData.deposit); // 입력 값을 숫자로 변환
 
@@ -63,22 +82,27 @@ export default function Pay() {
             return;
         }
 
-        if (confirm("정말로 입급하실래요?")) {
-            fetch(`/${loggedInfo}`, {
+        if (confirm("정말로 입금하실래요?")) {
+            const updatedFormData = {
+                ...formData, // 기존 formData 내용을 그대로 유지
+                email: email // email 필드 추가
+            };
+            console.log(updatedFormData);
+            fetch(`http://localhost:8080/jinddoPay/charge/${depositValue}`, {
                 method: "PUT",
-                body: JSON.stringify(formData),
+                body: JSON.stringify(updatedFormData),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((res) => {
                 if (res.status == 200) {
-                    alert(`${formData.deposit}원이 입급되었습니다, 현재 잔액은 ${formData.deposit + formData.balance}원 입니다`)
-                    location.href='/pay'
+                    alert(`${formData.deposit}원이 입급되었습니다, 현재 잔액은 ${parseInt(formData.deposit) + parseInt(formData.balance)}원 입니다`);
+                    location.href='/pay';
+                    return;
                 } else {
-                    //alert('입급에 실패하였습니다. 다시 시도해주세요!')
-                    alert(`${formData.deposit}원이 입급되었습니다, 현재 잔액은 ${parseInt(formData.deposit) + parseInt(formData.balance)}원 입니다`)
-                    //테스트용 잔액 조절
-                    
+                    alert('입급에 실패하였습니다. 다시 시도해주세요!');
+                    location.href='/pay';
+                    return;
                 }
             }).catch((error) => {
                 alert('잠시 후 다시 시도해주세요');
@@ -89,32 +113,50 @@ export default function Pay() {
     function Withdraw () { //출금
         //e.preventDefault();
 
-        const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
+        const email = sessionStorage.getItem('loggedEmail');
 
-        const WithdrawValue = parseFloat(formData.Withdraw); // 입력 값을 숫자로 변환
+        const WithdrawValue = -parseFloat(formData.Withdraw); // 입력 값을 숫자로 변환
 
         if (isNaN(WithdrawValue)) {
             alert("숫자 형태로 입력해주세요!");
             location.href = '/pay';
             return;
         }
-        fetch(`/${loggedInfo.email}`, {
-            method: "PUT",
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((res) => {
-            if (res.status == 200) {
-                //alert(`${formData.Withdraw}원이 출금되었습니다 현재 잔액은 ${parseInt(formData.deposit) - parseInt(formData.balance)}원 입니다`)
-                location.href='/pay'
-            } else {
-                //alert('출금에 실패하였습니다. 다시 시도해주세요!')
-                alert(`${formData.Withdraw}원이 출금되었습니다 현재 잔액은 ${parseInt(formData.balance) - parseInt(formData.Withdraw)}원 입니다`)
-            }
-        }).catch((error) => {
-            alert('잠시 후 다시 시도해주세요');
-        })
+
+        const valueCheck = parseInt(formData.balance) - parseInt(formData.Withdraw) //잔고 체크 용도
+
+        if (valueCheck < 0) {
+            alert("잔고가 부족합니다. 잔고를 확인해주세요!");
+            location.href = '/pay';
+            return;
+        }
+        if(confirm("정말로 출금하실래요?")) {
+            const updatedFormData = {
+                ...formData,
+                email: email // email 필드 추가
+            };
+            fetch(`http://localhost:8080/jinddoPay/charge/${WithdrawValue}`, {
+                
+                method: "PUT",
+                body: JSON.stringify(updatedFormData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((res) => {
+                if (res.status == 200) {
+                    alert(`${formData.Withdraw}원이 출금되었습니다 현재 잔액은 ${valueCheck}원 입니다`)
+                    location.href='/pay'
+                    return
+                } else {
+                    alert('출금에 실패하였습니다. 다시 시도해주세요!')
+                    location.href='/pay'
+                    return
+                }
+            }).catch((error) => {
+                alert('잠시 후 다시 시도해주세요');
+            })
+        }
+
     }
 
     function handleInputChange(e : ChangeEvent<HTMLInputElement>) {
@@ -123,16 +165,17 @@ export default function Pay() {
     }
 
     return (
-        <div className="flex justify-between items-center p-4 space-x-4">
+        <div className="flex flex-col justify-between items-center p-4 space-y-4">
+            <h2 className="text-2xl font-bold mb-4">진도페이</h2>
             <div className="w-1/3">
                 <div className="bg-gray-100 p-4 rounded-md">
                     <h2 className="text-xl font-bold mb-2">입금</h2>
                     <input
                         type='text'
                         name='deposit'
-                        value={formData.deposit}
+                        defaultValue={formData.deposit}
                         onChange={handleInputChange}
-                        className='border rounded py-2 px-3 w-full'
+                        className='border rounded py-2 px-3 w-full mb-3'
                     />
                     <button
                         type='button'
@@ -146,9 +189,9 @@ export default function Pay() {
                     <input
                         type='text'
                         name='Withdraw'
-                        value={formData.Withdraw}
+                        defaultValue={formData.Withdraw}
                         onChange={handleInputChange}
-                        className='border rounded py-2 px-3 w-full'
+                        className='border rounded py-2 px-3 w-full mb-3'
                     />
                     <button
                         type='button'
@@ -160,9 +203,9 @@ export default function Pay() {
                 <div className="bg-gray-100 p-4 rounded-md">
                     <h2 className="text-xl font-bold mb-2">잔액</h2>
                     <input
-                        type="text"
+                        type="text" 
                         name="balance"
-                        value={formData.balance}
+                        defaultValue={formData.balance} readOnly
                         className="border rounded py-2 px-3 w-full"
                     />
                 </div> 
@@ -173,4 +216,7 @@ export default function Pay() {
         </div>
     );
 }
+
+
+
 
