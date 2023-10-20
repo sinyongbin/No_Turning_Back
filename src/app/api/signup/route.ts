@@ -15,7 +15,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 address: data.get('address'),
                 phoneNum: data.get('phoneNum'),
                 password: data.get('password'),
-
             }),
             headers: {
                 "Content-Type": "application/json",

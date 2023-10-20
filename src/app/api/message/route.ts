@@ -1,30 +1,25 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
+ 
 
+export async function POST(req:NextRequest, res: NextResponse) {
 
-export async function GET(){
-    const data = await prisma.post.findMany({
-        orderBy: {
-            update_date: 'desc',
-        }
-    });
-    // console.log('data', data);
-    // const data = await prisma.post.findMany({select :  {
-    //     id: true,
-    //     email: true,
-    //     title: true,
-    //     content: true,
-    //     starting_price: true,
-    // } })
+    const data = await req.formData();
+    
+    console.log(data);
+    
 
-    // BigInt 값을 문자열로 변환
-    const changeData = data.map((item) => ({
-        ...item,
-        starting_price: item.starting_price.toString(),
-        // 다른 BigInt 필드도 필요한 경우 문자열로 변환
-    }));
-    // console.log("changeData: " , changeData);
+    let { email, title, content } = Object.fromEntries(data);
 
-    return NextResponse.json(changeData);
+    let insert = {
+        email: email.toString(),
+        title: title.toString(),
+        content: content.toString(),
+    }
+    const report = await prisma.message.create({
+        data: insert
+    })
+    console.log("문의하기 글 내용: ", report);
+    return new Response("OK")
 }
 
