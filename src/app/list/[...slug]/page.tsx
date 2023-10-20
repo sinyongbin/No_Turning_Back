@@ -14,7 +14,7 @@ export default function Page(query:{params : any}) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [postData, setPostData] = useState<any>([]);
 
-    let category = query.params.slug[0]
+    let category = query.params.slug[0];
     
     useEffect(()=>{
         getData();

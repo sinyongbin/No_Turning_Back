@@ -4,11 +4,20 @@ import React, { FormEvent, FocusEvent, useState, useEffect, useRef, ChangeEvent}
 export default function PayJoin() {
 
   async function onSubmit(e:any) {
-    const loggedInfo = JSON.parse(sessionStorage.getItem('loggedInMember') || '{}');
-
+    const loggedInfo = sessionStorage.getItem('loggedEmail');
+    console.log('loggedInfo: ',loggedInfo);
+    
     try {
-        fetch(`/${loggedInfo.email}`, 
-        {method: 'GET'})
+        await fetch(`http://localhost:8080/jinddoPay/create`, 
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email:loggedInfo,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
         .then((res)=>{
             if(res.status===200){
                 alert(`진또페이의 세계에 오신걸 환영합니다`);

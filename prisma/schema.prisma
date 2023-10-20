@@ -40,14 +40,14 @@ model Post {
 }
 
 model Comment {
-  cid String @id @default(auto()) @map("_id") @db.ObjectId
-  post Post @relation(fields: [id], references: [id])
-  id String @db.ObjectId
-  email String
-  content String
-  publicInfo PublicInfo @default(PUBLIC)
-  create_date DateTime 
-  end_date DateTime
+  cid         String     @id @default(auto()) @map("_id") @db.ObjectId
+  post        Post       @relation(fields: [id], references: [id])
+  id          String     @db.ObjectId
+  email       String
+  content     String
+  publicInfo  PublicInfo @default(PUBLIC)
+  create_date DateTime
+  end_date    DateTime
 }
 
 model Report {
@@ -61,12 +61,17 @@ model Report {
 }
 
 enum Category {
-    beauty
-    hobby
-    digital
-    sport
-    car
-    etc
+  beauty
+  hobby
+  digital
+  sport
+  car
+  etc
+}
+
+model Image {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  postId String
 }
 
 enum Role {

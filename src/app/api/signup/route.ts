@@ -7,7 +7,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const data = await req.formData();
 
-
     try {
         const orcleResult = await fetch("http://localhost:8080/member/member_join", {
             method: "POST",
