@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
-import DetailModal from '@/app/message/_components/modal';
 import Bidding from '@/app/transaction/components/bidding';
+import SendModal from '@/app/message/_components/sendmodal';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
@@ -11,7 +11,16 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [isOpen, setIsOpen] = useState(false);
   const [postData, setPostData] = useState<any>({});
   const [nick, setNick] = useState<string>("");
+  const [isModal2Open, setIsModal2Open] = useState(false);
 
+  console.log("isModal2Open 상태:", isModal2Open);
+
+  const openModal2 = () => {  
+    setIsModal2Open(true);
+  };
+  const closeModal2 = () => {
+    setIsModal2Open(false);
+  };
   const id = params.id;
 
   useEffect(() => {
@@ -39,13 +48,16 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const openModal = () => {
     setModalOpen(true);
+   
   };
-
   const closeModal = () => {
-
     setIsOpen(false);
   };
 
+  const handleOpenModal = () => {
+    openModal2();
+  };
+  
   function Main() {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -92,12 +104,13 @@ export default function Detail({ params }: { params: { id: string } }) {
                   <div className="flex justify-center mt-4">
                     <button
                       className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300"
-                      onClick={openModal}
-                    >
+                      onClick={handleOpenModal}>
                       문의하기
                     </button>
-                    {isModalOpen && <></>/*<DetailModal id={id} isOpen={} closeModal={} nickname={nick} />*/}   
-                  </div>
+                    {isModalOpen && (
+                      <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} />
+                    )}
+                    </div>
                 </div>
                 <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">입찰시 주의사항</h2>
                 <p className="mt-6">약관의 동의하시오</p>
@@ -127,7 +140,7 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   return (
     <>
-      {postData.post == undefined ? <div></div> : <Main />}
+      {postData.post == undefined ? <div className='text-center text-5xl' > 데이터를 불러오는중입니다 잠시만 기달려주세요</div> : <Main />}
     </>
   );
 }
