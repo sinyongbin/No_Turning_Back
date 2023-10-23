@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
-import Bidding from '@/app/transaction/components/bidding';
 import SendModal from '@/app/message/_components/sendmodal';
+import Bidding from '@/app/transaction/components/bidding';
+import Timer from '@/app/timer/page';
+
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [newComment, setNewComment] = useState(''); // Comment 타입 사용
@@ -12,23 +14,25 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [postData, setPostData] = useState<any>({});
   const [nick, setNick] = useState<string>("");
   const [isModal2Open, setIsModal2Open] = useState(false);
+  const [isExpired, setIsExpired] = useState(false); // 새로운 상태 추가
 
-  console.log("isModal2Open 상태:", isModal2Open);
-
+  const id = params.id;
   const openModal2 = () => {  
     setIsModal2Open(true);
   };
   const closeModal2 = () => {
     setIsModal2Open(false);
   };
-  const id = params.id;
+  
 
   useEffect(() => {
     getData(id);
   }, []);
 
   useEffect(() => {
-
+    // console.log("endDate");
+    // console.log(postData)
+    
   }, [postData]);
 
   async function getData(id: any) {
@@ -40,11 +44,36 @@ export default function Detail({ params }: { params: { id: string } }) {
       .catch((error) => {
         console.error('서버 요청 실패', error);
       });
-
-    console.log(detailData);
     setNick(detailData[1].nickname);
     setPostData(detailData[0]);
+    const endTime = detailData[0]?.post.endDate; 
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      if (endTime && now > endTime) {
+        setIsExpired(true);
+        handleBidding();  
+        clearInterval(interval);
+       
+      }
+    }, 1000);
   }
+  const handleBidding = async () => {
+    try {
+      const response = await fetch(`/api/updatePost/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isExpired: true }),
+      });
+      if (response.ok) {
+        console.log('성공');
+      }
+    } catch (error) {
+      console.error('실패', error);
+    }
+  };
+  
 
   const openModal = () => {
     setModalOpen(true);
@@ -76,14 +105,15 @@ export default function Detail({ params }: { params: { id: string } }) {
                   <ul role="list" className="mt-8 space-y-8 text-gray-600">
                     <li className="flex gap-x-3">
                       <div className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
-                      <span>
+                      {/* <span>
                         <strong className="font-semibold text-gray-900">입찰건수: Bid Count</strong>
-                      </span>
+                      </span> */}
                     </li>
                     <li className="flex gap-x-3">
                       <div className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
                       <span>
-                        <strong className="font-semibold text-gray-900">남은시간: Time Remaining</strong>
+                        <strong className="font-semibold text-gray-900"> <Timer endDate={parseInt(postData.post.endDate)}/>
+                        </strong>
                       </span>
                     </li>
                     <li className="flex gap-x-3">
@@ -96,18 +126,32 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </li>
                   </ul>
                   <div>
-                    <button className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700" onClick={()=>setIsOpen(true)}>
+                  {isExpired ? (
+                    <button
+                      className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
+                      onClick={handleBidding}
+                      disabled={true}
+                    >
+                      입찰이 끝났습니다
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
+                      onClick={handleBidding}
+                      disabled={false}
+                    >
                       입찰하기
                     </button>
-                    <Bidding postId= {id} closeModal={closeModal} isOpen={isOpen}/>
-                  </div>
+                  )}
+                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} />
+                </div>
                   <div className="flex justify-center mt-4">
                     <button
                       className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300"
                       onClick={handleOpenModal}>
                       문의하기
                     </button>
-                    {isModalOpen && (
+                    {isModal2Open && (
                       <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} />
                     )}
                     </div>

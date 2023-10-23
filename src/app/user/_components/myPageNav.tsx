@@ -16,22 +16,7 @@ const navigation = [
 ]
 
 export default function MyPageNav() {
-    const [isActive, setIsActive] = useState(false);
-    const [searchText, setSearchText] = useState<string>('');
 
-    const searchToggle = () => {
-        setIsActive(!isActive);
-        setSearchText('');
-    };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(event.target.value);
-    };
-
-    const handleSearch = () => {
-        // 검색 로직을 이곳에 추가
-        console.log('검색어:', searchText);
-    };
     return (
         <>
         <Disclosure as="nav" className="bg-white mb-10">

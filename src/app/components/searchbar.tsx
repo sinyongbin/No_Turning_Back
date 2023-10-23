@@ -1,11 +1,12 @@
-import Link from "next/link";
-import Dropdown from "./dropdown";
-import { useState } from "react";
+"use client"
+import { useState,useEffect } from "react";
 
 export default function SearchBar() {
   const [isActive, setIsActive] = useState(false);
   const [searchText, setSearchText] = useState<string>('');
-
+  
+  
+  
   const searchToggle = () => {
     setIsActive(!isActive);
     setSearchText('');
@@ -16,8 +17,21 @@ export default function SearchBar() {
   };
 
   const handleSearch = () => {
-    // 검색 로직을 이곳에 추가
-    console.log('검색어:', searchText);
+    if (searchText.trim() !== '') {
+      fetch(`/api/search?query=${encodeURIComponent(searchText)}`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('서버 응답:', data);
+        })
+        .catch((error) => {
+          console.error('에러 발생:', error);
+        });
+    } else {
+      console.log('검색어가 비어 있습니다.');
+    }
+    alert(searchText);
   };
     return (
       <>

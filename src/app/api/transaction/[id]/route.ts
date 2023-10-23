@@ -7,7 +7,7 @@ export async function GET(req : NextRequest, context: { params: any }) {
         method : "GET"
     })
     .then(e=>{return e.json()})
-    return NextResponse.json(data )
+    return NextResponse.json(data)
 }
 
 

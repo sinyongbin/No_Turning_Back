@@ -16,6 +16,7 @@ export async function GET(req: NextRequest, context: { params: any }){
                 title:true,
                 content:true,
                 starting_price:true,
+                endDate:true
             },
         });
         const nickname  = await prisma.profile.findMany(
