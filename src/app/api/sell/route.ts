@@ -26,8 +26,9 @@ export async function POST(req:NextRequest, res: NextResponse) {
         starting_price: parseInt(data[0].price),
         categoryname: data[0].categoryname,
         images: data[0].images,
+        // endDate : new Date().getTime() + 86400000,
+         endDate : new Date().getTime() + 20000,
         category: selectedCategory,
-        
         
     }
     const post = await prisma.post.create({
@@ -37,20 +38,21 @@ export async function POST(req:NextRequest, res: NextResponse) {
     let postid = post.id
     let email = data[0].email
     let starting_price = parseInt(data[0].price)
-    let transOracle = await [{
+    let transOracle = {
             maxPrice: starting_price,
             // maxEmail : "default",
             currentPrice: starting_price,
             postId:postid,
             sellerEmail: email,
-      }]
+    }
     const orcleResult = await fetch("http://localhost:8080/transaction/post", {
           method: "POST",
           body: JSON.stringify(transOracle),
           headers: {
               "Content-Type": "application/json",
           }
-    }).then(e=>e.json())
-
-    return NextResponse.json({message: "OK" },{status:200});
+    })
+    console.log(orcleResult.status)
+    console.log("__________________________________________________________")
+    return NextResponse.json({message: "OK" },{status:orcleResult.status});
   }

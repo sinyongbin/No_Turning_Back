@@ -6,8 +6,8 @@ export async function GET(){
     const result = await prisma.post.findMany({
       select:{
         content:true,
-        title:true,
         images:true,
+        title:true,
         user:{
           select:{
             nickname:true,
@@ -17,6 +17,6 @@ export async function GET(){
       
     })
     console.log(result);
-    return NextResponse.json(result);
+    return new Response("OK");
   }
 //ninckname , contnent , title 받아와야함
