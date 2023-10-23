@@ -51,12 +51,15 @@ export default function Login() {
 
           return temp2;
       })
-
       if (temp.result.nickname == undefined) {
         alert('다시 시도해주세요!')
       } else {
+        console.log("type of temp.result.email")
+        console.log(typeof temp.result.email)
+        console.log(temp.result.email)
         sessionStorage.setItem('loggedInfo', temp.result.nickname);
         sessionStorage.setItem('loggedEmail',temp.result.email);
+      
         alert(temp.result.nickname+'님 환영합니다')
       }
       location.href='/'

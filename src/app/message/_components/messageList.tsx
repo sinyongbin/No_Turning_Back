@@ -2,7 +2,7 @@
 
 import { log } from 'console';
 import React, { FormEvent, useEffect, useState } from 'react';
-import Modal from './modal';
+import Modal from './sendmodal';
 
 
 type Update = {

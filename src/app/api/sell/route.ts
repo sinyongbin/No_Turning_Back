@@ -32,7 +32,25 @@ export async function POST(req:NextRequest, res: NextResponse) {
     }
     const post = await prisma.post.create({
         data: insert,
-        
     })
-    return new Response("OK")
-}
+
+    let postid = post.id
+    let email = data[0].email
+    let starting_price = parseInt(data[0].price)
+    let transOracle = await [{
+            maxPrice: starting_price,
+            // maxEmail : "default",
+            currentPrice: starting_price,
+            postId:postid,
+            sellerEmail: email,
+      }]
+    const orcleResult = await fetch("http://localhost:8080/transaction/post", {
+          method: "POST",
+          body: JSON.stringify(transOracle),
+          headers: {
+              "Content-Type": "application/json",
+          }
+    }).then(e=>e.json())
+
+    return NextResponse.json({message: "OK" },{status:200});
+  }
