@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import MyPageNav from '../user/_components/myPageNav'
-
+import MyPageNav from '../buy/_components/myPageNav'
 
 
 export const metadata: Metadata = {
