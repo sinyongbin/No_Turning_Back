@@ -3,30 +3,30 @@ import prisma from "@/db";
 
 
 
-export async function GET(request: NextRequest, context: { params: any }) {
-    let query = context.params.id;
+export async function POST(request: NextRequest, response: NextResponse) {
+    
+    const data = await request.formData();
     try {
         const result = await fetch("http://localhost:8080/member/login", {
             method: "POST",
             body: JSON.stringify({
-                email: query[0],
-                password: query[1]
+                email: data.get('email'),
+                password: data.get('password')
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
-        }
-        )
+        })
         if (result.status === 200) {
 
+            let { email } = Object.fromEntries(data);
             const prismaData = await prisma.profile.findUnique({
-                where: { email: query[0] },
+                where: { email: email.toString() },
                 select: {
                     email: true,
                     nickname: true,
                 }
             })
-            console.log('prismaData:', prismaData);
             return NextResponse.json({ result: prismaData }, { status: 200 });
         }
     }

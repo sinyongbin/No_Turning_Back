@@ -39,11 +39,12 @@ export default function Login() {
     const password = formData.password;
 
     if (email && password) {
-      const temp =await fetch(`/api/login/${email}/${password}`,{
-          method: "GET",
-          headers:{
-            accept : "application/json"
-          }
+      const temp =await fetch(`/api/login`,{
+        method: "POST",
+        body: new FormData(e.currentTarget),
+        headers:{
+          accept : "application/json"
+        }
       }).then(async e=>{
           let temp2 = (await e.json())
           console.log('몽고에 요청하고 받은 데이터:', temp2.result.nickname);
