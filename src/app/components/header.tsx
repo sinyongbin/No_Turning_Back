@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 import MyModal from './Login/MyModal';
 import { redirect } from 'next/dist/server/api-utils';
 
-
-
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,16 +25,12 @@ export default function App() {
     setIsModalOpen(false);
   };
 
-  const handleLogin = () => {
-    // 로그인 성공 시, isLoggedIn 상태를 변경하고 localStorage에 저장
-    setIsLoggedIn(true);
-  };
-
   const handleLogout = () => {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
     setIsLoggedIn(false);
-    alert("로그아웃 되었습니다.");
     sessionStorage.removeItem('loggedInfo');
+    sessionStorage.removeItem('loggedEmail');
+    alert("로그아웃 되었습니다.");
     location.href='./';
   };
 
