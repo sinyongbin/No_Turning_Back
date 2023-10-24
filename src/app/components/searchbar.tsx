@@ -16,26 +16,7 @@ export default function SearchBar() {
     setSearchText(event.target.value);
   };
 
-  const handleSearch = () => {
-    if (searchText.trim() !== '') {
-      fetch(`/api/search?query=${encodeURIComponent(searchText)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json' 
-        }
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('서버 응답:', data);
-        })
-        .catch((error) => {
-          console.error('에러 발생:', error);
-        });
-    } else {
-      console.log('검색어가 비어 있습니다.');
-    }
-    alert(searchText);
-  };
+ 
     return (
       <>
       
