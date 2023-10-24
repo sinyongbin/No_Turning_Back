@@ -9,7 +9,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
   
-  useEffect(() => { // 
+  useEffect(() => { 
     const loggedIn = sessionStorage.getItem('loggedInfo');
     if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
       setIsLoggedIn(true);
@@ -36,6 +36,7 @@ export default function App() {
 
   return (
     <>
+   
       <div className="header_top">
         <div className="top_inner">
           <ul className="top_list">

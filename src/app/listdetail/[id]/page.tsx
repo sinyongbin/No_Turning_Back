@@ -5,6 +5,7 @@ import ImageViewer from '../_components/detailImg';
 import SendModal from '@/app/message/_components/sendmodal';
 import Bidding from '@/app/transaction/components/bidding';
 import Timer from '@/app/timer/page';
+import Nav from '@/app/components/nav';
 
 
 export default function Detail({ params }: { params: { id: string } }) {
@@ -17,6 +18,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [isExpired, setIsExpired] = useState(false); // 새로운 상태 추가
 
   const id = params.id;
+
   const openModal2 = () => {  
     setIsModal2Open(true);
   };
@@ -52,8 +54,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       if (endTime && now > endTime) {
         setIsExpired(true);
         handleBidding();  
-        clearInterval(interval);
-       
+        clearInterval(interval);  
       }
     }, 1000);
   }
@@ -73,7 +74,9 @@ export default function Detail({ params }: { params: { id: string } }) {
       console.error('실패', error);
     }
   };
-  
+  const handleButton = ()=>{
+    setIsOpen(true)
+  }
 
   const openModal = () => {
     setModalOpen(true);
@@ -90,6 +93,16 @@ export default function Detail({ params }: { params: { id: string } }) {
   function Main() {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+        <div>
+          <a href='../'>
+            <div className='top-12 mb-6 ml-[650px]'> 
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+          </svg>
+        </div>
+        </a>
+        
+        </div>
         <div className="mx-auto flex flex-col lg:flex-row lg:max-w-7xl lg:px-8">
           <ImageViewer id={id} />
 
@@ -137,7 +150,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                   ) : (
                     <button
                       className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
-                      onClick={handleBidding}
+                      onClick={handleButton}
                       disabled={false}
                     >
                       입찰하기

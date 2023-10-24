@@ -1,22 +1,34 @@
 import { NextResponse , NextRequest } from "next/server";
 import prisma from "@/db";
-import { Content } from "next/font/google";
 
-export async function GET(){
-    const result = await prisma.post.findMany({
-      select:{
-        content:true,
-        images:true,
-        title:true,
-        user:{
-          select:{
-            nickname:true,
-          }
-        }
-      }
-      
-    })
-    console.log(result);
-    return new Response("OK");
-  }
-//ninckname , contnent , title 받아와야함
+
+export async function GET(req:NextRequest,context: { params: any }) {
+  const searchText = context.params.searchText;
+  console.log("검색어:", searchText);
+  
+  const result = await prisma.post.findMany({
+      where: {
+          OR: [         
+              { title: { contains: searchText } },    
+              {categoryname:{contains:searchText}},
+              { user: { nickname: { contains: searchText } } }
+          ]
+      },
+      select: {
+          id: true,
+          title: true,
+          categoryname:true,
+          starting_price:true,
+          user: {
+              select: {
+                  nickname: true,
+              },
+          },
+          images:true,
+      },
+   
+  });
+
+  console.log("검색 결과:", result);
+  return NextResponse.json(result);
+}

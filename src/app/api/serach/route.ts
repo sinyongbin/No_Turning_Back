@@ -13,8 +13,7 @@ export async function GET(){
             nickname:true,
           }
         }
-      }
-      
+      } 
     })
     console.log(result);
     return NextResponse.json(result);

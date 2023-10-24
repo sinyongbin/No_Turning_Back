@@ -19,6 +19,8 @@ export default function Login() {
 
   useEffect(()=>{
     const emailS = window.localStorage.getItem("email")
+    console.log(emailS);
+    
     const toggle : boolean = window.localStorage.getItem("switch") === "TRUE" ? true : false
     if(toggle && emailS != "")
     {  

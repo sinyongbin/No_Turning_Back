@@ -20,6 +20,9 @@ export default function SearchBar() {
     if (searchText.trim() !== '') {
       fetch(`/api/search?query=${encodeURIComponent(searchText)}`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json' 
+        }
       })
         .then((response) => response.json())
         .then((data) => {

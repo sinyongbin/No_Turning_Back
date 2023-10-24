@@ -7,9 +7,10 @@ export async function GET(req : NextRequest, context: { params: any }) {
         method : "GET"
     })
     .then(e=>{return e.json()})
+    
+    
     return NextResponse.json(data)
 }
-
 
 export async function POST(req : NextRequest, context: { params: any }) {
     let id = context.params.id;
