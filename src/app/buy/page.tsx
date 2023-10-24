@@ -1,11 +1,11 @@
-import React from 'react'; // React를 import 해야 합니다.
-import Buy from './_components/buy';
+import React from 'react';
+import Table from './_components/table';
 
-export default function Mypage() {
+export default function TablePage() {
     return (
         <>
             <div>
-                <Buy />
+                <Table />
             </div>
         </>
     );

@@ -51,15 +51,6 @@ export default function App() {
             </li>
             {isLoggedIn ? (
               <li className="top_item">
-                <a href="/buy" className="top_link">
-                  경매결과
-                </a>
-              </li>
-            ) : (
-              <></>
-            )}
-            {isLoggedIn ? (
-              <li className="top_item">
                 <a href="/user" className="top_link">
                   {loggedInNickName+'님'}    
                 </a>   
