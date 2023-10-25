@@ -2,20 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
-import SendModal from '@/app/message/_components/sendmodal';
 import Bidding from '@/app/transaction/components/bidding';
 import Timer from '@/app/timer/page';
-import Nav from '@/app/components/nav';
+import SendModal from '../_components/senderModal';
 
 
 export default function Detail({ params }: { params: { id: string } }) {
-  const [newComment, setNewComment] = useState(''); // Comment 타입 사용
+  
   const [isModalOpen, setModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [postData, setPostData] = useState<any>({});
   const [nick, setNick] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [isModal2Open, setIsModal2Open] = useState(false);
-  const [isExpired, setIsExpired] = useState(false); // 새로운 상태 추가
+  const [isExpired, setIsExpired] = useState(false); 
 
   const id = params.id;
 
@@ -48,6 +48,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       });
     setNick(detailData[1].nickname);
     setPostData(detailData[0]);
+    setEmail(detailData[0].post.email);
     const endTime = detailData[0]?.post.endDate; 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -95,7 +96,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
         <div>
           <a href='../'>
-            <div className='top-12 mb-6 ml-[650px]'> 
+            <div className='top-12 mb-6 ml-[980px]'> 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
           </svg>
@@ -165,7 +166,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                       문의하기
                     </button>
                     {isModal2Open && (
-                      <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} />
+                      <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} email={email}/>
                     )}
                     </div>
                 </div>
@@ -175,10 +176,19 @@ export default function Detail({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="product_detail_item_wrap detail_item flex justify-center items-center">
+        <div className="flex min-h-screen flex-row ">
+      <div className="main -ml-48 flex flex-grow flex-col p-4  md:ml-0">
+    <div className="flex items-center justify-center bg-white text-center text-5xl font-bold ">{postData.post.content}</div>
+  </div>
+</div>
+
+
+
+        {/* <div className="product_detail_item_wrap detail_item flex justify-center items-center">
           <div className="detail_title_header_images">
             <div className="detail_header_logo_wrap">
-              <p className="detail_header_logo_title"></p>
+          
+              <p className="detail_header_logo_title font-semibold text-3xl">상품 설명</p>
             </div>
             <div className="detail_img_wrap">
               <div className="detail_content_images open" style={{ maxHeight: '963px' }}>
@@ -190,7 +200,7 @@ export default function Detail({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

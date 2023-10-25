@@ -27,7 +27,6 @@ model Post {
   email          String
   title          String
   content        String
-  comments       Comment[] // Comment 모델의 배열 형태로, 해당 게시물과 연결된 댓글
   starting_price Int
   category       Category
   categoryname   String
@@ -37,17 +36,6 @@ model Post {
   update_date DateTime @updatedAt
   // create_date DateTime 
   endDate Int
-}
-
-model Comment {
-  cid         String     @id @default(auto()) @map("_id") @db.ObjectId
-  post        Post       @relation(fields: [id], references: [id])
-  id          String     @db.ObjectId
-  email       String
-  content     String
-  publicInfo  PublicInfo @default(PUBLIC)
-  create_date DateTime
-  end_date    DateTime
 }
 
 model Report {
@@ -60,6 +48,21 @@ model Report {
   answer Boolean @default(false)
 }
 
+model Message {
+  id String @id @default(auto()) @map("_id") @db.ObjectId  
+  postid      String
+  sender      String 
+  receiver    String
+  title       String
+  content     String
+  create_date DateTime @default(now())
+}
+
+model Image {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  postId String
+}
+
 enum Category {
   beauty
   hobby
@@ -67,11 +70,6 @@ enum Category {
   sport
   car
   etc
-}
-
-model Image {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  postId String
 }
 
 enum Role {

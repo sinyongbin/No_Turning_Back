@@ -63,7 +63,7 @@ export default function SellProduct() {
         images:previewImg}
     ]
     console.log(jsonData)
-      const send = await fetch('http://localhost:3000/api/sell',{
+      const send = await fetch('/api/sell',{
         method: 'POST',
         body : JSON.stringify(jsonData),
         headers: {

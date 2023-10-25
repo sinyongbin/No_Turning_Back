@@ -4,10 +4,11 @@ import {Fragment,useState,useEffect, useRef} from 'react'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import { TransactionInfo } from '@/typeModules'
 
-export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo)
+export default  function Bidding({closeModal, isOpen , postId } : TransactionInfo)
 {
   
-    const [data , setData] = useState<any>([])
+    const [ amount , setAmount ] = useState<any>(false);
+    const [data , setData] = useState<any>([]);
     const ref = useRef<any>(null);
     useEffect(()=>{getData},[])
     useEffect(()=>{},[data])
@@ -16,30 +17,60 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
       return () => clearInterval(interval)
     },[])
     
-    function updateValue(price : string)
-    {
-      let parseNumber = parseInt(price)
-      if(data.sellerEmail != sessionStorage.getItem("loggedEmail")){
-            if(parseNumber === -1)
-            {   
-                let cusVal = parseInt(ref.current?.value)
-                let min = (parseInt(data.currentPrice) * 1.01).toFixed(0)
-                if(cusVal >= parseInt(min))
-                {
-                  requestUpdate(cusVal)
+    async function updateValue(price: string) {
+      let parseNumber = parseInt(price);
+      if (data.sellerEmail != sessionStorage.getItem("loggedEmail")) {
+        if (parseNumber === -1) {
+          let cusVal = parseInt(ref.current?.value);
+          let min = (parseInt(data.currentPrice) * 1.01).toFixed(0);
+          if (cusVal >= parseInt(min)) {
+            // 잔액 확인을 위한 fetch 로직 추가
+            fetch(`http://localhost:8080/jinddoPay/create/${sessionStorage.getItem("loggedEmail")}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((res) => res.json())
+              .then((balance) => {
+            
+                if (balance >= cusVal) {
+                  requestUpdate(cusVal);
+                } else {
+                  alert("잔액이 부족합니다.");
                 }
-                else
-                {
-                  alert("최소금액은: "+min)
-                }
-            }
-          if(data.maxEmail != sessionStorage.getItem("loggedEmail"))
-          {
-            requestUpdate(parseNumber)
+              })
+              .catch((error) => {
+                console.error('잔액 확인 중 오류 발생:', error);
+              });
+          } else {
+            alert("최소금액은: " + min);
           }
+        }
+        if (data.maxEmail != sessionStorage.getItem("loggedEmail")) {
+
+          fetch(`http://localhost:8080/jinddoPay/create/${sessionStorage.getItem("loggedEmail")}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then((res) => res.json())
+            .then((balance) => {
+
+              if (balance >= parseNumber) {
+                requestUpdate(parseNumber);
+              } else {
+                alert("잔액이 부족합니다.");
+              }
+            })
+            .catch((error) => {
+              console.error('잔액 확인 중 오류 발생:', error);
+            });
+        }
       }
-    
     }
+    
     async function requestUpdate(price : number){
         let currentPrice = parseInt(data.currentPrice)
         let maxPrice = parseInt(data.maxPrice)
@@ -80,7 +111,6 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
         }).then(e=>{
           setData(e)
         })
-  
     }
     async function getData()
     {
@@ -97,23 +127,42 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
       console.log(temp)
       setData(temp)
     }
+    // const handlerAnswerButton = ()=> {
+    //   const getEail = sessionStorage.getItem('loggedEmail')
+    //   fetch(`api/pay/${getEail}`, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    // })
+    //     .then((res) => res.json())
+    //     .then((data)=>
+    //       setAmount(data)      
+    //     )           
+    //     .catch((error) => {
+    //         console.error('에러 발생:', error);
+    //     });
+    // };
 
-    async function handleBidding() {
-      let result = await fetch(`http://localhost:8080/jinddoPay/create/${postId}`,{
-        method : "GET",
-        headers : {
-          accept : "application/json"
-        }
-    }).then(
-      e=>{
-        return e.json()
+    const handlerAnswerButton = () => {
+      const getEail = sessionStorage.getItem('loggedEmail');
+      if (getEail !== null) {
+        fetch(`api/pay/${getEail}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => setAmount(data))
+          .catch((error) => {
+            console.error('에러 발생:', error);
+          });
+      } else {
+        console.log('세션없음');
       }
-    )
-    console.log(result)
-    setData(result);
-  }
-
-
+    };
+    
     return(<>
       {data !== undefined ?
           <Transition appear show={isOpen} as={Fragment}>
@@ -205,7 +254,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                                 <input ref={ref} name= "cusPrice" type='number' className='h-10 w-full border border-gray-400 rounded-lg' />
                               </div>
                               <div >
-                                <button onClick = {()=>{updateValue("-1")}} className='bg-sky-400 h-9 text-center w-full mt-5 rounded-lg'>응찰하기</button>
+                                <button onClick = {()=>{updateValue("-1"),(handlerAnswerButton)}} className='bg-sky-400 h-9 text-center w-full mt-5 rounded-lg'>응찰하기</button>
                               </div>
                         </div>
                       :

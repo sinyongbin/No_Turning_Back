@@ -35,8 +35,12 @@ export default function Nav() {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    // console.log('data:', data);
-                    setSearchResults(data);
+                    if (data.length === 0) {
+                        alert('그런 물품은 없어요 ㅠㅠ');
+                    } else {
+                        // console.log('data:', data);
+                        setSearchResults(data);
+                    }
                 })
                 .catch((error) => {
                     console.error('에러 발생:', error);
@@ -45,6 +49,7 @@ export default function Nav() {
             alert('검색어를 입력하세요');
         }
     };
+    
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -63,7 +68,7 @@ export default function Nav() {
                                         <input
                                             type="text"
                                             className="search-input placeholder:text-cyan-50"
-                                            placeholder="Search..."
+                                            placeholder="제목,닉네임,카테고리이름까지 가능"
                                             value={searchText}
                                             onChange={handleInputChange}
                                             onKeyPress={handleKeyPress}
