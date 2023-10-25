@@ -9,12 +9,12 @@ import { Disclosure } from '@headlessui/react'
 // }
 
 const navigation = [
-    { name: '회원정보', href: 'user', current: true },
-    { name: '내가 쓴 글', href: 'mylist', current: false },
-    { name: '구매', href: 'buy', current: false },
-    { name: '판매', href: 'sale', current: false },
-    { name: '페이', href: 'pay', current: false },
-    { name: '쪽지', href: 'message', current: false },
+    { name: '회원정보', href: '/user', current: true },
+    { name: '내가 쓴 글', href: '/mylist', current: false },
+    { name: '구매', href: '/buy', current: false },
+    { name: '판매', href: '/sale', current: false },
+    { name: '페이', href: '/pay', current: false },
+    { name: '쪽지', href: '/message', current: false },
 ]
 
 export default function MyPageNav() {

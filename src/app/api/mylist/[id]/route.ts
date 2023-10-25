@@ -36,10 +36,6 @@ export async function POST(request:NextRequest,context: { params: any }) {
     const myemail = context.params.id;
     const data = await request.json();
 
-    console.log(data);
-
-    console.log(data.id);
-
     // let { id } = Object.fromEntries(data);
 
     const deletedPost = await prisma.post.deleteMany({

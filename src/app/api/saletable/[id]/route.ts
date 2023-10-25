@@ -5,7 +5,7 @@ export async function POST(request:NextRequest,context: { params: any }) {
     let myEmail = context.params.id;
     let postInfo =[];
     try{
-        let result = await fetch(`http://localhost:8080/transaction/buyerTransaction/${myEmail}`,{
+        let result = await fetch(`http://localhost:8080/transaction/sellerTransaction/${myEmail}`,{
             method : "GET",
         }).then(e=>e.json());
         

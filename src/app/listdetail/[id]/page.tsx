@@ -74,6 +74,9 @@ export default function Detail({ params }: { params: { id: string } }) {
     }
   };
   
+  const handleButton = () =>{
+    setIsOpen(true)
+  }
 
   const openModal = () => {
     setModalOpen(true);
@@ -137,7 +140,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                   ) : (
                     <button
                       className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
-                      onClick={handleBidding}
+                      onClick={handleButton}
                       disabled={false}
                     >
                       입찰하기

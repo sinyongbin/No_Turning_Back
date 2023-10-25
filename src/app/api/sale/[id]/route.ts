@@ -7,7 +7,7 @@ export async function POST(request: NextRequest, context: { params: any }) {
     let postInfo = [];
 
     try {
-        let result = await fetch(`http://localhost:8080/transaction/buyerTransaction/${myEmail}`, {
+        let result = await fetch(`http://localhost:8080/transaction/sellerTransaction/${myEmail}`, {
             method: "GET",
         }).then(e => e.json());
         if (result !== null) {
@@ -49,13 +49,15 @@ export async function PUT(req:NextRequest, context:{ params: any }) {
         let result1 = await fetch(`http://localhost:8080/transaction/post/${postid1}`, {
             method: "GET"
         }).then(e=>e.json());
-        
-        if(result1.buyerCheck === false) {
-            let result2 = await fetch(`http://localhost:8080/transaction/buyerCheck/${postid1}`,{
+
+        if(result1.buyerCheck === true && result1.sellerCheck === false) {
+            let result2 = await fetch(`http://localhost:8080/transaction/sellerCheck/${postid1}`,{
                 method: "PUT"
             })
             return NextResponse.json({status:true});
-        }else{
+        } else if (result1.buyerCheck === true && result1.sellerCheck === true) {
+            return NextResponse.json({status:200});
+        } else {
             return NextResponse.json({status:false});
         }
     }catch(err){

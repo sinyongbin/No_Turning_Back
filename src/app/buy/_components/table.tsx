@@ -1,66 +1,94 @@
 "use client"
 
+import Nav from "@/app/components/nav";
 import { useEffect, useState } from "react"
 
 export default function Table() {
-
-    const [formData, setFormData] = useState({
-        current_price : '', //낙찰가
-        post_id : '', //포스트 id
-        title: '', //제목
-    })
+    const [products, setProducts] = useState([]);
+    const [visibleProducts, setVisibleProducts] = useState([]);
+    const [postData, setPostData] = useState<any>([]);
 
     useEffect(()=>{
+        getData();
+    }, [])
+
+    async function getData() {
         const loggedEmail = sessionStorage.getItem('loggedEmail');
 
-        try {
-            fetch(`/api/buytable/${loggedEmail}`,{
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                }
-            }).then(res=>res.json()).then(res =>{
-                setFormData(res);
-                console.log(res);
-            })
-        } catch (error) {
-            console.log(error);
+        await fetch(`/api/buytable/${loggedEmail}`,{
+            method:"POST",
+            body: JSON.stringify(loggedEmail),
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }
+        })
+        .then((e) => e.json())
+        .then((e) => {
+            setProducts(e);
+            setVisibleProducts(e.slice(0, 8)); // 초기에 표시할 상품 설정
+
+        })
+        .catch((error) => console.error(error));
+    }
+
+    const loadMoreProducts = () => {
+        const currentLength = visibleProducts.length;
+        const nextProducts = products.slice(currentLength, currentLength + 8);
+
+        if (nextProducts.length > 0) {
+            setVisibleProducts((prevProducts) => [...prevProducts, ...nextProducts]);
         }
-    }, [])
+    }
     
+    function ListDetailPage(){
+        return(
+            <div className="mx-48 p-3 ">
+            <div className="mb-4">
+                <table className="border-collapse w-full">
+                    <thead>
+                        <tr>
+                        <th className="border border-gray-300 p-2 w-7/12">제목</th>
+                        <th className="border border-gray-300 p-2 w-2/12">판매자</th>
+                        <th className="border border-gray-300 p-2 w-2/12">가격</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {visibleProducts.map((e: any, key: number) => (
+                        <tr key={key}>
+                        <td className="border border-gray-300 p-2">
+                            <a href={`/buy/${e.postId}`}>
+                                <p>{e.title}</p>
+                            </a>
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                            <h3>{e.sellerEmail}</h3>
+                        </td>
+                        <td className="border border-gray-300 p-2">
+                            <h3>{e.currentPrice}</h3>
+                        </td>        
+                        </tr>
+                    ))}    
+                    </tbody>
+                </table>
+                <div className="text-center mt-4">
+                    {visibleProducts.length < products.length && (
+                        <button
+                            className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce"
+                            onClick={loadMoreProducts}
+                        >
+                            더 보기
+                        </button>
+                    )}
+                </div>
+            </div>
+            </div>
+        )
+    }
+
     return (
         <>
-            <div className="mx-48 p-3 ">
-
-                <div className="mb-4">
-                    <table className="border-collapse w-full">
-                        <thead>
-                            <tr>
-                            <th className="border border-gray-300 p-2 w-7/12">제목</th>
-                            <th className="border border-gray-300 p-2 w-2/12">판매자</th>
-                            <th className="border border-gray-300 p-2 w-2/12">가격</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {/* {messages.map((message, index) => (
-                            <tr key={index}>
-                            <td className="border border-gray-300 p-2">
-                                <a href='../messageForm'>{message.title}</a>
-                            </td>
-                            <td className="border border-gray-300 p-2">{message.nickname}</td>
-                            <td className="border border-gray-300 p-2">{message.date}</td>
-                            <td className="border border-gray-300 p-2 text-center">
-                                <button className="bg-blue-500 text-white py-1 px-6 rounded-md hover:bg-blue-700">
-                                삭제
-                                </button>
-                            </td>
-                            </tr>
-                        ))} */}
-                        </tbody>
-                    </table>
-                </div>
-                
-            </div>
+            {postData == undefined ? <div>test</div> : <ListDetailPage/>}
         </>
     )
 }
