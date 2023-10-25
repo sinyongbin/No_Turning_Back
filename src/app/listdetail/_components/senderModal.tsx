@@ -88,8 +88,6 @@ export default function SendModal({ isModal2Open, closeModal2, id, email, nickna
                     // 쪽지가 성공적으로 보내진 경우
                     closeModal2(); // 모달 창을 닫습니다
 
-                    // alert(`회원가입을 축하합니다! ${nickName} 님`);
-                    // location.href='/';
                 }
                 console.log('response: ', response);
             })

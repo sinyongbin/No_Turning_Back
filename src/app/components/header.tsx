@@ -31,7 +31,7 @@ export default function App() {
     sessionStorage.removeItem('loggedInfo');
     sessionStorage.removeItem('loggedEmail');
     alert("로그아웃 되었습니다.");
-    location.href='./';
+    window.location.reload();
   };
 
   return (

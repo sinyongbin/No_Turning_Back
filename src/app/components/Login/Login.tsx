@@ -64,7 +64,7 @@ export default function Login() {
       
         alert(temp.result.nickname+'님 환영합니다')
       }
-      location.href='/'
+      window.location.reload();
     }
   }
   

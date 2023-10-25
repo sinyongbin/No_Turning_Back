@@ -16,8 +16,16 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [email, setEmail] = useState<string>("");
   const [isModal2Open, setIsModal2Open] = useState(false);
   const [isExpired, setIsExpired] = useState(false); 
-
+  const [sessionEmail, setSessionEmail] = useState<any>(false); 
+ 
   const id = params.id;
+
+  useEffect(() => {
+    const sessionEmail = sessionStorage.getItem('loggedEmail'); 
+    setSessionEmail(sessionEmail);
+  
+  }, []);
+ 
 
   const openModal2 = () => {  
     setIsModal2Open(true);
@@ -30,6 +38,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   useEffect(() => {
     getData(id);
   }, []);
+  
 
   useEffect(() => {
     // console.log("endDate");
@@ -91,6 +100,7 @@ export default function Detail({ params }: { params: { id: string } }) {
     openModal2();
   };
   
+  
   function Main() {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
@@ -140,14 +150,24 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </li>
                   </ul>
                   <div>
-                  {isExpired ? (
+                {isExpired ? (
+                  <button
+                    className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
+                    onClick={handleBidding}
+                    disabled={true}
+                  >
+                    입찰이 끝났습니다
+                  </button>
+                ) : (
+                  sessionEmail === email ? ( 
                     <button
                       className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
                       onClick={handleBidding}
                       disabled={true}
                     >
-                      입찰이 끝났습니다
+                      같은 이메일은 입찰할 수 없습니다
                     </button>
+                    
                   ) : (
                     <button
                       className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
@@ -156,10 +176,12 @@ export default function Detail({ params }: { params: { id: string } }) {
                     >
                       입찰하기
                     </button>
-                  )}
-                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} />
+                  )
+                )}
+                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email} />
                 </div>
                   <div className="flex justify-center mt-4">
+                  
                     <button
                       className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300"
                       onClick={handleOpenModal}>
@@ -171,7 +193,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </div>
                 </div>
                 <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">입찰시 주의사항</h2>
-                <p className="mt-6">약관의 동의하시오</p>
+                <p className="mt-6"></p>
               </div>
             </div>
           </div>
@@ -181,9 +203,6 @@ export default function Detail({ params }: { params: { id: string } }) {
     <div className="flex items-center justify-center bg-white text-center text-5xl font-bold ">{postData.post.content}</div>
   </div>
 </div>
-
-
-
         {/* <div className="product_detail_item_wrap detail_item flex justify-center items-center">
           <div className="detail_title_header_images">
             <div className="detail_header_logo_wrap">
