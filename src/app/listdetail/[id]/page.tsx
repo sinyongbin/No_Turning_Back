@@ -184,7 +184,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                       입찰하기
                     </button>
                   )}
-                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email} />
+                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} />
 
                 </div>
                   <div className="flex justify-center mt-4">

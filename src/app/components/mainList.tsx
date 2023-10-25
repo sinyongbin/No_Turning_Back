@@ -106,7 +106,7 @@ export default function MainList() {
           <span className="close" onClick={searchToggle}></span>
             <button className="search-submit-button" onClick={handleSearch}></button>
         </div>
-        <div className='mt-28'>
+        <div className='mt-10'>
         <div>
           <HomeMain/>
         </div>
