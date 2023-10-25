@@ -21,7 +21,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const id = params.id;
 
   useEffect(() => {
-    const sessionEmail = sessionStorage.getItem('loggedEmail'); 
+    const sessionEmail = sessionStorage.getItem('loggedEmail') ; 
     setSessionEmail(sessionEmail);
   
   }, []);
@@ -150,16 +150,15 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </li>
                   </ul>
                   <div>
-                {isExpired ? (
-                  <button
-                    className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
-                    onClick={handleBidding}
-                    disabled={true}
-                  >
-                    입찰이 끝났습니다
-                  </button>
-                ) : (
-                  sessionEmail === email ? ( 
+                  {isExpired ? (
+                    <button
+                      className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
+                      onClick={handleBidding}
+                      disabled={true}
+                    >
+                      입찰이 끝났습니다
+                    </button>
+                  ) : sessionEmail === email ? (
                     <button
                       className="bg-zinc-400 w-[500px] border-2 text-white px-4 py-4 rounded-lg "
                       onClick={handleBidding}
@@ -167,29 +166,60 @@ export default function Detail({ params }: { params: { id: string } }) {
                     >
                       같은 이메일은 입찰할 수 없습니다
                     </button>
+                  ) : !sessionEmail ? (
+                    <div>
                     
+                      <button
+                        className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
+                        disabled
+                      >
+                        로그인 후 이용해주세요
+                      </button>
+                    </div>
                   ) : (
                     <button
                       className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
                       onClick={handleButton}
-                      disabled={false}
                     >
                       입찰하기
                     </button>
-                  )
-                )}
+                  )}
                   <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email} />
+
                 </div>
                   <div className="flex justify-center mt-4">
                   
-                    <button
-                      className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300"
-                      onClick={handleOpenModal}>
-                      문의하기
-                    </button>
-                    {isModal2Open && (
-                      <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} email={email}/>
-                    )}
+                  {sessionEmail ? (
+                    <div className="flex justify-center mt-4">
+                      {sessionEmail === email ? (
+                        <button
+                          className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg cursor-not-allowed"
+                          disabled={true}
+                        >
+                          판매자 본인이에요
+                        </button>
+                      ) : (
+                        <button
+                          className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg hover:bg-zinc-300"
+                          onClick={handleOpenModal}
+                        >
+                          문의하기
+                        </button>
+                      )}
+                      {isModal2Open && (
+                        <SendModal id={id} isModal2Open={isModal2Open} closeModal2={closeModal2} nickname={nick} email={email} />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex justify-center mt-4">
+                      <button
+                        className="w-[500px] border-2 bg-white text-black px-4 py-4 rounded-lg cursor-not-allowed"
+                        disabled={true}
+                      >
+                        로그인 후 이용해주세요
+                      </button>
+                    </div>
+                  )}
                     </div>
                 </div>
                 <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">입찰시 주의사항</h2>

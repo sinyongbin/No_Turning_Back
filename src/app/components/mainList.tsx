@@ -1,82 +1,164 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
-
-import Image from 'next/image'
-import prisma from '@/db'
-
-import { useState,useEffect } from 'react'
-
+import React, { Fragment, useState, useEffect } from 'react';
 
 export default function MainList() {
-
-  const [products, setProducts] = useState([]);
+  const [isActive, setIsActive] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState([]);
   
+
+  const searchToggle = () => {
+    setIsActive(!isActive);
+    setSearchText('');
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
+
   useEffect(() => {
     // API 엔드포인트를 호출하여 데이터 가져오기
-    fetch(`/api/mainList`)
+    fetch('/api/serach')
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data);
-        setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품 설정
+        // setProducts(data);
+        setSearchResults(data);
+        setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품
       })
       .catch((error) => console.error(error));
   }, []);
 
+  const handleSearch = () => {
+    if (searchText.trim() !== '') {
+        fetch(`/api/serach/${searchText}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.length === 0) {
+                    alert('그런 물품은 없어요 ㅠㅠ');
+                } else {
+                    setSearchResults(data);
+                    setVisibleProducts(data.slice(0, 8)); 
+                }
+            })
+            .catch((error) => {
+                console.error('에러 발생:', error);
+            });
+    } else {
+        alert('검색어를 입력하세요');
+    }
+  };
 
-    const loadMoreProducts = () => {
-      // "더 보기" 버튼을 클릭했을 때 실행되는 함수입니다.
-      const currentLength = visibleProducts.length;
-      const nextProducts = products.slice(currentLength, currentLength + 4);
-  
-      if (nextProducts.length > 0) {
-        setVisibleProducts((prevProducts) => [...prevProducts, ...nextProducts]);
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+          handleSearch();
       }
-    };
+  };
 
-    
-      return (
-        
-        <div className="bg-white">
-         <div className='mt-52'>
-          <HomeMain/>
-        </div> 
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="sr-only">Products</h2>
-  
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-            {visibleProducts.map((e: any, key: number) => (
-              <div key={key} className="product-item">
-                <a href={`/listdetail/${e.id}`} className="group">
-                  <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                    <img
-                      src={e.images[0]}
-                      alt={e.imageAlt} 
-                      className="h-full w-full object-cover object-center group-hover:opacity-75"
-                      style={{ width: '280px', height: '280px' }}
-                    />
+  const loadMoreProducts = () => {
+    // "더 보기" 버튼을 클릭했을 때 실행되는 함수
+    const currentLength = visibleProducts.length;
+    const nextProducts = searchResults.slice(currentLength, currentLength + 4);
+    if (nextProducts.length > 0) {
+      setVisibleProducts((prevProducts) => [...prevProducts, ...nextProducts]);
+    }
+  };
+
+  return (
+      <div className="bg-white">
+        <div className={`search-wrapper ${isActive ? 'active' : ''}`}>
+          <div className="input-holder">
+              {isActive && (
+                  <input
+                      type="text"
+                      className="search-input placeholder:text-cyan-50"
+                      placeholder="제목,닉네임,카테고리이름까지 가능"
+                      value={searchText}
+                      onChange={handleInputChange}
+                      onKeyPress={handleKeyPress}
+                  />
+              )}
+              <button className="search-icon" onClick={searchToggle}>
+                  <div className="center-icon">
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="1.5"
+                          stroke="currentColor"
+                          className="w-8 h-8 text-current"
+                      >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                        />
+                      </svg>
                   </div>
-                  <h3 className="mt-4 text-sm text-gray-700">{e.title}</h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900">{e.starting_price}</p>
-                </a>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-4">
-            {visibleProducts.length < products.length && (
-              <button
-                className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce"
-                onClick={loadMoreProducts}
-              >
-                더 보기
               </button>
-            )}
           </div>
+          <span className="close" onClick={searchToggle}></span>
+            <button className="search-submit-button" onClick={handleSearch}></button>
         </div>
+        <div className='mt-28'>
+        <div>
+          <HomeMain/>
+        </div>
+      </div> 
+      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 className="sr-only">Products</h2>
+
+        {searchResults.length > 0 && (
+            <div className="bg-white">
+                <div>
+                    <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                        <h2 className="sr-only">Products</h2>
+                        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                            {visibleProducts.map((e: any, key: number) => (
+                                <div key={key} className="product-item">
+                                    <a href={`/listdetail/${e.id}`} className="group">
+                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
+                                            <img
+                                                src={e.images[0]}
+                                                alt={e.imageAlt}
+                                                className="h-full w-full object-cover object-center group-hover:opacity-75"
+                                                style={{ width: '280px', height: '280px' }}
+                                            />
+                                        </div>
+                                        <h3 className="mt-4 text-sm text-gray-700">{e.title}</h3>
+                                        <p className="mt-1 text-lg font-medium text-gray-900">
+                                            {e.starting_price}
+                                        </p>
+                                    </a>
+                                </div>
+                            ))}
+                            
+                        </div>
+                        <div className="text-center mt-4">
+                          {visibleProducts.length < searchResults.length && (
+                            <button
+                              className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 border-2 rounded-lg animate-bounce"
+                              onClick={loadMoreProducts}
+                            >
+                              더 보기
+                            </button>
+                          )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
       </div>
-      
-    );
-  }
+    </div>
+    
+  );
+}
   
 
 function HomeMain(){
@@ -87,13 +169,15 @@ function HomeMain(){
             <div className="sm:max-w-lg">
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                 <img src='img/진또로고.png'></img>
-                <span className="relative inline-block animate-ping">
-                  JINDDOBAY 
-                </span>
+                <div className='justify-center text-center items-center'>
+                  <span className="relative inline-block ">
+                    JINDDOBAY 
+                  </span>
+                </div>
               </h1>
               <p className="mt-4 text-xl text-gray-500">
               </p>
-              <div id="download-buttons" className="flex space-x-4">
+              <div id="download-buttons" className="flex space-x-4 justify-center">
                 <a
                   target="_blank"
                   className="flex items-center bg-blue-500 text-white text-sm md:text-base lg:text-lg px-3 py-2 rounded-full"
@@ -147,9 +231,6 @@ function HomeMain(){
                 </div>
               </div>
             </div>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-              <a href="#">둘러보기</a>
-            </button>
           </div>
         </div>
       </div>

@@ -8,7 +8,8 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
-  
+  const [sessionEmail, setSessionEmail] = useState('');
+
   useEffect(() => { 
     const loggedIn = sessionStorage.getItem('loggedInfo');
     if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
