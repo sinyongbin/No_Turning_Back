@@ -21,7 +21,7 @@ export default function ListView(id:any) {
     return (
         <div>
             <button className = "bg-blue-500" onClick={()=>setIsOpen(true)}>입찰하기</button>
-            <Bidding postId= {loggedInNickName} closeModal={closeModal} isOpen={isOpen}/>
+            {/* <Bidding postId= {loggedInNickName} closeModal={closeModal} isOpen={isOpen}/> */}
         </div>
     )
 }

@@ -19,6 +19,8 @@ export default function Login() {
 
   useEffect(()=>{
     const emailS = window.localStorage.getItem("email")
+    console.log(emailS);
+    
     const toggle : boolean = window.localStorage.getItem("switch") === "TRUE" ? true : false
     if(toggle && emailS != "")
     {  
@@ -62,7 +64,7 @@ export default function Login() {
       
         alert(temp.result.nickname+'님 환영합니다')
       }
-      location.href='/'
+      window.location.reload();
     }
   }
   

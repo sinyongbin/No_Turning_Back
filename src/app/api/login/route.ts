@@ -6,6 +6,8 @@ import prisma from "@/db";
 export async function POST(request: NextRequest, response: NextResponse) {
     
     const data = await request.formData();
+    console.log(data);
+    
     try {
         const result = await fetch("http://localhost:8080/member/login", {
             method: "POST",

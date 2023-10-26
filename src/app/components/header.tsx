@@ -8,8 +8,9 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
-  
-  useEffect(() => { // 
+  const [sessionEmail, setSessionEmail] = useState('');
+
+  useEffect(() => { 
     const loggedIn = sessionStorage.getItem('loggedInfo');
     if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
       setIsLoggedIn(true);
@@ -28,27 +29,46 @@ export default function App() {
   const handleLogout = () => {
     // 로그아웃 시, isLoggedIn 상태를 변경하고 localStorage에서 제거
     setIsLoggedIn(false);
+  
     sessionStorage.removeItem('loggedInfo');
     sessionStorage.removeItem('loggedEmail');
     alert("로그아웃 되었습니다.");
-    location.href='./';
+    window.location.reload();
   };
+
+  const handleLoginAlert = () => {
+    alert('로그인후 이용 해주세요!');
+  };
+
 
   return (
     <>
-      <div className="header_top">
-        <div className="top_inner">
-          <ul className="top_list">
-            <li className="top_item">
-              <a href="sell" className="top_link">
+   
+   <div className="header_top">
+      <div className="top_inner">
+        <ul className="top_list">
+          <li className="top_item">
+            {isLoggedIn ? (
+              <a href="/sell" className="top_link">
                 물품등록
               </a>
-            </li>
-            <li className="top_item">
-              <a href="report" className="top_link">
+            ) : (
+              <button onClick={handleLoginAlert} className="top_link">
+                물품등록
+              </button>
+            )}
+          </li>
+          <li className="top_item">
+            {isLoggedIn ? (
+              <a href="/report" className="top_link">
                 신고
               </a>
-            </li>
+            ) : (
+              <button onClick={handleLoginAlert} className="top_link">
+                신고
+              </button>
+            )}
+          </li>
             {isLoggedIn ? (
               <li className="top_item">
                 <a href="/user" className="top_link">

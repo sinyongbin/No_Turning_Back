@@ -3,7 +3,6 @@
 
 import Nav from "@/app/components/nav";
 import ImageViewer from "@/app/listdetail/_components/detailImg";
-import { log } from "console";
 import { useState,useEffect } from "react";
 
 
@@ -95,6 +94,4 @@ export default function Page(query:{params : any}) {
             {postData == undefined ? <div className="text-center text-5xl"> 데이터 로딩중입니다</div> : <ListDetailPage/>}
         </>
       )
-  }
-        
-       
+  } 
