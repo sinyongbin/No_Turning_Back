@@ -86,13 +86,20 @@ export default function Page(query:{params : any}) {
                           style={{ width: '280px', height: '280px' }}
                         />
                         <h3>{e.title}</h3>
+                        <p>{e.starting_price}원</p>
                       </a>
-                      <p>{e.starting_price}원</p>
+                      <div className="space-x-4">
+                      <button type="button"
+                        onClick={() => Delete(e.id)}
+                        className="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        수정
+                      </button>
                       <button type="button"
                         onClick={() => Delete(e.id)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                         삭제
                       </button>
+                      </div>
                     </div>
                   ))}
 

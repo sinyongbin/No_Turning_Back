@@ -180,11 +180,12 @@ export default function Detail({ params }: { params: { id: string } }) {
                     <button
                       className="bg-black w-[500px] border-2 text-white px-4 py-4 rounded-lg hover:bg-zinc-700"
                       onClick={handleButton}
+                      disabled={false}
                     >
                       입찰하기
                     </button>
                   )}
-                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email} />
+                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email}/>
 
                 </div>
                   <div className="flex justify-center mt-4">

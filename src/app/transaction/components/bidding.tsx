@@ -132,41 +132,6 @@ export default  function Bidding({closeModal, isOpen , postId } : TransactionInf
       console.log(temp)
       setData(temp)
     }
-    // const handlerAnswerButton = ()=> {
-    //   const getEail = sessionStorage.getItem('loggedEmail')
-    //   fetch(`api/pay/${getEail}`, {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // })
-    //     .then((res) => res.json())
-    //     .then((data)=>
-    //       setAmount(data)      
-    //     )           
-    //     .catch((error) => {
-    //         console.error('에러 발생:', error);
-    //     });
-    // };
-
-    // const handlerAnswerButton = () => {
-    //   const getEail = sessionStorage.getItem('loggedEmail');
-    //   if (getEail !== null) {
-    //     fetch(`api/pay/${getEail}`, {
-    //       method: 'GET',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => setAmount(data))
-    //       .catch((error) => {
-    //         console.error('에러 발생:', error);
-    //       });
-    //   } else {
-    //     console.log('세션없음');
-    //   }
-    // };
     
     return(<>
       {data !== undefined ?

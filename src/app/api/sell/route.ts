@@ -26,8 +26,8 @@ export async function POST(req:NextRequest, res: NextResponse) {
         starting_price: parseInt(data[0].price),
         categoryname: data[0].categoryname,
         images: data[0].images,
-        endDate : new Date().getTime() + 86400000,
-        //  endDate : new Date().getTime() + 20000,
+        // endDate : new Date().getTime() + 86400000,
+         endDate : new Date().getTime() + 60000,
         category: selectedCategory,
         
     }
