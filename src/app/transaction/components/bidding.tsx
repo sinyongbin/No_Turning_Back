@@ -9,18 +9,13 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
   
     const [data , setData] = useState<any>([])
     const ref = useRef<any>(null);
-    useEffect(()=>{getData},[])
-    useEffect(()=>{},[data])
     useEffect(()=>{
-      const interval = setInterval(() => {getData()},5000)
-      return () => clearInterval(interval)
-    },[])
-    
-    
+      getData()
+    },[data])
     function updateValue(price : string)
     {
       let parseNumber = parseInt(price)
-      if(data.sellerEmail != sessionStorage.getItem("loggedEmail")){
+      if(data.sellerEmail != sessionStorage.getItem("loginEmail")){
             if(parseNumber === -1)
             {   
                 let cusVal = parseInt(ref.current?.value)
@@ -35,7 +30,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                   alert("최소금액은: "+min)
                 }
             }
-          if(data.maxEmail != sessionStorage.getItem("loggedEmail"))
+          if(data.maxEmail != sessionStorage.getItem("loginEmail"))
           {
             requestUpdate(parseNumber)
           }
@@ -45,7 +40,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
     async function requestUpdate(price : number){
         let currentPrice = parseInt(data.currentPrice)
         let maxPrice = parseInt(data.maxPrice)
-        if(data.maxEmail ==sessionStorage.getItem("loggedEmail")&& maxPrice < price)
+        if(data.maxEmail ==sessionStorage.getItem("loginEmail")&& maxPrice < price)
         {
           console.log(data.maxEmail)
           data.maxPrice = price
@@ -55,9 +50,9 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
           if(maxPrice < price)
           {
 
-            if(data.maxEmail != sessionStorage.getItem("loggedEmail")){
+            if(data.maxEmail != sessionStorage.getItem("loginEmail")){
 
-              data.maxEmail =sessionStorage.getItem("loggedEmail")
+              data.maxEmail =sessionStorage.getItem("loginEmail")
             }
               data.maxPrice = price
               let newcurr= maxPrice * 1.02;
@@ -71,7 +66,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
               data.currentPrice = price;
             }
         }
-        await fetch(`/api/transaction/${postId}`,{
+        await fetch(`api/transaction/${postId}`,{
           method: "POST",
           headers:{
             "Content-Type": "application/json"
@@ -85,19 +80,13 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
     }
     async function getData()
     {
-      let temp = await fetch(`/api/transaction/${postId}`,{
-          method : "GET",
-          headers : {
-            accept : "application/json"
-          }
-      }).then(
-        e=>{
-          return e.json()
-        }
-      )
-      console.log(temp)
-      setData(temp)
-        
+      let temp = await fetch(`api/transaction/${postId}`,{
+          method : "GET"
+      }).then(e =>{
+        return e.json()
+      }).then(e=>{
+        setData(e)
+      })
     }
     return(<>
     {data !== undefined ?
@@ -131,7 +120,7 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                     as="h3"
                     className=" font-medium leading-6 text-gray-900">
                     <div className="titleSection text-left flex">
-                      {/* <h1 className='text-xl'>입찰에 참가:</h1> */}
+                      <h1 className='text-xl'>입찰에 참가: {postId}</h1>
                       <div className="ml-auto right">
                           <button onClick={closeModal}>
                               <XCircleIcon style={
@@ -143,13 +132,13 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                       </div>
                     </div>
                     <div className="priceInfo mt-3"> 
-                    {data.maxEmail == sessionStorage.getItem("loggedEmail") ? 
+                    {data.maxEmail == sessionStorage.getItem("loginEmail") ? 
                         <div><b>KRW: {data.maxPrice}</b> + <span> shipping : 3000 KRW</span></div>:
                         <div><b>KRW: {data.currentPrice}</b> + <span> shipping : 3000 KRW</span></div>
                     }
                     </div>
                   </Dialog.Title>
-                    {data.maxEmail == sessionStorage.getItem("loggedEmail") ? "":
+                    {data.maxEmail == sessionStorage.getItem("loginEmail") ? "":
                       <div id="description" className=''>
                           <div className="maxBiddingButton mt-10 grid-cols-3 gap-6 grid justify-center items-center">
                                   <div className="grid-rows-2">
@@ -177,12 +166,12 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
                           </div>
                       </div>
                     }
-                    {data.maxEmail == sessionStorage.getItem("loggedEmail") ? "":
+                    {data.maxEmail == sessionStorage.getItem("loginEmail") ? "":
                         <div className="mt-12 h-[1px] bg-black m-6 relative text-center">
                           <span className='text-black absolute mt-[-30px] ml-[-30px] bg-white px-4 py-4'>또는</span>
                         </div>
                     }
-                    {data.maxEmail == sessionStorage.getItem("loggedEmail") ? 
+                    {data.maxEmail == sessionStorage.getItem("loginEmail") ? 
                       <div className="grid gird-rows-3">
                             <div className='text-black font-bold text-lg'>최고 입찰자입니다!</div>
                             <div className='mt-2'>
@@ -210,6 +199,6 @@ export default  function Bidding({closeModal, isOpen , postId} : TransactionInfo
             </div>
           </div>
         </Dialog>
-      </Transition>:"undeinfed"}
+      </Transition>:""}
     </>)
 }
