@@ -55,8 +55,8 @@ export async function PUT(req:NextRequest, context:{ params: any }) {
                 method: "PUT"
             })
             return NextResponse.json({status:true});
-        }else{
-            return NextResponse.json({status:false});
+        } else {
+            return NextResponse.json({status:500});
         }
     }catch(err){
         return NextResponse.json({status:500});

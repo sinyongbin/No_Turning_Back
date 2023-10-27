@@ -5,7 +5,8 @@ import React, { useState, useEffect } from 'react';
 export default function Buy() {
     const [products, setProducts] = useState([]);
     const [postData, setPostData] = useState<any>([]);
-    const [Checked, setChecked] = useState(false);
+    const [Checked1, setChecked1] = useState(false);
+    const [Checked2, setChecked2] = useState(false);
     const [formData, setFormData] = useState({
         postId : '', //post_id
         maxEmail : '', //구매자 이메일
@@ -43,6 +44,12 @@ export default function Buy() {
         .then((e) => e.json())
         .then((e) => {
             setProducts(e);
+            if(e[0].buyerCheck === true && e[0].sellerCheck) {
+                setChecked1(true);
+                setChecked2(true);
+            } else if (e[0].buyerCheck === true) {
+                setChecked1(true);
+            }
         })
         .catch((error) => console.error(error));
     }
@@ -70,11 +77,8 @@ export default function Buy() {
             .then((res)=>res.json())
             .then((res)=>{
                 if (res.status === true) {
-                    setChecked(true);
+                    setChecked1(true);
                     alert("성공적으로 체크되었습니다");
-                    return;
-                } else if (res.status === false){
-                    alert("이미 체크되어 있어요!");
                 } else {
                     alert("잠시 후 다시 시도해주세요!");
                 }
@@ -82,6 +86,11 @@ export default function Buy() {
         } catch (err) {
             console.log("오류:", err);
         }
+    }
+
+    function CheckOk() {
+        alert("이미 체크되어 있어요!");
+        return;
     }
     
     function ListDetailPage(){
@@ -93,14 +102,14 @@ export default function Buy() {
                             {e.title} 경매 결과 : {e.currentPrice} 원 낙찰
                         </h2>
                         <div className="bg-white p-4 rounded-lg shadow-md flex">
-                        {Checked? (
+                        {Checked1? (
                             <div className="w-1/2 pr-4">
                             <div>
                                 <p className="mt-4 text-lg font-bold">구매자 정보</p>
                                 <p>닉네임: {}</p>
                                 <p>이메일: {e.maxEmail}</p>
                     
-                                <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">구매자 확인</button>
+                                <button type="button" onClick={CheckOk} className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">확인 완료</button>
                             </div>
                             </div>
                         ) : (
@@ -110,19 +119,31 @@ export default function Buy() {
                                 <p>닉네임: {}</p>
                                 <p>이메일: {e.maxEmail}</p>
                     
-                                <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">확인 완료</button>
+                                <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">구매자 확인</button>
                             </div>
                             </div>
                         )}
+                        {Checked2? (
                             <div className="w-1/2 pl-4">
                             <div>
                                 <p className="mt-4 text-lg font-bold">판매자 정보</p>
                                 <p>닉네임: {}</p>
                                 <p>이메일: {e.sellerEmail}</p>
                     
-                                <button type="button" className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">판매자 확인</button>
+                                <button type="button" className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">거래 완료</button>
                             </div>
+                            </div>                            
+                        ) : (
+                            <div className="w-1/2 pl-4">
+                            <div>
+                                <p className="mt-4 text-lg font-bold">판매자 정보</p>
+                                <p>닉네임: {}</p>
+                                <p>이메일: {e.sellerEmail}</p>
+                    
+                                <button type="button" className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">판매자 확인</button>
                             </div>
+                            </div>      
+                        )}
                         </div>
                     </div>
                 ))}

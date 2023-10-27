@@ -49,16 +49,15 @@ export async function PUT(req:NextRequest, context:{ params: any }) {
         let result1 = await fetch(`http://localhost:8080/transaction/post/${postid1}`, {
             method: "GET"
         }).then(e=>e.json());
-
         if(result1.buyerCheck === true && result1.sellerCheck === false) {
             let result2 = await fetch(`http://localhost:8080/transaction/sellerCheck/${postid1}`,{
                 method: "PUT"
             })
             return NextResponse.json({status:true});
-        } else if (result1.buyerCheck === true && result1.sellerCheck === true) {
-            return NextResponse.json({status:200});
-        } else {
+        } else if (result1.buyerCheck === false && result1.sellerCheck === false) {
             return NextResponse.json({status:false});
+        } else {
+            return NextResponse.json({status:500})
         }
     }catch(err){
         return NextResponse.json({status:500});
