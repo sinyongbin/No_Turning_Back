@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+"use client"
 import { Disclosure } from '@headlessui/react';
 import React, { Fragment, useState, useEffect } from 'react';
 
