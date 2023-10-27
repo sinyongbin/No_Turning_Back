@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 export default function Buy() {
     const [products, setProducts] = useState([]);
     const [postData, setPostData] = useState<any>([]);
+    const [Checked, setChecked] = useState(false);
     const [formData, setFormData] = useState({
         postId : '', //post_id
         maxEmail : '', //구매자 이메일
@@ -69,6 +70,7 @@ export default function Buy() {
             .then((res)=>res.json())
             .then((res)=>{
                 if (res.status === true) {
+                    setChecked(true);
                     alert("성공적으로 체크되었습니다");
                     return;
                 } else if (res.status === false){
@@ -91,6 +93,7 @@ export default function Buy() {
                             {e.title} 경매 결과 : {e.currentPrice} 원 낙찰
                         </h2>
                         <div className="bg-white p-4 rounded-lg shadow-md flex">
+                        {Checked? (
                             <div className="w-1/2 pr-4">
                             <div>
                                 <p className="mt-4 text-lg font-bold">구매자 정보</p>
@@ -100,6 +103,17 @@ export default function Buy() {
                                 <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">구매자 확인</button>
                             </div>
                             </div>
+                        ) : (
+                            <div className="w-1/2 pr-4">
+                            <div>
+                                <p className="mt-4 text-lg font-bold">구매자 정보</p>
+                                <p>닉네임: {}</p>
+                                <p>이메일: {e.maxEmail}</p>
+                    
+                                <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">확인 완료</button>
+                            </div>
+                            </div>
+                        )}
                             <div className="w-1/2 pl-4">
                             <div>
                                 <p className="mt-4 text-lg font-bold">판매자 정보</p>

@@ -51,7 +51,7 @@ export async function PUT(req:NextRequest, context:{ params: any }) {
         }).then(e=>e.json());
         
         if(result1.buyerCheck === false) {
-            let result2 = await fetch(`http://localhost:8080/transaction/buyerCheck/${postid1}`,{
+            let result2 = await fetch(`http://localhost:8080/transaction/dealerCheck/${postid1}`,{
                 method: "PUT"
             })
             return NextResponse.json({status:true});
