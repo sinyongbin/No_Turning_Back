@@ -5,8 +5,7 @@ import React, { useState, useEffect } from 'react';
 export default function Buy() {
     const [products, setProducts] = useState([]);
     const [postData, setPostData] = useState<any>([]);
-    const [Checked1, setChecked1] = useState(false);
-    const [Checked2, setChecked2] = useState(false);
+    const [Checked, setChecked] = useState(false);
     const [formData, setFormData] = useState({
         postId : '', //post_id
         maxEmail : '', //구매자 이메일
@@ -44,11 +43,8 @@ export default function Buy() {
         .then((e) => e.json())
         .then((e) => {
             setProducts(e);
-            if(e[0].buyerCheck === true && e[0].sellerCheck) {
-                setChecked1(true);
-                setChecked2(true);
-            } else if (e[0].buyerCheck === true) {
-                setChecked1(true);
+            if(e[0].buyerCheck === true) {
+                setChecked(true);
             }
         })
         .catch((error) => console.error(error));
@@ -77,7 +73,7 @@ export default function Buy() {
             .then((res)=>res.json())
             .then((res)=>{
                 if (res.status === true) {
-                    setChecked1(true);
+                    setChecked(true);
                     alert("성공적으로 체크되었습니다");
                 } else {
                     alert("잠시 후 다시 시도해주세요!");
@@ -95,14 +91,14 @@ export default function Buy() {
     
     function ListDetailPage(){
         return (
-            <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+            <div className="mx-auto w-full sm:w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
                 {products.map((e: any, key: number) => (
                     <div key={key}>
                         <h2 className="text-2xl font-bold mb-4">
                             {e.title} 경매 결과 : {e.currentPrice} 원 낙찰
                         </h2>
                         <div className="bg-white p-4 rounded-lg shadow-md flex">
-                        {Checked1? (
+                        {Checked? (
                             <div className="w-1/2 pr-4">
                             <div>
                                 <p className="mt-4 text-lg font-bold">구매자 정보</p>
@@ -122,27 +118,6 @@ export default function Buy() {
                                 <button type="button" onClick={Check} className="mt-2 py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">구매자 확인</button>
                             </div>
                             </div>
-                        )}
-                        {Checked2? (
-                            <div className="w-1/2 pl-4">
-                            <div>
-                                <p className="mt-4 text-lg font-bold">판매자 정보</p>
-                                <p>닉네임: {}</p>
-                                <p>이메일: {e.sellerEmail}</p>
-                    
-                                <button type="button" className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">거래 완료</button>
-                            </div>
-                            </div>                            
-                        ) : (
-                            <div className="w-1/2 pl-4">
-                            <div>
-                                <p className="mt-4 text-lg font-bold">판매자 정보</p>
-                                <p>닉네임: {}</p>
-                                <p>이메일: {e.sellerEmail}</p>
-                    
-                                <button type="button" className="mt-2 py-2 px-4 bg-red-500 text-white rounded hover:bg-blue-600">판매자 확인</button>
-                            </div>
-                            </div>      
                         )}
                         </div>
                     </div>
