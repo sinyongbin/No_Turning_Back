@@ -7,6 +7,7 @@ export default function MessageForm({ params }: { params: { id: string } }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [nick, setNick] = useState<string>("");
   const [sender, setSender] = useState<string>("");
+  const [postTitle, setPostTitle] = useState<any>([]); // 여기도 문제인듯
 
   const id = params.id;
 
@@ -25,6 +26,34 @@ export default function MessageForm({ params }: { params: { id: string } }) {
     }
     messageId(id);
   }, []);
+
+
+  // post에 요청해서 postTitle 가져오고 싶어서 만들어본 useEffect
+  useEffect(() => {
+    async function postId(id: any) {
+      const postTitle = await fetch(`/api/finddetail/${id}`, {
+        method: "GET",
+        // body : JSON.stringify(jsonData),
+        // headers:{
+        //   // accepts : "application/json",
+        //   'Content-Type': 'application/json',
+        // }
+      })
+      .then(data => data.json())
+      .then((data) => {
+        console.log("data: ", data.result); // 배열의 0번째 인덱스인 post가 null로 찍힘
+        return data.result;
+      })
+      .catch((error) => {
+        console.error('서버 요청 실패', error);
+      });
+      setPostTitle(postTitle[0].post); 
+      console.log("postTitle: ", postTitle);// 현재 안찍히는중
+    }
+    postId(id);
+  }, []);
+  
+
 
   const openModal = () => {
     setModalOpen(true);
@@ -45,7 +74,8 @@ export default function MessageForm({ params }: { params: { id: string } }) {
           ></div>
 
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">소통 내역</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"> 쪽지 내용 </h2>
+            {/* {postTitle} */}
           </div>
 
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 mx-[500px]">

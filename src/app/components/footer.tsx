@@ -3,7 +3,7 @@ import React from 'react';
 export default function Footer() {
 
     return (
-    <footer className="footer bottom-0">
+    <footer className="footer bottom-0 relative">
         <div className="container mx-auto flex flex-col items-center">
         <div className="flex space-x-4 mb-4">
             <a href="#" className="footer-link">

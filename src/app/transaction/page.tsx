@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from "react"
-import Bidding from "./components/bidding";
 
 
 export default function ListView(id:any) {

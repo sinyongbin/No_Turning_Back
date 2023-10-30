@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ImageViewer from '../_components/detailImg';
-import Bidding from '@/app/transaction/components/bidding';
+import Bidding from '@/app/transaction/_components/bidding';
 import Timer from '@/app/timer/page';
 import SendModal from '../_components/senderModal';
 
@@ -68,6 +68,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       }
     }, 1000);
   }
+  
   const handleBidding = async () => {
     try {
       const response = await fetch(`/api/updatePost/${id}`, {
@@ -105,7 +106,7 @@ export default function Detail({ params }: { params: { id: string } }) {
     return (
       <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
         <div>
-          <a href='../'>
+          <a href='/'>
             <div className='top-12 mb-6 ml-[980px]'> 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
@@ -184,7 +185,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                       입찰하기
                     </button>
                   )}
-                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} />
+                  <Bidding postId={id} closeModal={closeModal} isOpen={isOpen} email={email} />
 
                 </div>
                   <div className="flex justify-center mt-4">

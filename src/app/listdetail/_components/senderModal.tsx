@@ -35,10 +35,7 @@ interface ModalProps {
 
 
 export default function SendModal({ isModal2Open, closeModal2, id, email, nickname }: ModalProps) {
-    const [bidAmount, setBidAmount] = useState('');
-    const [sessionNickname, setSessionNickname] = useState('');
     const [sessionEmail, setSessionEmail] = useState('');
-    const [message, setMessage] = useState("");
     const [formData, setFormData] = useState({
         title: '',
         content: '',
@@ -115,7 +112,7 @@ export default function SendModal({ isModal2Open, closeModal2, id, email, nickna
                 
         //   }).catch((e) => {throw e}).finally()
         // }
-        
+
     }
 
     function handleInputChange(e : ChangeEvent<HTMLInputElement>) {

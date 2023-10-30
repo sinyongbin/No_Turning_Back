@@ -4,7 +4,7 @@ import { Category } from "@prisma/client";
 
 export async function GET(req: NextRequest, context: { params: any }) {
   let category = context.params.category;
-  console.log("category", category);
+  console.log("category: ", category);
   let selectedCategory;
   if (category === 'beauty') {
     selectedCategory = Category.beauty;
@@ -32,14 +32,4 @@ export async function GET(req: NextRequest, context: { params: any }) {
   } catch (err) {
     return NextResponse.json({ status: 500 });
   }
-}
-export async function POST(req: NextRequest) {
-
-  return new Response("OK")
-}
-export async function PUT() {
-  return null;
-}
-export async function DELETE() {
-  return null;
 }

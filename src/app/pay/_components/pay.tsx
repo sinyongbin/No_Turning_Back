@@ -117,7 +117,7 @@ export default function Pay() {
 
         const WithdrawValue = -parseFloat(formData.Withdraw); // 입력 값을 숫자로 변환
 
-        if (isNaN(WithdrawValue)) {
+        if (isNaN(WithdrawValue)) { // 주어진 값이 숫자가 아닌경우 true
             alert("숫자 형태로 입력해주세요!");
             location.href = '/pay';
             return;
