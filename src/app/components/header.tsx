@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import MyModal from './Login/MyModal';
 import { redirect } from 'next/dist/server/api-utils';
+import Swal from 'sweetalert2';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,7 +38,19 @@ export default function App() {
   };
 
   const handleLoginAlert = () => {
-    alert('로그인후 이용 해주세요!');
+    Swal.fire({
+      title: '로그인후 이용해주세요.',
+      width: 600,
+      padding: '3em',
+      color: '#716add',
+      background: '#fff url(/img/simpson.gif)',
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("/img/runningcat.webp")
+        left top
+        no-repeat
+      `
+    })
   };
 
 

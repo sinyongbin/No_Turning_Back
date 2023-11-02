@@ -41,11 +41,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
                     bio: gender(bio.toString()),
                 }
             })
-            return NextResponse.json({ result: "로그인 성공" }, { status: 200 });
+            return NextResponse.json({ result: "회원가입 성공" }, { status: 200 });
         }
     }
     catch (err) {
-        return NextResponse.json({ result: "로그인 실패" }, { status: 500 });
+        return NextResponse.json({ result: "회원가입 실패" }, { status: 500 });
     }
-    return NextResponse.json({ result: "로그인 실패" }, { status: 500 });
+    return NextResponse.json({ result: "회원가입 실패" }, { status: 500 });
 }

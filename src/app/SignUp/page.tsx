@@ -42,10 +42,15 @@ export default function Signup() {
       return;
     }
 
-    if (formData.password.length > 8) {
+    if (formData.password.length < 8) {
       alert("비밀번호는 최소 8자 입력해주세요!")
       return;
     }
+
+    if (formData.phoneNum.startsWith("-")) {
+      alert("음수 값은 입력할 수 없습니다.");
+      location.href='/pay'
+    } 
     
     // MongoDB로 가는 부분
     if(email && password && address && phoneNum && nickName && bio){
@@ -188,6 +193,7 @@ export default function Signup() {
             name="phoneNum"
             value={formData.phoneNum}
             onChange={handleInputChange}
+            placeholder='숫자를 입력해주세요'
             className="border rounded py-2 px-3 w-full"
           />
         </div>

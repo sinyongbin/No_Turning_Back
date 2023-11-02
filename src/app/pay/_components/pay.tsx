@@ -130,6 +130,7 @@ export default function Pay() {
             location.href = '/pay';
             return;
         }
+
         if(confirm("정말로 출금하실래요?")) {
             const updatedFormData = {
                 ...formData,
@@ -162,6 +163,11 @@ export default function Pay() {
     function handleInputChange(e : ChangeEvent<HTMLInputElement>) {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+
+        if (value.startsWith("-")) {
+            alert("음수 값은 입력할 수 없습니다.");
+            location.href='/pay'
+        }
     }
 
     return (
@@ -171,7 +177,7 @@ export default function Pay() {
                 <div className="bg-gray-100 p-4 rounded-md">
                     <h2 className="text-xl font-bold mb-2">입금</h2>
                     <input
-                        type='text'
+                        type='number'
                         name='deposit'
                         defaultValue={formData.deposit}
                         onChange={handleInputChange}
@@ -187,7 +193,7 @@ export default function Pay() {
                 <div className="bg-gray-100 p-4 rounded-md">
                     <h2 className="text-xl font-bold mb-2">출금</h2>
                     <input
-                        type='text'
+                        type='number'
                         name='Withdraw'
                         defaultValue={formData.Withdraw}
                         onChange={handleInputChange}
