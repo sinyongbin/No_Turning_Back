@@ -91,7 +91,7 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const openModal = () => {
     setModalOpen(true);
-   
+
   };
   const closeModal = () => {
     setIsOpen(false);

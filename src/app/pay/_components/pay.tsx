@@ -28,7 +28,7 @@ export default function Pay() {
         const loggedInfo = sessionStorage.getItem('loggedEmail');
         
         try {
-            fetch(`http://localhost:8080/jinddoPay/create/${loggedInfo}`, {
+            fetch(`http://192.168.0.244:8080/jinddoPay/create/${loggedInfo}`, {
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
@@ -212,6 +212,7 @@ export default function Pay() {
             </div>
 
             <MyModal isOpen={isModalOpen} closeModal={closeModal}>
+                {/* 진또페이 사용하시겠냐고 물어볼때 사용(PAY JOIN) */}
             </MyModal>
         </div>
     );

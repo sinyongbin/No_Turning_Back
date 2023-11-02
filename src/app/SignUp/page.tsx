@@ -166,7 +166,7 @@ export default function Signup() {
             type="text"
             name="address"
             value={formData.address}
-            onChange={handleInputChange}
+            // onChange={handleInputChange}
             className="border rounded py-2 px-3 w-full"
             readOnly
           />

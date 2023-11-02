@@ -20,7 +20,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
       selectedCategory = Category.etc;
     }
     let insert = {
-        email: data[0].email, // 필요없는거 아닌가? 경매 등록할 때
+        email: data[0].email,
         title: data[0].title,
         content: data[0].content,
         starting_price: parseInt(data[0].price),
@@ -35,6 +35,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
         data: insert,
     })
 
+   // oracle로 요청하는 부분
     let postid = post.id
     let email = data[0].email
     let starting_price = parseInt(data[0].price)
@@ -45,7 +46,7 @@ export async function POST(req:NextRequest, res: NextResponse) {
             postId:postid,
             sellerEmail: email,
     }
-    const orcleResult = await fetch("http://localhost:8080/transaction/post", {
+    const orcleResult = await fetch("http://localhost:8080/transaction/post", { 
           method: "POST",
           body: JSON.stringify(transOracle),
           headers: {

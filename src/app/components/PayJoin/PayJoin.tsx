@@ -20,7 +20,7 @@ export default function PayJoin() {
       }]
         console.log(jsonData);
         
-        await fetch(`http://localhost:8080/jinddoPay/create`, 
+        await fetch(`http://192.168.0.244:8080/jinddoPay/create`, 
         {
           method: "POST",
           body: JSON.stringify(jsonData[0]),
