@@ -42,6 +42,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
                 }
             })
             return NextResponse.json({ result: "회원가입 성공" }, { status: 200 });
+        } else if (orcleResult.status === 404){
+            return NextResponse.json({ result: "이미 존재하는 아이디" }, { status: 404 });
         }
     }
     catch (err) {
