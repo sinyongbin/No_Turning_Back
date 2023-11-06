@@ -6,7 +6,7 @@ import prisma from "@/db";
 export async function POST(request: NextRequest, response: NextResponse) {
     
     const data = await request.formData();
-    console.log(data);
+    // console.log(data);
     
     try {
         const result = await fetch("http://localhost:8080/member/login", {
@@ -19,17 +19,27 @@ export async function POST(request: NextRequest, response: NextResponse) {
                 'Content-Type': 'application/json'
             }
         })
+        const balanceState=await result.text();
+
         if (result.status === 200) {
 
             let { email } = Object.fromEntries(data);
-            const prismaData = await prisma.profile.findUnique({
+            let prismaData = await prisma.profile.findUnique({
                 where: { email: email.toString() },
                 select: {
                     email: true,
                     nickname: true,
                 }
             })
-            return NextResponse.json({ result: prismaData }, { status: 200 });
+            const returnValues={
+                email:prismaData?.email,
+                nickname:prismaData?.nickname,
+                balanceState:balanceState
+            };
+            console.log("보내줄 값임: ",returnValues);
+
+            
+            return NextResponse.json({ result: returnValues }, { status: 200 });
         }
     }
     catch (err) {

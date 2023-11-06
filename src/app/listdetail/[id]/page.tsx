@@ -17,7 +17,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [isModal2Open, setIsModal2Open] = useState(false);
   const [isExpired, setIsExpired] = useState(false); 
   const [sessionEmail, setSessionEmail] = useState<any>(false); 
- 
+
   const id = params.id;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Detail({ params }: { params: { id: string } }) {
     setSessionEmail(sessionEmail);
   
   }, []);
- 
+
 
   const openModal2 = () => {  
     setIsModal2Open(true);
@@ -166,7 +166,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                       onClick={handleBidding}
                       disabled={true}
                     >
-                      같은 이메일은 입찰할 수 없습니다
+                      판매자 본인이에요
                     </button>
                   ) : !sessionEmail ? (
                     <div>

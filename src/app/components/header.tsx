@@ -9,16 +9,19 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInNickName,setIsLoggedInNickName] = useState('');
-  const [sessionEmail, setSessionEmail] = useState('');
+  const [isLoggedBalance, setIsLoggedBalance] = useState<string | null>('');
+
 
   useEffect(() => { 
     const loggedIn = sessionStorage.getItem('loggedInfo');
+    const BalanceState = sessionStorage.getItem('loggedBalanceState');
     if (loggedIn !== null && typeof loggedIn === 'string' && loggedIn.length > 0) {
       setIsLoggedIn(true);
       setIsLoggedInNickName(loggedIn);
+      setIsLoggedBalance(BalanceState); // BalanceState == '계좌있음' or '계좌없음'
     }
   }, []);
-  
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -33,8 +36,10 @@ export default function App() {
   
     sessionStorage.removeItem('loggedInfo');
     sessionStorage.removeItem('loggedEmail');
+    sessionStorage.removeItem('loggedBalanceState');
     alert("로그아웃 되었습니다.");
-    window.location.reload();
+    // window.location.reload();
+    window.location.href= '/';
   };
 
   const handleLoginAlert = () => {
@@ -53,23 +58,45 @@ export default function App() {
     })
   };
 
+  const handleLoginBalance = () => {
+    Swal.fire({
+      title: '진또페이 등록 후 이용해주세요.',
+      width: 600,
+      padding: '3em',
+      color: '#716add',
+      background: '#fff url(/img/simpson.gif)',
+      backdrop: `
+        rgba(0,0,123,0.4)
+        url("/img/runningcat.webp")
+        left top
+        no-repeat
+      `
+    })
+  };
+
 
   return (
     <>
-   
-   <div className="header_top">
+  
+  <div className="header_top">
       <div className="top_inner">
         <ul className="top_list">
           <li className="top_item">
-            {isLoggedIn ? (
+          {isLoggedIn ? (
+            isLoggedBalance == '계좌있음' ? (
               <a href="/sell" className="top_link">
                 물품등록
               </a>
             ) : (
-              <button onClick={handleLoginAlert} className="top_link">
+              <button onClick={handleLoginBalance} className="top_link">
                 물품등록
               </button>
-            )}
+            )
+          ) : (
+            <button onClick={handleLoginAlert} className="top_link">
+              물품등록
+            </button>
+          )}
           </li>
           <li className="top_item">
             {isLoggedIn ? (

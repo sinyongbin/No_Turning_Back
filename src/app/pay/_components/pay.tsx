@@ -28,13 +28,12 @@ export default function Pay() {
         const loggedInfo = sessionStorage.getItem('loggedEmail');
         
         try {
-            fetch(`http://192.168.0.244:8080/jinddoPay/create/${loggedInfo}`, {
+            fetch(`http://localhost:8080/jinddoPay/create/${loggedInfo}`, {
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
                 }
             }).then(res => {
-
                 if (res.status === 204) {
                     console.log("서버로부터 받은 데이터는 null입니다.");
                     // 데이터가 null인 경우에 대한 처리를 추가

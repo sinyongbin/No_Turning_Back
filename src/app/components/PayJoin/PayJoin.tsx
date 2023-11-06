@@ -18,9 +18,7 @@ export default function PayJoin() {
       const jsonData =[{
         email:loggedEmail
       }]
-        console.log(jsonData);
-        
-        await fetch(`http://192.168.0.244:8080/jinddoPay/create`, 
+        const res = await fetch(`http://localhost:8080/jinddoPay/create`, 
         {
           method: "POST",
           body: JSON.stringify(jsonData[0]),
@@ -28,17 +26,16 @@ export default function PayJoin() {
             'Content-Type': 'application/json',
           },
         })
-        .then((res)=>{
-          console.log('res: ', res.status)
-            if(res.status===200){
-                alert(`마음껏 입금, 출금을 해주세요!`);
-                location.href = '/';
-            } else {
-                alert(`다시 시도해주세요!`)
-            }
-        });
+        if(res.status===200){
+            sessionStorage.setItem('loggedBalanceState', await res.text());
+            alert(`마음껏 입금, 출금을 해주세요!`);
+            location.href = '/';
+        } else {
+            alert(`다시 시도해주세요!`)
+        }
     } catch (error) {
-        alert(`다시 시도해주세요222!`)
+        console.log(error);
+        alert(`에러! 다시 시도해주세요!`)
     }
   }
 
