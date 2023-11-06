@@ -85,6 +85,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       console.error('실패', error);
     }
   };
+  
   const handleButton = ()=>{
     setIsOpen(true)
   }

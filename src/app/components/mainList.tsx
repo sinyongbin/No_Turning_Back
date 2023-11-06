@@ -20,7 +20,6 @@ export default function MainList() {
 
 
   const allData = () => {
-    // API 엔드포인트를 호출하여 데이터 가져오기
     fetch('/api/serach')
       .then((response) => response.json())
       .then((data) => {

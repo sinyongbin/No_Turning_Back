@@ -17,7 +17,7 @@ export async function GET(request:NextRequest,context: { params: any }) {
         if(result.status === 200){
             const response = await result.json();
 
-            const { address, phoneNum } = response;
+            const { address, phoneNum, warning } = response;
 
             const data = await prisma.profile.findMany({
                 select :  {
@@ -30,6 +30,7 @@ export async function GET(request:NextRequest,context: { params: any }) {
 
             const combinedData = {
                 //...response, //전체 데이터 뽑아오기
+                warning,
                 address,
                 phoneNum,
                 nickname: data[0].nickname, 

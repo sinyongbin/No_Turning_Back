@@ -24,10 +24,7 @@ export default function Page({ id }: dataType  ) {
 
     return (
         <>
-         
-           
-            
-               <div>
+            <div>
                 <Nav/>
                 <Detail/>
             </div>

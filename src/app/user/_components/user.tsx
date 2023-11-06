@@ -5,6 +5,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 export default function User() {
 
     const [formData, setFormData] = useState({
+        warning:'',
         phoneNum: '',
         address: '',
         nickname:'',
@@ -108,7 +109,8 @@ export default function User() {
 
     return (
         <div className="max-w-xl mx-auto p-4 border border-gray-300">
-            <h2 className="text-2xl font-bold mb-4">회원정보</h2>
+            <h2 className="text-2xl font-bold mb-4">회원정보 </h2>
+            <p className='text-red-500'>경고 횟수: {formData.warning}</p>
             <hr className="my-4 border-t border-gray-300" />
             <div className="mb-4">
                 <label className="block mb-2">비밀번호</label>
