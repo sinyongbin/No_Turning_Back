@@ -49,8 +49,8 @@ export default function Signup() {
 
     if (formData.phoneNum.startsWith("-")) {
       alert("음수 값은 입력할 수 없습니다.");
-      location.href='/pay'
-    } 
+      location.href='/signup'
+    }
     
     // MongoDB로 가는 부분
     if(email && password && address && phoneNum && nickName && bio){
@@ -171,7 +171,6 @@ export default function Signup() {
             type="text"
             name="address"
             value={formData.address}
-            onChange={handleInputChange}
             className="border rounded py-2 px-3 w-full"
             readOnly
           />
