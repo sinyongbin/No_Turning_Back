@@ -40,7 +40,7 @@ export default function MyModal({ closeModal , isOpen } : ModalProps) {
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-center text-gray-900">
-                    진도페이 사용할래요?
+                    진또페이 사용할래요?
                   </Dialog.Title>
                   <div className="mt-2">
                       <PayJoin/>

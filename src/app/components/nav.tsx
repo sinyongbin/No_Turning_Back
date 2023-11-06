@@ -63,8 +63,6 @@ export default function Nav() {
             <Disclosure as="nav" className="bg-white mb-10">
                     <div className="">
                         <div className="flex justify-center items-center">
-                            
-        
                             <div className="flex-item">
                                 <div className="link-container space-x-6">
                                     {navigation.map((item) => (
@@ -80,7 +78,6 @@ export default function Nav() {
                                 </div>
                             </div>
                         </div>
-                        
                         <div className=""></div>
                     </div>
             </Disclosure>

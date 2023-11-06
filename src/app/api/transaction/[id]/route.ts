@@ -29,11 +29,11 @@ export async function POST(req : NextRequest, context: { params: any }) {
         return  new Response("ERROR")
     }
 }
-export async function PUT()
-{
-    return null;
-}
-export async function DELETE()
-{
-    return null;
-}
+// export async function PUT()
+// {
+//     return null;
+// }
+// export async function DELETE()
+// {
+//     return null;
+// }

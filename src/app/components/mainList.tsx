@@ -18,17 +18,36 @@ export default function MainList() {
     setSearchText(event.target.value);
   };
 
-  useEffect(() => {
+
+  const allData = () => {
     // API 엔드포인트를 호출하여 데이터 가져오기
     fetch('/api/serach')
       .then((response) => response.json())
       .then((data) => {
-        // setProducts(data);
         setSearchResults(data);
         setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품
       })
-      .catch((error) => console.error(error));
-  }, []);
+      .catch((error) => {
+        console.error('에러 발생:', error);
+      });
+  };
+  
+  useEffect(() => {
+    allData();
+  }, []); 
+
+
+  // useEffect(() => {
+  //   // API 엔드포인트를 호출하여 데이터 가져오기
+  //   fetch('/api/serach')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // setProducts(data);
+  //       setSearchResults(data);
+  //       setVisibleProducts(data.slice(0, 8)); // 초기에 표시할 상품
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   const handleSearch = () => {
     if (searchText.trim() !== '') {
@@ -104,13 +123,20 @@ export default function MainList() {
               </button>
           </div>
           <span className="close" onClick={searchToggle}></span>
-            <button className="search-submit-button" onClick={handleSearch}></button>
+          {/* <div className="ml-10">
+            <button className="search-submit-button" onClick={allData}>
+              전체보기 버튼
+            </button>
+          </div> */}
+            <button className="ml-10 px-4 py-2 font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring focus:ring-indigo-300" onClick={allData}>
+              전체보기 버튼 
+            </button>
         </div>
         <div className='mt-10'>
-        <div>
-          <HomeMain/>
-        </div>
-      </div> 
+          <div>
+            {/* <HomeMain/> */}
+          </div> 
+        </div> 
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Products</h2>
 

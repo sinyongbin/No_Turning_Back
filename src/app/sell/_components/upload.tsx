@@ -60,9 +60,9 @@ export default function SellProduct() {
         price: f.get("price")?.toString(),
         content: f.get("content")?.toString(),
         category: f.get("category")?.toString(),
-        images:previewImg}
-    ]
-    console.log(jsonData)
+        images:previewImg
+      }]
+      console.log(jsonData)
       const send = await fetch('/api/sell',{
         method: 'POST',
         body : JSON.stringify(jsonData),
@@ -86,7 +86,7 @@ export default function SellProduct() {
     <>
     <form onSubmit={onSubmit}>
       <div style={backGroundStyle}>
-        <div className="mx-[10%]">
+        <div className="mx-[20%]">
           <div className="tab-bar">
             <div className="tab">
               <span className="tab_hi">경매 올리기</span>
@@ -134,26 +134,39 @@ export default function SellProduct() {
               </div>
 
               <div className="border-gray-900/10 pb-12">
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-4">
-                  <select
-                      id="category"
-                      name="category"
-                      value={category}
-                      onChange={handleCategoryChange}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                    >
-                      <option value="beauty">패션/뷰티</option>
-                      <option value="hobby">취미/키덜트</option>
-                      <option value="digital">디지털/가구/가전</option>
-                      <option value="sport">스포츠</option>
-                      <option value="car">자동차</option>
-                      <option value="etc">기타</option>
-                  </select>
+                <div className="mt-10 grid grid-cols-6 gap-y-8 sm:grid-cols-6">
+                  <div className="sm:col-span-1">
+                      <select
+                          id="category"
+                          name="category"
+                          value={category}
+                          onChange={handleCategoryChange}
+                          className="block rounded-md w-full border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                        >
+                          <option value="beauty">패션/뷰티</option>
+                          <option value="hobby">취미/키덜트</option>
+                          <option value="digital">디지털/가구/가전</option>
+                          <option value="sport">스포츠</option>
+                          <option value="car">자동차</option>
+                          <option value="etc">기타</option>
+                      </select>
+                  </div>
+                    <span>
+                      <div className="sm:col-span-2 md:col-span-1">
+                      <input
+                        type="text"
+                        id="categoryTag"
+                        name="categoryname"
+                        value={categoryTag}
+                        onChange={handleCategoryTagChange}
+                        placeholder="카테고리 태그를 입력하세요"
+                        className="rounded-md sm:w-full md:w-[300px] border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                      />
+                      </div>
+                    </span>
                 </div>
-              </div>
 
-                <div className="mt-4">
+                {/* <div className="mt-4">
                   <label htmlFor="categoryTag" className="block text-sm font-medium leading-6 text-gray-900">
                     카테고리 태그 입력:
                   </label>
@@ -166,9 +179,9 @@ export default function SellProduct() {
                     placeholder="카테고리 태그를 입력하세요"
                     className="rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                   />
-                </div>
+                </div> */}
 
-                <div className='mx-48 flex'>
+                <div className='flex'>
                     <UploadSubmit previewImg={previewImg} setPreviewImg={setPreviewImg} />
                 </div>
 
