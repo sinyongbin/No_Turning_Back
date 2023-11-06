@@ -63,11 +63,15 @@ export default function Signup() {
           body: new FormData(e.currentTarget),
         })
         .then((response) => { 
-          if (response.status !== 200) {
-            throw new Error('서버 응답이 실패했습니다. 상태 코드: ' + response.status);
-          } else {
+          if (response.status === 200) {
             alert(`회원가입을 축하합니다! ${nickName} 님`);
             location.href='./';
+          } else if (response.status === 404){
+            alert(`이미 존재하는 아이디입니다.`);
+            return;
+          } else {
+            alert(`새로고침한 다음에 다시 시도해주세요!`);
+            return;
           }
         })
           .catch((error) => {
