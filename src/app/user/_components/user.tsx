@@ -164,8 +164,8 @@ export default function User() {
                         type="text"
                         name="phoneNum"
                         value={formData.phoneNum}
-                        onChange={handleInputChange}
                         className="border rounded py-2 px-3 w-full"
+                        disabled
                     />
                 </div>
                 <div className='mb-4'>
@@ -174,8 +174,8 @@ export default function User() {
                         type="text"
                         name="address"
                         value={formData.address}
-                        onChange={handleInputChange}
                         className="border rounded py-2 px-3 w-full"
+                        disabled
                     />    
                 </div>      
             </div>

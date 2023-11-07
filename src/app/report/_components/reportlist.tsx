@@ -68,7 +68,7 @@ return (
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
                 <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                        올리는 사람 닉네임
+                        본인 닉네임
                 </label>
                 <div className="mt-2 w-[448px]">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset">
@@ -89,14 +89,14 @@ return (
 
                 <div className="sm:col-span-4">
                 <label htmlFor="title" className="block text-sm font-medium leading-6 text-gray-900">
-                    제목
+                    신고할 유저
                 </label>
                 <div className="mt-2 w-[448px]">
                     <input
                     id="titles"
                     name="title"
                     type="text"
-                    placeholder="제목"
+                    placeholder="이메일로 작성"
                     autoComplete="off"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset"
                     />
@@ -114,7 +114,8 @@ return (
                     id="description"
                     name="content"
                     rows={3}
-                    placeholder="내용을 입력해 주세요"
+                    placeholder="신고 내용을 정확하게 입력해 주세요"
+                    
                     className="block w-full rounded-md border-0 py-1.5 h-[80px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                     defaultValue={''}
                 />

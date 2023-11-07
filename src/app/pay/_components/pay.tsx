@@ -171,7 +171,7 @@ export default function Pay() {
 
     return (
         <div className="flex flex-col justify-between items-center p-4 space-y-4">
-            <h2 className="text-2xl font-bold mb-4">진도페이</h2>
+            <h2 className="text-2xl font-bold mb-4">진또페이</h2>
             <div className="w-1/3">
                 <div className="bg-gray-100 p-4 rounded-md">
                     <h2 className="text-xl font-bold mb-2">입금</h2>

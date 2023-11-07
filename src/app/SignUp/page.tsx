@@ -37,6 +37,22 @@ export default function Signup() {
       alert("숫자 형태로 입력해주세요!");
       return;
     }
+
+    if (formData.phoneNum.startsWith("-")) {
+      alert("음수 값은 입력할 수 없습니다.");
+      return;
+    }
+
+    if (formData.phoneNum.length !== 11) {  
+      alert("핸드폰 번호가 제대로 입력되지 않았습니다!")
+      return;
+    }
+
+    if(formData.phoneNum.substring(0, 3) !== '010') {
+      alert("앞에 3자리는 010으로 시작해주세요!")
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
@@ -45,11 +61,6 @@ export default function Signup() {
     if (formData.password.length < 8) {
       alert("비밀번호는 최소 8자 입력해주세요!")
       return;
-    }
-
-    if (formData.phoneNum.startsWith("-")) {
-      alert("음수 값은 입력할 수 없습니다.");
-      location.href='/signup'
     }
     
     // MongoDB로 가는 부분
@@ -192,7 +203,7 @@ export default function Signup() {
         <div className="mb-4">
           <label className="block mb-2">전화번호</label>
           <input
-            type="number"
+            type="text"
             name="phoneNum"
             value={formData.phoneNum}
             onChange={handleInputChange}
