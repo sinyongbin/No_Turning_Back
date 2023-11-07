@@ -89,11 +89,11 @@ export default function Page(query:{params : any}) {
                         <p>{e.starting_price}원</p>
                       </a>
                       <div className="space-x-4">
-                      <button type="button"
+                      {/* <button type="button"
                         onClick={() => Delete(e.id)}
                         className="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                         수정
-                      </button>
+                      </button> */}
                       <button type="button"
                         onClick={() => Delete(e.id)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">

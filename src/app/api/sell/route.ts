@@ -57,3 +57,4 @@ export async function POST(req:NextRequest, res: NextResponse) {
     console.log("__________________________________________________________")
     return NextResponse.json({message: "OK" },{status:orcleResult.status});
   }
+

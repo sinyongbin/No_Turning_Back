@@ -128,7 +128,7 @@ export default function MainList() {
             </button>
           </div> */}
             <button className="ml-10 px-4 py-2 font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring focus:ring-indigo-300" onClick={allData}>
-              전체보기 버튼 
+              전체보기
             </button>
         </div>
         <div className=''>
