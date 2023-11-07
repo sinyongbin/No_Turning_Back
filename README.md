@@ -1,7 +1,7 @@
 프로젝트 소개
   https://www.canva.com/design/DAFzWY-g4pg/g3wKMce_yCEasKDTEHFEsg/edit?locale=ko-KRhttps://www.canva.com/design/DAFzWY-g4pg/g3wKMce_yCEasKDTEHFEsg/edit?locale=ko-KR
 
-연동된 프로젝트
+연동된 프로젝트 \n
   오라클 서버
     https://github.com/KColdCastle/No_Turning_Back_Oracle_Server 
   오라클 Admin 전용
