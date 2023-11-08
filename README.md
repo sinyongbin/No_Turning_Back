@@ -18,8 +18,8 @@ Oralce DB 설치 필요 <br/>
    &emsp;&emsp;   -mongodb.net/? <br/>
    &emsp;&emsp;   -mongodb.net/<콜렉션 이름>? 위에 url에 콜렉션 이름 추가 필요 <br/>
 Prisma 스키마로 데이터 관게 생성 <br/>
- &emsp;&emsp; npm prisma generate <br/>
+ &emsp;&emsp; npx prisma generate <br/>
 MongoDB 에 관계성 주입 (몽고DB 는 비관계성 데이터 베이스기 때문에 관계성이 주입시 일부 안될수 있음) <br/>
- &emsp;&emsp; npm prisma db push <br/>
+ &emsp;&emsp; npx prisma db push <br/>
 
 
